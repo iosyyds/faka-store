@@ -29,7 +29,7 @@ jobs:
         env:
           # 后端 API 地址：在仓库 Settings → Variables 配置 NEXT_PUBLIC_API_BASE，
           # 或直接改下面这行的地址为你的后端域名
-          NEXT_PUBLIC_API_BASE: ${{ vars.NEXT_PUBLIC_API_BASE || 'https://api.yourdomain.com' }}
+          NEXT_PUBLIC_API_BASE: ${{ vars.NEXT_PUBLIC_API_BASE || 'https://kk.qqqi.top' }}
           # 子路径：默认与仓库名一致（不带末尾斜杠）；部署在根路径或自定义域名时改为空字符串
           NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH || '/faka-store' }}
         run: npm run build
