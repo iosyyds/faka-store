@@ -1,0 +1,296 @@
+@import "tailwindcss";
+
+/* ============================================================
+   iOS 26 · Liquid Glass（液态玻璃）设计系统
+   半透明玻璃 + 通透光影 + 悬浮空间感 + 流动渐变衬底
+   ============================================================ */
+
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.42);
+  --glass-bg-strong: rgba(255, 255, 255, 0.62);
+  --glass-border: rgba(255, 255, 255, 0.65);
+  --glass-highlight: rgba(255, 255, 255, 0.9);
+  --glass-shadow: 0 20px 50px -12px rgba(30, 40, 90, 0.28);
+  --ink: #1c1c28;
+  --ink-soft: rgba(28, 28, 40, 0.62);
+  --accent: #3b82f6;
+  --accent-2: #8b5cf6;
+  --accent-3: #ec4899;
+  --accent-4: #06b6d4;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --glass-bg: rgba(28, 32, 52, 0.5);
+    --glass-bg-strong: rgba(40, 46, 70, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.18);
+    --glass-highlight: rgba(255, 255, 255, 0.35);
+    --glass-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.55);
+    --ink: #f4f6ff;
+    --ink-soft: rgba(244, 246, 255, 0.66);
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+/* ---------- 流动渐变衬底（玻璃背后的光） ---------- */
+.app-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(135deg, #7dd3fc 0%, #a5b4fc 28%, #c4b5fd 50%, #f0abfc 72%, #fda4af 100%);
+  transition: background 0.6s ease;
+}
+@media (prefers-color-scheme: dark) {
+  .app-bg {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2e1f5e 32%, #4a2a68 55%, #5f2a4d 78%, #0f2c4a 100%);
+  }
+}
+
+/* 漂浮光斑：让玻璃有"可折射的光源" */
+.blob {
+  position: fixed;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.65;
+  pointer-events: none;
+  will-change: transform;
+}
+.blob-1 {
+  width: 46vw;
+  height: 46vw;
+  top: -8vw;
+  left: -6vw;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0) 65%);
+  animation: drift1 22s ease-in-out infinite alternate;
+}
+.blob-2 {
+  width: 38vw;
+  height: 38vw;
+  top: 30vh;
+  right: -8vw;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.55), rgba(251, 191, 36, 0) 62%);
+  animation: drift2 26s ease-in-out infinite alternate;
+}
+.blob-3 {
+  width: 42vw;
+  height: 42vw;
+  bottom: -12vw;
+  left: 18vw;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.5), rgba(34, 211, 238, 0) 62%);
+  animation: drift3 30s ease-in-out infinite alternate;
+}
+@keyframes drift1 { to { transform: translate(6vw, 5vh) scale(1.08); } }
+@keyframes drift2 { to { transform: translate(-5vw, 7vh) scale(1.12); } }
+@keyframes drift3 { to { transform: translate(5vw, -6vh) scale(0.92); } }
+
+/* ---------- 玻璃基础材质 ---------- */
+.glass {
+  position: relative;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04),
+    var(--glass-shadow);
+}
+
+/* 玻璃顶部液态高光（像液体表面反光） */
+.glass::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 6%;
+  right: 6%;
+  height: 46%;
+  border-radius: 24px 24px 60% 60% / 24px 24px 30px 30px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.55),
+    rgba(255, 255, 255, 0.06)
+  );
+  pointer-events: none;
+  opacity: 0.9;
+}
+@media (prefers-color-scheme: dark) {
+  .glass::before {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.02));
+  }
+}
+
+/* 强玻璃：内容主体用，反光更收敛 */
+.glass-strong {
+  background: var(--glass-bg-strong);
+}
+
+/* 玻璃按钮 */
+.glass-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.06));
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -8px 16px rgba(255, 255, 255, 0.12),
+    0 10px 24px -8px rgba(59, 90, 246, 0.6);
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, filter 0.25s ease;
+  user-select: none;
+}
+.glass-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  filter: brightness(1.08);
+}
+.glass-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* 渐变描边按钮 */
+.glass-btn.accent {
+  background: linear-gradient(135deg, #60a5fa, #8b5cf6 55%, #ec4899);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 12px 28px -8px rgba(139, 92, 246, 0.65);
+}
+
+/* ---------- 玻璃胶囊 chip ---------- */
+.glass-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 var(--glass-highlight);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+.glass-chip:hover {
+  transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 var(--glass-highlight), 0 8px 20px -8px rgba(30, 40, 90, 0.35);
+}
+.glass-chip.active {
+  color: #fff;
+  background: linear-gradient(135deg, #60a5fa, #8b5cf6 55%, #ec4899);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 10px 22px -8px rgba(139, 92, 246, 0.6);
+}
+
+/* 渐变文字标题 */
+.gradient-text {
+  background: linear-gradient(120deg, #2563eb, #8b5cf6 45%, #ec4899 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@media (prefers-color-scheme: dark) {
+  .gradient-text {
+    background: linear-gradient(120deg, #93c5fd, #c4b5fd 45%, #f9a8d4 80%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* ---------- 入场动画 ---------- */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 玻璃弹层 */
+.modal-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(20, 24, 48, 0.35);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  animation: maskIn 0.3s ease;
+}
+@keyframes maskIn { from { opacity: 0; } }
+
+.modal-pop {
+  animation: popIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes popIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.94); }
+}
+
+/* 二维码呼吸光 */
+.qr-glow {
+  animation: qrPulse 2.6s ease-in-out infinite;
+}
+@keyframes qrPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.35); }
+  50% { box-shadow: 0 0 0 14px rgba(139, 92, 246, 0); }
+}
+
+/* 加载中的玻璃旋转环 */
+.spinner {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  border-top-color: #fff;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* 卡片悬浮效果 */
+.lift {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+}
+.lift:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 28px 60px -16px rgba(30, 40, 90, 0.4);
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: rgba(120, 130, 200, 0.4); border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
