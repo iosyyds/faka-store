@@ -125,7 +125,11 @@ export default function Home() {
       <nav style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(255,255,255,0.72)', backdropFilter: 'saturate(180%) blur(20px)', WebkitBackdropFilter: 'saturate(180%) blur(20px)', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
         <div style={{ maxWidth: 1024, margin: '0 auto', padding: '0 22px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }} onClick={() => router.push('/')}>
-            <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#007AFF,#5856D6)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 13, letterSpacing: -0.5 }}>{site.site_name?.[0] || '甜'}</div>
+            {site.site_logo ? (
+              <img src={site.site_logo} alt="logo" style={{ width: 28, height: 28, borderRadius: 8, objectFit: 'cover' }} />
+            ) : (
+              <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#007AFF,#5856D6)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 13, letterSpacing: -0.5 }}>{site.site_name?.[0] || '甜'}</div>
+            )}
             <span style={{ fontSize: 17, fontWeight: 600, letterSpacing: -0.3 }}>{site.site_name || '甜甜发卡'}</span>
           </div>
           <button onClick={() => router.push('/query')} style={{ padding: '7px 18px', borderRadius: 20, background: appleBlue, color: '#fff', border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer', letterSpacing: -0.1, transition: 'all .2s', boxShadow: '0 2px 8px rgba(0,122,255,0.25)' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.04)'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(0,122,255,0.35)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,122,255,0.25)'; }}>订单查询</button>
@@ -226,8 +230,8 @@ export default function Home() {
             </div>
           </div>
           <div style={{ borderTop: '1px solid rgba(0,0,0,0.06)', paddingTop: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
-            <div style={{ fontSize: 11, color: appleSubtext }}>© {new Date().getFullYear()} {site.site_name || '甜甜发卡'} {site.copyright || ''}</div>
-            <div style={{ fontSize: 11, color: appleSubtext }}>{site.icp_number || ''} · 虚拟商品自动发卡平台</div>
+            <div style={{ fontSize: 11, color: appleSubtext }}>© {new Date().getFullYear()} {site.site_name || '甜甜发卡'}</div>
+            <div style={{ fontSize: 11, color: appleSubtext }}>{site.icp_number || ''} 虚拟商品自动发卡平台</div>
           </div>
         </div>
       </footer>
@@ -305,8 +309,8 @@ export default function Home() {
                   <div style={{ marginBottom: 14 }}>
                     <label style={{ display: 'block', fontSize: 12, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>支付方式</label>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', border: '1.5px solid #1677FF', borderRadius: 12, background: 'rgba(22,119,255,0.04)', cursor: 'pointer' }}>
-                      <div style={{ width: 28, height: 28, borderRadius: 6, background: '#1677FF', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                        <span style={{ color: '#fff', fontSize: 16, fontWeight: 700, fontFamily: '-apple-system,sans-serif' }}>支</span>
+                      <div style={{ width: 32, height: 32, borderRadius: 7, background: '#1677FF', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        <svg width="22" height="22" viewBox="0 0 1024 1024" fill="#fff"><path d="M230.4 128h563.2c56.32 0 102.4 46.08 102.4 102.4v563.2c0 56.32-46.08 102.4-102.4 102.4H230.4c-56.32 0-102.4-46.08-102.4-102.4V230.4c0-56.32 46.08-102.4 102.4-102.4z m340.48 358.4c-30.72-10.24-71.68-20.48-112.64-25.6 20.48-40.96 35.84-87.04 40.96-133.12H384v-51.2h133.12V256h51.2v20.48H704v51.2H568.32c-5.12 30.72-15.36 61.44-30.72 87.04 56.32 10.24 117.76 30.72 168.96 56.32l-35.84 66.56z m-225.28 51.2c-76.8 0-143.36 30.72-143.36 71.68s66.56 71.68 143.36 71.68c61.44 0 112.64-20.48 138.24-51.2l-46.08-40.96c-15.36 15.36-46.08 25.6-92.16 25.6-40.96 0-66.56-10.24-66.56-25.6s25.6-25.6 66.56-25.6c35.84 0 61.44 5.12 87.04 15.36l30.72-56.32c-30.72-10.24-66.56-15.36-117.76-15.36z"/></svg>
                       </div>
                       <div style={{ flex: 1 }}>
                         <div style={{ fontSize: 13, fontWeight: 600, color: appleText }}>支付宝</div>

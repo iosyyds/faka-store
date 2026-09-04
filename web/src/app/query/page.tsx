@@ -95,7 +95,7 @@ export default function QueryPage() {
     3: { label: '已退款', color: '#FF3B30' },
   };
 
-  const inputStyle: React.CSSProperties = { width: '100%', padding: '7px 10px', border: '1px solid #E5E5EA', background: '#fff', borderRadius: 8, fontSize: 12, outline: 'none' };
+  const inputStyle: React.CSSProperties = { width: '100%', padding: '6px 9px', border: '1px solid #E5E5EA', background: '#fff', borderRadius: 7, fontSize: 12, outline: 'none', height: 30, boxSizing: 'border-box' };
 
   return (
     <div style={{ minHeight: '100vh', background: '#FBFBFD', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif', color: appleText }}>
@@ -137,7 +137,7 @@ export default function QueryPage() {
             <label style={{ display: 'block', fontSize: 12, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>验证码</label>
             <div style={{ display: 'flex', gap: 10 }}>
               <input type="text" placeholder="请输入验证码" value={captchaInput} onChange={(e) => setCaptchaInput(e.target.value)} style={{ ...inputStyle, flex: 1 }} maxLength={4} onKeyDown={(e) => e.key === 'Enter' && handleQuery()} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
-              <canvas ref={canvasRef} width={96} height={34} onClick={refreshCaptcha} style={{ borderRadius: 8, cursor: 'pointer', border: '1px solid #E5E5EA' }} title="点击刷新" />
+              <canvas ref={canvasRef} width={90} height={30} onClick={refreshCaptcha} style={{ borderRadius: 7, cursor: 'pointer', border: '1px solid #E5E5EA', height: 30, flexShrink: 0, boxSizing: 'border-box' }} title="点击刷新" />
             </div>
           </div>
 
