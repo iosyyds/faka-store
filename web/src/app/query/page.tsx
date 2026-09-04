@@ -1,40 +1,81 @@
 'use client';
-import { useState, useMemo } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 const API_BASE = 'https://kk.qqqi.top/api';
+const appleBlue = '#007AFF';
+const appleGray = '#F2F2F7';
+const appleText = '#1D1D1F';
+const appleSubtext = '#86868B';
 
 interface OrderInfo {
   order_no: string; product_name: string; spec_name: string; quantity: number; total_amount: string;
   status: number; paid_at: string | null; created_at: string; cards: { content: string }[]; contact: string;
 }
 
-function genCaptcha() {
-  const a = Math.floor(Math.random() * 9) + 1;
-  const b = Math.floor(Math.random() * 9) + 1;
-  return { a, b, answer: a + b };
+function genCaptchaText() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let s = '';
+  for (let i = 0; i < 4; i++) s += chars[Math.floor(Math.random() * chars.length)];
+  return s;
 }
 
 export default function QueryPage() {
   const router = useRouter();
+  const [isWechat, setIsWechat] = useState(false);
   const [orderNo, setOrderNo] = useState('');
   const [captchaInput, setCaptchaInput] = useState('');
-  const [captcha, setCaptcha] = useState(genCaptcha());
+  const [captchaText, setCaptchaText] = useState(genCaptchaText());
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState('');
   const [order, setOrder] = useState<OrderInfo | null>(null);
 
-  const appleBlue = '#007AFF';
-  const appleGray = '#F2F2F7';
-  const appleText = '#1D1D1F';
-  const appleSubtext = '#86868B';
+  useEffect(() => {
+    setIsWechat(/MicroMessenger/i.test(navigator.userAgent));
+  }, []);
 
-  const refreshCaptcha = () => { setCaptcha(genCaptcha()); setCaptchaInput(''); };
+  useEffect(() => { drawCaptcha(); }, [captchaText]);
+
+  function drawCaptcha() {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const w = canvas.width, h = canvas.height;
+    ctx.fillStyle = '#F2F2F7';
+    ctx.fillRect(0, 0, w, h);
+    for (let i = 0; i < 4; i++) {
+      ctx.strokeStyle = `rgba(${Math.random()*100+100},${Math.random()*100+100},${Math.random()*100+100},0.4)`;
+      ctx.beginPath();
+      ctx.moveTo(Math.random() * w, Math.random() * h);
+      ctx.lineTo(Math.random() * w, Math.random() * h);
+      ctx.stroke();
+    }
+    for (let i = 0; i < 30; i++) {
+      ctx.fillStyle = `rgba(${Math.random()*150+50},${Math.random()*150+50},${Math.random()*150+50},0.5)`;
+      ctx.fillRect(Math.random() * w, Math.random() * h, 1.5, 1.5);
+    }
+    const colors = ['#007AFF', '#5856D6', '#FF2D55', '#34C759', '#FF9500'];
+    for (let i = 0; i < captchaText.length; i++) {
+      ctx.save();
+      ctx.font = `bold ${18 + Math.random() * 4}px -apple-system, sans-serif`;
+      ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+      const x = 12 + i * 20;
+      const y = 22 + Math.random() * 6 - 3;
+      ctx.translate(x, y);
+      ctx.rotate((Math.random() - 0.5) * 0.4);
+      ctx.fillText(captchaText[i], 0, 0);
+      ctx.restore();
+    }
+  }
+
+  const refreshCaptcha = () => { setCaptchaText(genCaptchaText()); setCaptchaInput(''); };
 
   async function handleQuery() {
     if (!orderNo.trim()) { setErr('请输入订单号'); return; }
     if (!captchaInput.trim()) { setErr('请输入验证码'); return; }
-    if (parseInt(captchaInput) !== captcha.answer) { setErr('验证码错误'); refreshCaptcha(); return; }
+    if (captchaInput.trim().toUpperCase() !== captchaText) { setErr('验证码错误'); refreshCaptcha(); return; }
     setLoading(true); setErr(''); setOrder(null);
     try {
       const res = await fetch(`${API_BASE}/order_query.php?order_no=${encodeURIComponent(orderNo.trim())}`);
@@ -54,23 +95,30 @@ export default function QueryPage() {
     3: { label: '已退款', color: '#FF3B30' },
   };
 
-  const inputStyle: React.CSSProperties = { width: '100%', padding: '9px 12px', border: '1px solid #E5E5EA', background: '#fff', borderRadius: 10, fontSize: 13, outline: 'none', letterSpacing: -0.1 };
+  const inputStyle: React.CSSProperties = { width: '100%', padding: '7px 10px', border: '1px solid #E5E5EA', background: '#fff', borderRadius: 8, fontSize: 12, outline: 'none' };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#FBFBFD', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif', color: appleText }}>
-      {/* Apple 毛玻璃导航 */}
-      <nav style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(255,255,255,0.72)', backdropFilter: 'saturate(180%) blur(20px)', WebkitBackdropFilter: 'saturate(180%) blur(20px)', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
+    <div style={{ minHeight: '100vh', background: '#FBFBFD', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif', color: appleText }}>
+      {isWechat && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.85)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 40 }}>
+          <div style={{ width: 60, height: 60, marginBottom: 20, borderRadius: 14, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#07C160" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
+          </div>
+          <div style={{ color: '#fff', fontSize: 18, fontWeight: 600, marginBottom: 10, textAlign: 'center' }}>请在浏览器中打开</div>
+          <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: 14, textAlign: 'center', lineHeight: 1.6, maxWidth: 280 }}>点击右上角「···」<br/>选择「在浏览器打开」即可正常访问</div>
+        </div>
+      )}
+      <nav style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(255,255,255,0.72)', backdropFilter: 'saturate(180%) blur(20px)', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
         <div style={{ maxWidth: 1024, margin: '0 auto', padding: '0 22px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }} onClick={() => router.push('/')}>
             <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#007AFF,#5856D6)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 13 }}>甜</div>
             <span style={{ fontSize: 17, fontWeight: 600, letterSpacing: -0.3 }}>甜甜发卡</span>
           </div>
-          <button onClick={() => router.push('/')} style={{ padding: '7px 16px', borderRadius: 20, background: appleGray, color: appleText, border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer', transition: '.2s' }} onMouseEnter={(e) => (e.currentTarget.style.background = '#E8E8ED')} onMouseLeave={(e) => (e.currentTarget.style.background = appleGray)}>返回首页</button>
+          <button onClick={() => router.push('/')} style={{ padding: '7px 16px', borderRadius: 20, background: appleGray, color: appleText, border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>返回首页</button>
         </div>
       </nav>
 
       <div style={{ maxWidth: 440, margin: '0 auto', padding: '40px 20px' }}>
-        {/* 查询卡片 - Apple 风格 */}
         <div style={{ background: '#fff', borderRadius: 20, padding: 28, boxShadow: '0 4px 24px rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.04)' }}>
           <div style={{ textAlign: 'center', marginBottom: 24 }}>
             <div style={{ width: 48, height: 48, margin: '0 auto 12px', borderRadius: 14, background: 'linear-gradient(135deg,#007AFF,#5856D6)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 16px rgba(0,122,255,0.25)' }}>
@@ -88,19 +136,18 @@ export default function QueryPage() {
           <div style={{ marginBottom: 20 }}>
             <label style={{ display: 'block', fontSize: 12, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>验证码</label>
             <div style={{ display: 'flex', gap: 10 }}>
-              <input type="text" placeholder="请输入计算结果" value={captchaInput} onChange={(e) => setCaptchaInput(e.target.value)} style={{ ...inputStyle, flex: 1 }} onKeyDown={(e) => e.key === 'Enter' && handleQuery()} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
-              <div onClick={refreshCaptcha} style={{ minWidth: 88, height: 38, background: 'linear-gradient(135deg,#F2F2F7,#E8E8ED)', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, color: appleBlue, cursor: 'pointer', letterSpacing: 1, userSelect: 'none', transition: '.2s' }} title="点击刷新">{captcha.a} + {captcha.b} = ?</div>
+              <input type="text" placeholder="请输入验证码" value={captchaInput} onChange={(e) => setCaptchaInput(e.target.value)} style={{ ...inputStyle, flex: 1 }} maxLength={4} onKeyDown={(e) => e.key === 'Enter' && handleQuery()} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
+              <canvas ref={canvasRef} width={96} height={34} onClick={refreshCaptcha} style={{ borderRadius: 8, cursor: 'pointer', border: '1px solid #E5E5EA' }} title="点击刷新" />
             </div>
           </div>
 
           {err && <div style={{ color: '#FF3B30', fontSize: 12, marginBottom: 12, textAlign: 'center' }}>{err}</div>}
 
-          <button onClick={handleQuery} disabled={loading} style={{ width: '100%', padding: '11px', borderRadius: 12, border: 'none', background: appleBlue, color: '#fff', fontSize: 14, fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.6 : 1, boxShadow: '0 3px 10px rgba(0,122,255,0.25)', letterSpacing: -0.2, transition: '.2s' }} onMouseEnter={(e) => { if (!loading) e.currentTarget.style.transform = 'scale(1.01)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}>
+          <button onClick={handleQuery} disabled={loading} style={{ width: '100%', padding: '11px', borderRadius: 12, border: 'none', background: appleBlue, color: '#fff', fontSize: 14, fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.6 : 1, boxShadow: '0 3px 10px rgba(0,122,255,0.25)' }}>
             {loading ? '查询中...' : '立即查询'}
           </button>
         </div>
 
-        {/* 查询结果 */}
         {order && (
           <div style={{ background: '#fff', borderRadius: 20, padding: 20, marginTop: 16, boxShadow: '0 4px 24px rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.04)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
@@ -110,7 +157,6 @@ export default function QueryPage() {
             <div style={{ fontSize: 12, color: appleSubtext, marginBottom: 4 }}>订单号：{order.order_no}</div>
             <div style={{ fontSize: 12, color: appleSubtext, marginBottom: 4 }}>数量：{order.quantity} · 金额：<span style={{ color: '#FF3B30', fontWeight: 600 }}>¥{order.total_amount}</span></div>
             <div style={{ fontSize: 12, color: appleSubtext, marginBottom: 14 }}>下单时间：{order.created_at}</div>
-
             {order.status === 1 && order.cards && order.cards.length > 0 && (
               <div>
                 <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 10 }}>🎫 卡密 ({order.cards.length}条)</div>

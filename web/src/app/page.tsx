@@ -20,6 +20,7 @@ interface OrderInfo {
 
 export default function Home() {
   const router = useRouter();
+  const [isWechat, setIsWechat] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [site, setSite] = useState<SiteInfo>({ site_name: '甜甜发卡', site_logo: '', customer_service: '', qq_group: '', copyright: '' });
   const [categories, setCategories] = useState<string[]>([]);
@@ -35,7 +36,11 @@ export default function Home() {
   const [errMsg, setErrMsg] = useState('');
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  useEffect(() => { loadData(); return () => { if (pollRef.current) clearInterval(pollRef.current); }; }, []);
+  useEffect(() => {
+    setIsWechat(/MicroMessenger/i.test(navigator.userAgent));
+    loadData();
+    return () => { if (pollRef.current) clearInterval(pollRef.current); };
+  }, []);
 
   const loadData = async () => {
     try {
@@ -106,6 +111,16 @@ export default function Home() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#FBFBFD', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif', color: appleText }}>
+      {isWechat && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.85)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 40 }}>
+          <div style={{ width: 60, height: 60, marginBottom: 20, borderRadius: 14, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#07C160" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
+          </div>
+          <div style={{ color: '#fff', fontSize: 18, fontWeight: 600, marginBottom: 10, textAlign: 'center' }}>请在浏览器中打开</div>
+          <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: 14, textAlign: 'center', lineHeight: 1.6, maxWidth: 280 }}>点击右上角「···」<br/>选择「在浏览器打开」即可正常访问</div>
+          <div style={{ marginTop: 24, width: 40, height: 40, border: '2px solid rgba(255,255,255,0.3)', borderTopColor: '#fff', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+        </div>
+      )}
       {/* Apple 毛玻璃导航栏 */}
       <nav style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(255,255,255,0.72)', backdropFilter: 'saturate(180%) blur(20px)', WebkitBackdropFilter: 'saturate(180%) blur(20px)', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
         <div style={{ maxWidth: 1024, margin: '0 auto', padding: '0 22px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -145,14 +160,14 @@ export default function Home() {
         ) : filteredProducts.length === 0 ? (
           <div style={{ textAlign: 'center', padding: 80, color: appleSubtext, fontSize: 14 }}>暂无商品</div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 14 }}>
+          <div className="product-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16 }}>
             {filteredProducts.map((p) => (
               <div key={p.id} onClick={() => openBuy(p)} style={{ background: '#fff', borderRadius: 18, overflow: 'hidden', cursor: 'pointer', transition: 'all .3s cubic-bezier(0.25,0.1,0.25,1)', boxShadow: '0 2px 12px rgba(0,0,0,0.04)', border: '1px solid rgba(0,0,0,0.04)' }}
                 onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px) scale(1.01)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.1)'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.04)'; }}>
                 {/* 图片区 */}
-                <div style={{ height: 120, background: p.image ? '#fafafa' : 'linear-gradient(135deg,#F2F2F7,#E8E8ED)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-                  {p.image ? <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <span style={{ fontSize: 40, opacity: 0.6 }}>🎁</span>}
+                <div style={{ height: 140, background: p.image ? '#fafafa' : 'linear-gradient(135deg,#F2F2F7,#E8E8ED)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+                  {p.image ? <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <span style={{ fontSize: 44, opacity: 0.6 }}>🎁</span>}
                   <div style={{ position: 'absolute', top: 10, left: 10, display: 'flex', gap: 5 }}>
                     <span style={{ padding: '3px 9px', background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(10px)', borderRadius: 12, fontSize: 10, fontWeight: 600, color: '#34C759', letterSpacing: 0.2 }}>秒发</span>
                     {p.is_hot ? <span style={{ padding: '3px 9px', background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(10px)', borderRadius: 12, fontSize: 10, fontWeight: 600, color: '#FF3B30' }}>热门</span> : null}
@@ -179,25 +194,42 @@ export default function Home() {
 
       {/* Apple 风格页脚 */}
       <footer style={{ borderTop: '1px solid rgba(0,0,0,0.06)', background: '#F5F5F7' }}>
-        <div style={{ maxWidth: 1024, margin: '0 auto', padding: '28px 22px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 20 }}>
-          <div>
-            <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 6, color: appleText }}>{site.site_name || '甜甜发卡'}</div>
-            <div style={{ fontSize: 12, color: appleSubtext, maxWidth: 280, lineHeight: 1.6 }}>{site.footer_desc || '本站仅出售合规虚拟商品，下单即视为同意服务条款。'}</div>
-          </div>
-          <div style={{ display: 'flex', gap: 32 }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <a href="/faq" style={{ fontSize: 12, color: appleSubtext, textDecoration: 'none' }} onMouseEnter={(e) => (e.currentTarget.style.color = appleBlue)} onMouseLeave={(e) => (e.currentTarget.style.color = appleSubtext)}>常见问题</a>
-              <a href="/after-sale" style={{ fontSize: 12, color: appleSubtext, textDecoration: 'none' }} onMouseEnter={(e) => (e.currentTarget.style.color = appleBlue)} onMouseLeave={(e) => (e.currentTarget.style.color = appleSubtext)}>售后反馈</a>
-            </div>
-            {site.customer_service ? (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                <div style={{ fontSize: 12, color: appleSubtext }}>客服：{site.customer_service}</div>
-                {site.qq_group ? <div style={{ fontSize: 12, color: appleSubtext }}>QQ群：{site.qq_group}</div> : null}
+        <div style={{ maxWidth: 1024, margin: '0 auto', padding: '36px 22px 24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr', gap: 32, marginBottom: 28 }}>
+            {/* 品牌 */}
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+                <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#007AFF,#5856D6)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 13 }}>{site.site_name?.[0] || '甜'}</div>
+                <span style={{ fontSize: 16, fontWeight: 600, letterSpacing: -0.3 }}>{site.site_name || '甜甜发卡'}</span>
               </div>
-            ) : null}
+              <p style={{ fontSize: 12, color: appleSubtext, lineHeight: 1.7, maxWidth: 260, margin: 0 }}>{site.footer_desc || '专业的虚拟商品自动发卡平台，支付宝安全支付，付款后自动秒发卡密，24小时无人值守。'}</p>
+            </div>
+            {/* 快速链接 */}
+            <div>
+              <div style={{ fontSize: 12, fontWeight: 600, color: appleText, marginBottom: 12, letterSpacing: -0.1 }}>快速链接</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <a href="/" style={{ fontSize: 12, color: appleSubtext, textDecoration: 'none', transition: '.2s' }} onMouseEnter={(e) => (e.currentTarget.style.color = appleBlue)} onMouseLeave={(e) => (e.currentTarget.style.color = appleSubtext)}>首页</a>
+                <a href="/query" style={{ fontSize: 12, color: appleSubtext, textDecoration: 'none', transition: '.2s' }} onMouseEnter={(e) => (e.currentTarget.style.color = appleBlue)} onMouseLeave={(e) => (e.currentTarget.style.color = appleSubtext)}>订单查询</a>
+                <a href="/faq" style={{ fontSize: 12, color: appleSubtext, textDecoration: 'none', transition: '.2s' }} onMouseEnter={(e) => (e.currentTarget.style.color = appleBlue)} onMouseLeave={(e) => (e.currentTarget.style.color = appleSubtext)}>常见问题</a>
+                <a href="/after-sale" style={{ fontSize: 12, color: appleSubtext, textDecoration: 'none', transition: '.2s' }} onMouseEnter={(e) => (e.currentTarget.style.color = appleBlue)} onMouseLeave={(e) => (e.currentTarget.style.color = appleSubtext)}>售后反馈</a>
+              </div>
+            </div>
+            {/* 联系我们 */}
+            <div>
+              <div style={{ fontSize: 12, fontWeight: 600, color: appleText, marginBottom: 12, letterSpacing: -0.1 }}>联系我们</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {site.customer_service ? <div style={{ fontSize: 12, color: appleSubtext }}>客服：{site.customer_service}</div> : null}
+                {site.qq_group ? <div style={{ fontSize: 12, color: appleSubtext }}>QQ群：{site.qq_group}</div> : null}
+                <div style={{ fontSize: 12, color: appleSubtext }}>支付方式：支付宝</div>
+                <div style={{ fontSize: 12, color: appleSubtext }}>工作时间：24小时自动发货</div>
+              </div>
+            </div>
+          </div>
+          <div style={{ borderTop: '1px solid rgba(0,0,0,0.06)', paddingTop: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+            <div style={{ fontSize: 11, color: appleSubtext }}>© {new Date().getFullYear()} {site.site_name || '甜甜发卡'} {site.copyright || ''}</div>
+            <div style={{ fontSize: 11, color: appleSubtext }}>{site.icp_number || ''} · 虚拟商品自动发卡平台</div>
           </div>
         </div>
-        <div style={{ borderTop: '1px solid rgba(0,0,0,0.06)', padding: '14px 22px', textAlign: 'center', fontSize: 11, color: appleSubtext }}>© {new Date().getFullYear()} {site.site_name || '甜甜发卡'} {site.copyright || ''} {site.icp_number || ''}</div>
       </footer>
 
       {/* 购买弹窗 - Apple 风格 */}
@@ -257,7 +289,7 @@ export default function Home() {
                   </div>
                   <div style={{ marginBottom: 14 }}>
                     <label style={{ display: 'block', fontSize: 12, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>联系方式</label>
-                    <input type="text" placeholder="手机号 / 邮箱 / QQ号" value={contact} onChange={(e) => setContact(e.target.value)} style={{ width: '100%', padding: '9px 12px', border: '1px solid #E5E5EA', background: '#fff', borderRadius: 10, fontSize: 13, outline: 'none', letterSpacing: -0.1 }} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
+                    <input type="text" placeholder="手机号 / 邮箱 / QQ号" value={contact} onChange={(e) => setContact(e.target.value)} style={{ width: '100%', padding: '7px 10px', border: '1px solid #E5E5EA', background: '#fff', borderRadius: 8, fontSize: 12, outline: 'none', letterSpacing: -0.1 }} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
                   </div>
                   <div style={{ marginBottom: 14 }}>
                     <label style={{ display: 'block', fontSize: 12, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>购买数量</label>
@@ -274,7 +306,7 @@ export default function Home() {
                     <label style={{ display: 'block', fontSize: 12, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>支付方式</label>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', border: '1.5px solid #1677FF', borderRadius: 12, background: 'rgba(22,119,255,0.04)', cursor: 'pointer' }}>
                       <div style={{ width: 28, height: 28, borderRadius: 6, background: '#1677FF', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M18.5 3h-13C3.6 3 2 4.6 2 6.5v11C2 19.4 3.6 21 5.5 21h13c1.9 0 3.5-1.6 3.5-3.5v-11C22 4.6 20.4 3 18.5 3zm-2.3 12.7c-1.2.6-2.9.9-4.7.9-3.1 0-5.6-1.4-5.6-3.2 0-1.8 2.5-3.2 5.6-3.2 1.8 0 3.5.3 4.7.9l.8-1.8H7.6v-1.4h4.4V7.5h1.8v.5h1.5v1.4h-1.5v1.1c1.2.4 2.2 1 2.9 1.7l-1.5 1.2c-.5-.5-1.3-.9-2.2-1.2-1.3-.4-2.8-.7-4-.7-2.2 0-3.8.9-3.8 2.1s1.6 2.1 3.8 2.1c1.5 0 2.9-.3 4-.8l.8 1.6z"/></svg>
+                        <span style={{ color: '#fff', fontSize: 16, fontWeight: 700, fontFamily: '-apple-system,sans-serif' }}>支</span>
                       </div>
                       <div style={{ flex: 1 }}>
                         <div style={{ fontSize: 13, fontWeight: 600, color: appleText }}>支付宝</div>
@@ -307,7 +339,7 @@ export default function Home() {
           </div>
         </div>
       )}
-      <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+      <style>{`@keyframes spin{to{transform:rotate(360deg)}} @media(max-width:640px){.product-grid{grid-template-columns:repeat(2,1fr)!important}}`}</style>
     </div>
   );
 }
