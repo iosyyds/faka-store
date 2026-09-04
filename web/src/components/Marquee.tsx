@@ -1,6 +1,13 @@
 "use client";
-import { useState } from "react";
-interface OrderItem { nickname: string; product_name: string; created_at: string; }
+import { useEffect, useState } from "react";
+
+interface OrderItem {
+  nickname: string;
+  product_name: string;
+  created_at: string;
+}
+
+/** 实时下单滚动公示栏 */
 export default function Marquee({ items }: { items: OrderItem[] }) {
   const [fallback] = useState<OrderItem[]>([
     { nickname: "用户**88", product_name: "会员月卡", created_at: "" },
@@ -10,21 +17,27 @@ export default function Marquee({ items }: { items: OrderItem[] }) {
     { nickname: "**奶茶", product_name: "网盘会员", created_at: "" },
     { nickname: "用户**67", product_name: "音乐会员", created_at: "" },
   ]);
+
   const list = items && items.length > 0 ? items : fallback;
+  // 复制一份用于无缝滚动
   const doubled = [...list, ...list];
+
   function maskName(name: string) {
     if (!name) return "用户";
     if (name.length <= 2) return name[0] + "**";
     return name[0] + "**" + name[name.length - 1];
   }
+
   function timeAgo(t: string) {
     if (!t) return "刚刚";
-    const diff = Math.floor((Date.now() - new Date(t).getTime()) / 1000);
+    const d = new Date(t).getTime();
+    const diff = Math.floor((Date.now() - d) / 1000);
     if (diff < 60) return "刚刚";
     if (diff < 3600) return Math.floor(diff / 60) + "分钟前";
     if (diff < 86400) return Math.floor(diff / 3600) + "小时前";
     return Math.floor(diff / 86400) + "天前";
   }
+
   return (
     <div className="marquee">
       <div className="marquee-inner">

@@ -1,6 +1,15 @@
 import Link from "next/link";
-export default function Footer({ siteName = "发卡商城", customerService = "", qqGroup = "", copyright = "" }: {
-  siteName?: string; customerService?: string; qqGroup?: string; copyright?: string;
+
+export default function Footer({
+  siteName = "发卡商城",
+  customerService = "",
+  qqGroup = "",
+  copyright = "",
+}: {
+  siteName?: string;
+  customerService?: string;
+  qqGroup?: string;
+  copyright?: string;
 }) {
   return (
     <footer className="footer">
@@ -30,7 +39,9 @@ export default function Footer({ siteName = "发卡商城", customerService = ""
           <p>请妥善保管您的卡密</p>
         </div>
       </div>
-      <div className="footer-bottom">{copyright || `© ${new Date().getFullYear()} ${siteName} 版权所有`}</div>
+      <div className="footer-bottom">
+        {copyright || `© ${new Date().getFullYear()} ${siteName} 版权所有`}
+      </div>
     </footer>
   );
 }
