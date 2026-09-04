@@ -145,30 +145,30 @@ export default function Home() {
         ) : filteredProducts.length === 0 ? (
           <div style={{ textAlign: 'center', padding: 80, color: appleSubtext, fontSize: 14 }}>暂无商品</div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 20 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 14 }}>
             {filteredProducts.map((p) => (
               <div key={p.id} onClick={() => openBuy(p)} style={{ background: '#fff', borderRadius: 18, overflow: 'hidden', cursor: 'pointer', transition: 'all .3s cubic-bezier(0.25,0.1,0.25,1)', boxShadow: '0 2px 12px rgba(0,0,0,0.04)', border: '1px solid rgba(0,0,0,0.04)' }}
                 onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px) scale(1.01)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.1)'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.04)'; }}>
                 {/* 图片区 */}
-                <div style={{ height: 150, background: p.image ? '#fafafa' : 'linear-gradient(135deg,#F2F2F7,#E8E8ED)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-                  {p.image ? <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <span style={{ fontSize: 48, opacity: 0.6 }}>🎁</span>}
+                <div style={{ height: 120, background: p.image ? '#fafafa' : 'linear-gradient(135deg,#F2F2F7,#E8E8ED)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+                  {p.image ? <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <span style={{ fontSize: 40, opacity: 0.6 }}>🎁</span>}
                   <div style={{ position: 'absolute', top: 10, left: 10, display: 'flex', gap: 5 }}>
-                    <span style={{ padding: '3px 9px', background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(10px)', borderRadius: 12, fontSize: 10, fontWeight: 600, color: '#34C759', letterSpacing: 0.2 }}>⚡ 秒发</span>
+                    <span style={{ padding: '3px 9px', background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(10px)', borderRadius: 12, fontSize: 10, fontWeight: 600, color: '#34C759', letterSpacing: 0.2 }}>秒发</span>
                     {p.is_hot ? <span style={{ padding: '3px 9px', background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(10px)', borderRadius: 12, fontSize: 10, fontWeight: 600, color: '#FF3B30' }}>热门</span> : null}
                   </div>
                   {p.stock === 0 && <div style={{ position: 'absolute', inset: 0, background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ padding: '6px 18px', background: '#1D1D1F', color: '#fff', borderRadius: 20, fontSize: 12, fontWeight: 500 }}>已售罄</span></div>}
                 </div>
                 {/* 内容区 */}
-                <div style={{ padding: '14px 16px 16px' }}>
-                  <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 6, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', minHeight: 38, lineHeight: 1.35, letterSpacing: -0.2 }}>{p.name}</div>
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 10 }}>
-                    <span style={{ fontSize: 20, fontWeight: 700, color: '#FF3B30', letterSpacing: -0.5 }}><span style={{ fontSize: 12, fontWeight: 600 }}>¥</span>{Number(p.price).toFixed(2)}</span>
-                    {p.original_price && Number(p.original_price) > Number(p.price) ? <span style={{ fontSize: 11, color: appleSubtext, textDecoration: 'line-through' }}>¥{Number(p.original_price).toFixed(2)}</span> : null}
+                <div style={{ padding: '10px 12px 12px' }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 4, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', minHeight: 34, lineHeight: 1.35, letterSpacing: -0.2 }}>{p.name}</div>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 5, marginBottom: 8 }}>
+                    <span style={{ fontSize: 17, fontWeight: 700, color: '#FF3B30', letterSpacing: -0.5 }}><span style={{ fontSize: 11, fontWeight: 600 }}>¥</span>{Number(p.price).toFixed(2)}</span>
+                    {p.original_price && Number(p.original_price) > Number(p.price) ? <span style={{ fontSize: 10, color: appleSubtext, textDecoration: 'line-through' }}>¥{Number(p.original_price).toFixed(2)}</span> : null}
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ fontSize: 11, color: appleSubtext }}>已售 {p.sales || 0}</span>
-                    <span style={{ padding: '6px 14px', borderRadius: 14, background: p.stock > 0 ? appleBlue : appleGray, color: p.stock > 0 ? '#fff' : appleSubtext, fontSize: 12, fontWeight: 500, transition: '.2s' }}>{p.stock > 0 ? '立即购买' : '缺货'}</span>
+                    <span style={{ fontSize: 10, color: appleSubtext }}>已售 {p.sales || 0}</span>
+                    <span style={{ padding: '5px 12px', borderRadius: 12, background: p.stock > 0 ? appleBlue : appleGray, color: p.stock > 0 ? '#fff' : appleSubtext, fontSize: 11, fontWeight: 500, transition: '.2s' }}>{p.stock > 0 ? '立即购买' : '缺货'}</span>
                   </div>
                 </div>
               </div>
@@ -257,17 +257,32 @@ export default function Home() {
                   </div>
                   <div style={{ marginBottom: 14 }}>
                     <label style={{ display: 'block', fontSize: 12, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>联系方式</label>
-                    <input type="text" placeholder="手机号 / 邮箱 / QQ号" value={contact} onChange={(e) => setContact(e.target.value)} style={{ width: '100%', padding: '12px 14px', border: 'none', background: appleGray, borderRadius: 12, fontSize: 14, outline: 'none', letterSpacing: -0.1 }} onFocus={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.boxShadow = '0 0 0 2px rgba(0,122,255,0.3)'; }} onBlur={(e) => { e.currentTarget.style.background = appleGray; e.currentTarget.style.boxShadow = 'none'; }} />
+                    <input type="text" placeholder="手机号 / 邮箱 / QQ号" value={contact} onChange={(e) => setContact(e.target.value)} style={{ width: '100%', padding: '9px 12px', border: '1px solid #E5E5EA', background: '#fff', borderRadius: 10, fontSize: 13, outline: 'none', letterSpacing: -0.1 }} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
                   </div>
                   <div style={{ marginBottom: 14 }}>
                     <label style={{ display: 'block', fontSize: 12, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>购买数量</label>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', background: appleGray, borderRadius: 10, overflow: 'hidden' }}>
-                        <button onClick={() => setQuantity(Math.max(1, quantity - 1))} style={{ width: 36, height: 36, border: 'none', background: 'transparent', cursor: 'pointer', fontSize: 16, fontWeight: 500, color: appleText }}>-</button>
-                        <span style={{ width: 36, textAlign: 'center', fontWeight: 600, fontSize: 15 }}>{quantity}</span>
-                        <button onClick={() => setQuantity(Math.min(selectedProduct.stock, quantity + 1))} style={{ width: 36, height: 36, border: 'none', background: 'transparent', cursor: 'pointer', fontSize: 16, fontWeight: 500, color: appleText }}>+</button>
+                      <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #E5E5EA', borderRadius: 10, overflow: 'hidden' }}>
+                        <button onClick={() => setQuantity(Math.max(1, quantity - 1))} style={{ width: 32, height: 32, border: 'none', background: '#FAFAFA', cursor: 'pointer', fontSize: 15, fontWeight: 500, color: appleText }}>-</button>
+                        <span style={{ width: 32, textAlign: 'center', fontWeight: 600, fontSize: 14 }}>{quantity}</span>
+                        <button onClick={() => setQuantity(Math.min(selectedProduct.stock, quantity + 1))} style={{ width: 32, height: 32, border: 'none', background: '#FAFAFA', cursor: 'pointer', fontSize: 15, fontWeight: 500, color: appleText }}>+</button>
                       </div>
                       <span style={{ fontSize: 11, color: appleSubtext }}>最多 {selectedProduct.stock} 件</span>
+                    </div>
+                  </div>
+                  <div style={{ marginBottom: 14 }}>
+                    <label style={{ display: 'block', fontSize: 12, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>支付方式</label>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', border: '1.5px solid #1677FF', borderRadius: 12, background: 'rgba(22,119,255,0.04)', cursor: 'pointer' }}>
+                      <div style={{ width: 28, height: 28, borderRadius: 6, background: '#1677FF', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M18.5 3h-13C3.6 3 2 4.6 2 6.5v11C2 19.4 3.6 21 5.5 21h13c1.9 0 3.5-1.6 3.5-3.5v-11C22 4.6 20.4 3 18.5 3zm-2.3 12.7c-1.2.6-2.9.9-4.7.9-3.1 0-5.6-1.4-5.6-3.2 0-1.8 2.5-3.2 5.6-3.2 1.8 0 3.5.3 4.7.9l.8-1.8H7.6v-1.4h4.4V7.5h1.8v.5h1.5v1.4h-1.5v1.1c1.2.4 2.2 1 2.9 1.7l-1.5 1.2c-.5-.5-1.3-.9-2.2-1.2-1.3-.4-2.8-.7-4-.7-2.2 0-3.8.9-3.8 2.1s1.6 2.1 3.8 2.1c1.5 0 2.9-.3 4-.8l.8 1.6z"/></svg>
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: 13, fontWeight: 600, color: appleText }}>支付宝</div>
+                        <div style={{ fontSize: 11, color: appleSubtext }}>推荐使用支付宝扫码支付</div>
+                      </div>
+                      <div style={{ width: 18, height: 18, borderRadius: '50%', border: '2px solid #1677FF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#1677FF' }}></div>
+                      </div>
                     </div>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 0', borderTop: '1px solid #F2F2F7', marginBottom: 14 }}>

@@ -54,7 +54,7 @@ export default function QueryPage() {
     3: { label: '已退款', color: '#FF3B30' },
   };
 
-  const inputStyle: React.CSSProperties = { width: '100%', padding: '12px 14px', border: 'none', background: appleGray, borderRadius: 12, fontSize: 14, outline: 'none', letterSpacing: -0.1 };
+  const inputStyle: React.CSSProperties = { width: '100%', padding: '9px 12px', border: '1px solid #E5E5EA', background: '#fff', borderRadius: 10, fontSize: 13, outline: 'none', letterSpacing: -0.1 };
 
   return (
     <div style={{ minHeight: '100vh', background: '#FBFBFD', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif', color: appleText }}>
@@ -82,20 +82,20 @@ export default function QueryPage() {
 
           <div style={{ marginBottom: 14 }}>
             <label style={{ display: 'block', fontSize: 12, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>订单号</label>
-            <input type="text" placeholder="FK 开头的订单号" value={orderNo} onChange={(e) => setOrderNo(e.target.value)} style={inputStyle} onKeyDown={(e) => e.key === 'Enter' && handleQuery()} onFocus={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.boxShadow = '0 0 0 2px rgba(0,122,255,0.3)'; }} onBlur={(e) => { e.currentTarget.style.background = appleGray; e.currentTarget.style.boxShadow = 'none'; }} />
+            <input type="text" placeholder="FK 开头的订单号" value={orderNo} onChange={(e) => setOrderNo(e.target.value)} style={inputStyle} onKeyDown={(e) => e.key === 'Enter' && handleQuery()} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
           </div>
 
           <div style={{ marginBottom: 20 }}>
             <label style={{ display: 'block', fontSize: 12, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>验证码</label>
             <div style={{ display: 'flex', gap: 10 }}>
-              <input type="text" placeholder="请输入计算结果" value={captchaInput} onChange={(e) => setCaptchaInput(e.target.value)} style={{ ...inputStyle, flex: 1 }} onKeyDown={(e) => e.key === 'Enter' && handleQuery()} onFocus={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.boxShadow = '0 0 0 2px rgba(0,122,255,0.3)'; }} onBlur={(e) => { e.currentTarget.style.background = appleGray; e.currentTarget.style.boxShadow = 'none'; }} />
-              <div onClick={refreshCaptcha} style={{ minWidth: 96, height: 44, background: 'linear-gradient(135deg,#F2F2F7,#E8E8ED)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, fontWeight: 700, color: appleBlue, cursor: 'pointer', letterSpacing: 1, userSelect: 'none', transition: '.2s' }} title="点击刷新">{captcha.a} + {captcha.b} = ?</div>
+              <input type="text" placeholder="请输入计算结果" value={captchaInput} onChange={(e) => setCaptchaInput(e.target.value)} style={{ ...inputStyle, flex: 1 }} onKeyDown={(e) => e.key === 'Enter' && handleQuery()} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
+              <div onClick={refreshCaptcha} style={{ minWidth: 88, height: 38, background: 'linear-gradient(135deg,#F2F2F7,#E8E8ED)', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, color: appleBlue, cursor: 'pointer', letterSpacing: 1, userSelect: 'none', transition: '.2s' }} title="点击刷新">{captcha.a} + {captcha.b} = ?</div>
             </div>
           </div>
 
           {err && <div style={{ color: '#FF3B30', fontSize: 12, marginBottom: 12, textAlign: 'center' }}>{err}</div>}
 
-          <button onClick={handleQuery} disabled={loading} style={{ width: '100%', padding: '13px', borderRadius: 14, border: 'none', background: appleBlue, color: '#fff', fontSize: 15, fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.6 : 1, boxShadow: '0 4px 14px rgba(0,122,255,0.3)', letterSpacing: -0.2, transition: '.2s' }} onMouseEnter={(e) => { if (!loading) e.currentTarget.style.transform = 'scale(1.01)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}>
+          <button onClick={handleQuery} disabled={loading} style={{ width: '100%', padding: '11px', borderRadius: 12, border: 'none', background: appleBlue, color: '#fff', fontSize: 14, fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.6 : 1, boxShadow: '0 3px 10px rgba(0,122,255,0.25)', letterSpacing: -0.2, transition: '.2s' }} onMouseEnter={(e) => { if (!loading) e.currentTarget.style.transform = 'scale(1.01)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}>
             {loading ? '查询中...' : '立即查询'}
           </button>
         </div>
