@@ -1,53 +1,63 @@
-"use client";
-import { useEffect, useState } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { fetchFAQs, type FAQ } from "@/lib/api";
+'use client';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default function FAQPage() {
-  const [faqs, setFaqs] = useState<FAQ[]>([]);
+const API_BASE = 'https://kk.qqqi.top/api';
+
+interface Faq { id: number; question: string; answer: string; sort: number; }
+
+export default function FaqPage() {
+  const router = useRouter();
+  const [faqs, setFaqs] = useState<Faq[]>([]);
   const [openId, setOpenId] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchFAQs()
-      .then((list) => setFaqs(list))
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    fetch(`${API_BASE}/faq.php`).then(r => r.json()).then(d => {
+      if (d.code === 0 && d.data) setFaqs(d.data);
+    }).catch(() => {});
   }, []);
 
-  const defaultFaqs: FAQ[] = [
-    { id: 1, question: "付款后多久能收到卡密？", answer: "全自动发货，付款成功后系统立即自动发卡，页面会自动跳转发卡结果。如未自动跳转，可在「查卡密」页面输入订单号查询。" },
-    { id: 2, question: "卡密怎么使用？", answer: "每个商品详情页都有使用教程，购买成功后也会在发卡页面显示兑换链接和使用说明，请仔细阅读。" },
-    { id: 3, question: "买错了可以退款吗？", answer: "虚拟商品一经售出概不退换，请在购买前仔细阅读商品说明和购买须知。如遇卡密无效等问题，请联系客服处理。" },
-    { id: 4, question: "订单号和查询密码忘了怎么办？", answer: "订单号和查询密码在下单时生成并显示，请务必保存。如遗忘，可在「我的订单」中用下单时的联系方式+任意一笔订单的查询密码查看全部订单。" },
+  const defaultFaqs: Faq[] = [
+    { id: 1, question: '付款后多久能收到卡密？', answer: '支付成功后系统自动发货，通常1-5秒内即可在订单查询页面看到卡密。如遇网络延迟请稍候刷新。', sort: 1 },
+    { id: 2, question: '卡密怎么使用？', answer: '每个商品都有对应的使用说明，支付成功后会在卡密下方显示兑换教程和使用链接，请按照说明操作。', sort: 2 },
+    { id: 3, question: '买错了可以退款吗？', answer: '虚拟商品一经售出概不退款。请在购买前仔细阅读商品描述和购买须知，确认无误后再下单。', sort: 3 },
+    { id: 4, question: '订单号忘了怎么办？', answer: '可通过订单查询页面，输入下单时填写的联系方式查询历史订单。建议保存好订单号以便后续查询。', sort: 4 },
   ];
 
   const list = faqs.length > 0 ? faqs : defaultFaqs;
 
   return (
-    <>
-      <Navbar siteName="发卡商城" />
-      <main className="container" style={{ maxWidth: 700 }}>
-        <h2 style={{ fontSize: 22, marginBottom: 20 }}>❓ 常见问题</h2>
-        {loading ? <div className="spinner" /> : list.map((f) => (
-          <div key={f.id} style={{ background: "#fff", border: "1px solid #e8eaed", borderRadius: 10, marginBottom: 10, overflow: "hidden" }}>
-            <div
-              style={{ padding: "14px 18px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", fontWeight: 500 }}
-              onClick={() => setOpenId(openId === f.id ? null : f.id)}
-            >
-              <span>{f.question}</span>
-              <span style={{ color: "#9ca3af", transition: ".2s", transform: openId === f.id ? "rotate(180deg)" : "none" }}>▼</span>
-            </div>
-            {openId === f.id && (
-              <div style={{ padding: "0 18px 16px", fontSize: 14, color: "#4b5563", lineHeight: 1.8, borderTop: "1px solid #f3f4f6", paddingTop: 12 }}>
-                {f.answer}
-              </div>
-            )}
+    <div style={{ minHeight: '100vh', background: '#ffffff' }}>
+      <nav style={{ background: '#fff', borderBottom: '1px solid #eef0f3', position: 'sticky', top: 0, zIndex: 100 }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 20px', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }} onClick={() => router.push('/')}>
+            <div style={{ width: 32, height: 32, background: 'linear-gradient(135deg,#2563eb,#7c3aed)', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 14 }}>甜</div>
+            <span style={{ fontSize: 16, fontWeight: 700, color: '#111827' }}>甜甜发卡</span>
           </div>
-        ))}
-      </main>
-      <Footer siteName="发卡商城" />
-    </>
+          <button onClick={() => router.push('/')} style={{ padding: '7px 16px', borderRadius: 8, background: '#f3f4f6', color: '#374151', border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>返回首页</button>
+        </div>
+      </nav>
+
+      <div style={{ maxWidth: 640, margin: '0 auto', padding: '24px 16px' }}>
+        <h2 style={{ fontSize: 20, fontWeight: 700, margin: '0 0 16px', textAlign: 'center' }}>❓ 常见问题</h2>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {list.map((f) => (
+            <div key={f.id} style={{ background: '#fff', border: '1px solid #eef0f3', borderRadius: 10, overflow: 'hidden' }}>
+              <div onClick={() => setOpenId(openId === f.id ? null : f.id)} style={{ padding: '12px 16px', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 14, fontWeight: 500, color: '#111827' }}>
+                <span>{f.question}</span>
+                <span style={{ color: '#9ca3af', transition: '.2s', transform: openId === f.id ? 'rotate(180deg)' : 'none' }}>▼</span>
+              </div>
+              {openId === f.id && (
+                <div style={{ padding: '0 16px 14px', fontSize: 13, color: '#6b7280', lineHeight: 1.7, borderTop: '1px solid #f3f4f6', paddingTop: 10 }}>{f.answer}</div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <footer style={{ background: '#fff', borderTop: '1px solid #eef0f3', marginTop: 40, padding: '24px 0', textAlign: 'center' }}>
+        <div style={{ fontSize: 13, color: '#9ca3af' }}>© {new Date().getFullYear()} 甜甜发卡 · 虚拟商品自动发卡平台</div>
+      </footer>
+    </div>
   );
 }
