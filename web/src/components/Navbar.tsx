@@ -1,50 +1,25 @@
-"use client";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+'use client';
+import React from 'react';
 
-export default function Navbar({ siteName = "发卡商城" }: { siteName?: string }) {
-  const pathname = usePathname();
-  const router = useRouter();
-  const [kw, setKw] = useState("");
-
-  const links = [
-    { href: "/", label: "首页" },
-    { href: "/query", label: "查卡密" },
-    { href: "/faq", label: "常见问题" },
-    { href: "/after-sale", label: "售后反馈" },
-  ];
-
-  return (
-    <header className="nav">
-      <div className="nav-inner">
-        <Link href="/" className="nav-logo">{siteName}</Link>
-        <nav className="nav-links">
-          {links.map((l) => (
-            <Link key={l.href} href={l.href} className={pathname === l.href ? "active" : ""}>
-              {l.label}
-            </Link>
-          ))}
-        </nav>
-        <div className="nav-search">
-          <span style={{ fontSize: 14, color: "#9ca3af" }}>🔍</span>
-          <input
-            placeholder="搜索商品..."
-            value={kw}
-            onChange={(e) => setKw(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && kw.trim()) {
-                router.push(`/?kw=${encodeURIComponent(kw.trim())}`);
-              }
-            }}
-          />
-        </div>
-        <div className="nav-actions">
-          <Link href="/query" className="btn btn-outline" style={{ padding: "7px 14px", fontSize: 13 }}>
-            我的订单
-          </Link>
-        </div>
-      </div>
-    </header>
-  );
+interface NavbarProps {
+  buttonText: string;
+  buttonHref: string;
+  isMobile: boolean;
 }
+
+const Navbar = React.memo(function Navbar({ buttonText, buttonHref, isMobile }: NavbarProps) {
+  const go = () => { window.location.href = buttonHref; };
+  return (
+    <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, background: 'rgba(255,255,255,0.8)', backdropFilter: 'saturate(180%) blur(20px)', WebkitBackdropFilter: 'saturate(180%) blur(20px)', borderBottom: '1px solid rgba(0,0,0,0.06)', transform: 'translateZ(0)', contain: 'strict' }}>
+      <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '0 16px' : '0 22px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', height: '100%' }} onClick={go}>
+          <img src="/logo.png" alt="logo" style={{ width: 28, height: 28, borderRadius: 7, objectFit: 'cover', display: 'block', flexShrink: 0 }} />
+          <span style={{ fontSize: 17, fontWeight: 600, lineHeight: '52px', height: 52, display: 'inline-flex', alignItems: 'center', margin: 0, padding: 0, whiteSpace: 'nowrap' }}>甜甜发卡</span>
+        </div>
+        <button onClick={go} style={{ width: 80, height: 32, padding: 0, borderRadius: 980, background: '#007AFF', color: '#fff', border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{buttonText}</button>
+      </div>
+    </nav>
+  );
+});
+
+export default Navbar;

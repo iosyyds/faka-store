@@ -134,15 +134,7 @@ export default function QueryPage() {
       )}
 
       {/* 导航栏 - 与首页完全一致 */}
-      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, background: 'rgba(255,255,255,0.8)', backdropFilter: 'saturate(180%) blur(20px)', WebkitBackdropFilter: 'saturate(180%) blur(20px)', borderBottom: '1px solid rgba(0,0,0,0.06)', transform: 'translateZ(0)' }}>
-        <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '0 16px' : '0 22px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', height: '100%' }} onClick={() => { window.location.href = '/'; }}>
-            <img src="/logo.png" alt="logo" style={{ width: 28, height: 28, borderRadius: 7, objectFit: 'cover', display: 'block', flexShrink: 0 }} />
-            <span style={{ fontSize: 17, fontWeight: 600, lineHeight: '52px', height: 52, display: 'inline-flex', alignItems: 'center', margin: 0, padding: 0, whiteSpace: 'nowrap' }}>{site.site_name || '甜甜发卡'}</span>
-          </div>
-          <button onClick={() => { window.location.href = '/'; }} style={{ width: 80, height: 32, padding: 0, borderRadius: 980, background: '#007AFF', color: '#fff', border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>返回首页</button>
-        </div>
-      </nav>
+      <Navbar buttonText="返回首页" buttonHref="/" isMobile={isMobile} />
 
       {/* 主内容 */}
       <div style={{ maxWidth: 440, margin: '0 auto', padding: isMobile ? '84px 16px 40px' : '100px 22px 64px' }}>
