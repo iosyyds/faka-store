@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect, useCallback, useRef } from 'react';
+import Navbar from '@/components/Navbar';
 
 const API_BASE = 'https://kk.qqqi.top/api';
 

@@ -1,5 +1,6 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
+import Navbar from '@/components/Navbar';
 
 const API_BASE = 'https://kk.qqqi.top/api';
 const appleBlue = '#007AFF';
