@@ -138,7 +138,7 @@ export default function QueryPage() {
         <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '0 16px' : '0 22px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', height: '100%' }} onClick={() => { window.location.href = '/'; }}>
             <img src="/logo.png" alt="logo" style={{ width: 28, height: 28, borderRadius: 7, objectFit: 'cover', display: 'block', flexShrink: 0 }} />
-            <span style={{ fontSize: 17, fontWeight: 600, lineHeight: '20px', display: 'flex', alignItems: 'center', height: '100%' }}>{site.site_name || '甜甜发卡'}</span>
+            <span style={{ fontSize: 17, fontWeight: 600, lineHeight: '20px', display: 'flex', alignItems: 'center' }}>{site.site_name || '甜甜发卡'}</span>
           </div>
           <button onClick={() => { window.location.href = '/'; }} style={{ width: 80, height: 32, padding: 0, borderRadius: 980, background: '#007AFF', color: '#fff', border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>返回首页</button>
         </div>
