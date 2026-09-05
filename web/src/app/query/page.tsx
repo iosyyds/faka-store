@@ -120,11 +120,11 @@ export default function QueryPage() {
           <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: 14, textAlign: 'center', lineHeight: 1.6, maxWidth: 280 }}>点击右上角「···」<br/>选择「在浏览器打开」即可正常访问</div>
         </div>
       )}
-      <nav style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(255,255,255,0.72)', backdropFilter: 'saturate(180%) blur(20px)', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
+      <nav style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(255,255,255,0.72)', backdropFilter: 'saturate(180%) blur(20px)', WebkitBackdropFilter: 'saturate(180%) blur(20px)', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
         <div style={{ maxWidth: 1024, margin: '0 auto', padding: '0 22px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }} onClick={() => router.push('/')}>
             <img src="/logo.png" alt="logo" style={{ width: 30, height: 30, borderRadius: 8, objectFit: 'cover', display: 'block' }} />
-            <span style={{ fontSize: 17, fontWeight: 600, letterSpacing: -0.3 }}>{site.site_name || '甜甜发卡'}</span>
+            <span style={{ fontSize: 17, fontWeight: 600, letterSpacing: -0.3, lineHeight: 1, display: 'inline-block' }}>{site.site_name || '甜甜发卡'}</span>
           </div>
           <button onClick={() => router.push('/')} style={{ padding: '7px 16px', borderRadius: 20, background: appleGray, color: appleText, border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>返回首页</button>
         </div>
