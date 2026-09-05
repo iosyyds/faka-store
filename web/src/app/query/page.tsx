@@ -54,36 +54,22 @@ export default function QueryPage() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     const w = canvas.width, h = canvas.height;
-    ctx.fillStyle = '#FAFAFA';
+    ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, w, h);
-    ctx.strokeStyle = '#E5E5EA';
-    ctx.lineWidth = 0.5;
-    for (let i = 0; i < w; i += 15) {
-      ctx.beginPath();
-      ctx.moveTo(i, 0);
-      ctx.lineTo(i, h);
-      ctx.stroke();
-    }
-    for (let i = 0; i < h; i += 15) {
-      ctx.beginPath();
-      ctx.moveTo(0, i);
-      ctx.lineTo(w, i);
-      ctx.stroke();
-    }
-    const colors = ['#1d1d1f', '#007AFF', '#5856D6', '#FF2D55', '#34C759'];
+    const blues = ['#007AFF', '#5856D6', '#00C7BE', '#34C759'];
     for (let i = 0; i < captchaText.length; i++) {
       ctx.save();
-      ctx.font = `bold 20px -apple-system, "SF Pro Display", sans-serif`;
-      ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
-      const x = 10 + i * 20;
-      const y = 26 + Math.random() * 4 - 2;
+      ctx.font = `bold 22px -apple-system, "SF Pro Display", sans-serif`;
+      ctx.fillStyle = blues[Math.floor(Math.random() * blues.length)];
+      const x = 12 + i * 20;
+      const y = 27 + Math.random() * 4 - 2;
       ctx.translate(x, y);
-      ctx.rotate((Math.random() - 0.5) * 0.25);
+      ctx.rotate((Math.random() - 0.5) * 0.2);
       ctx.fillText(captchaText[i], 0, 0);
       ctx.restore();
     }
-    for (let i = 0; i < 20; i++) {
-      ctx.fillStyle = `rgba(0,0,0,${Math.random() * 0.15})`;
+    for (let i = 0; i < 15; i++) {
+      ctx.fillStyle = `rgba(0,122,255,${Math.random() * 0.1})`;
       ctx.beginPath();
       ctx.arc(Math.random() * w, Math.random() * h, 1, 0, Math.PI * 2);
       ctx.fill();
@@ -151,8 +137,8 @@ export default function QueryPage() {
       <nav style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(255,255,255,0.8)', backdropFilter: 'saturate(180%) blur(20px)', WebkitBackdropFilter: 'saturate(180%) blur(20px)', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
         <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '0 16px' : '0 22px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', height: '100%' }} onClick={() => { window.location.href = '/'; }}>
-            <img src="/logo.png" alt="logo" style={{ width: 28, height: 28, borderRadius: 7, objectFit: 'cover', display: 'block' }} />
-            <span style={{ fontSize: 17, fontWeight: 600, lineHeight: 1, display: 'flex', alignItems: 'center' }}>{site.site_name || '甜甜发卡'}</span>
+            <img src="/logo.png" alt="logo" style={{ width: 28, height: 28, borderRadius: 7, objectFit: 'cover', display: 'block', flexShrink: 0 }} />
+            <span style={{ fontSize: 17, fontWeight: 600, lineHeight: 1, height: 20, display: 'flex', alignItems: 'center' }}>{site.site_name || '甜甜发卡'}</span>
           </div>
           <button onClick={() => { window.location.href = '/'; }} style={{ padding: '7px 16px', borderRadius: 980, background: '#007AFF', color: '#fff', border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>返回首页</button>
         </div>
