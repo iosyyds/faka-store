@@ -185,9 +185,9 @@ export default function Home() {
         {Array.isArray(categories) && categories.length > 0 && (
           <div style={{ position: 'relative', marginBottom: isMobile ? 16 : 24 }}>
             <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 4, paddingRight: isMobile ? 30 : 0, scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-              <span onClick={() => setActiveCategory('all')} style={{ padding: '6px 14px', borderRadius: 980, fontSize: 13, fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === 'all' ? '#1d1d1f' : '#F5F5F7', color: activeCategory === 'all' ? '#fff' : '#1d1d1f', transition: 'all 0.2s ease', flexShrink: 0 }}>全部</span>
+              <span onClick={() => setActiveCategory('all')} style={{ padding: '7px 16px', borderRadius: 980, fontSize: 13, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === 'all' ? '#007AFF' : '#F5F5F7', color: activeCategory === 'all' ? '#fff' : '#1d1d1f', transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)', flexShrink: 0, boxShadow: activeCategory === 'all' ? '0 4px 12px rgba(0,122,255,0.3)' : 'none', transform: activeCategory === 'all' ? 'scale(1.02)' : 'scale(1)' }}>全部</span>
               {categories.map((cat) => (
-                <span key={cat.id} onClick={() => setActiveCategory(cat.id)} style={{ padding: '6px 14px', borderRadius: 980, fontSize: 13, fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === cat.id ? '#1d1d1f' : '#F5F5F7', color: activeCategory === cat.id ? '#fff' : '#1d1d1f', transition: 'all 0.2s ease', flexShrink: 0 }}>
+                <span key={cat.id} onClick={() => setActiveCategory(cat.id)} style={{ padding: '7px 16px', borderRadius: 980, fontSize: 13, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === cat.id ? '#007AFF' : '#F5F5F7', color: activeCategory === cat.id ? '#fff' : '#1d1d1f', transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)', flexShrink: 0, boxShadow: activeCategory === cat.id ? '0 4px 12px rgba(0,122,255,0.3)' : 'none', transform: activeCategory === cat.id ? 'scale(1.02)' : 'scale(1)' }}>
                   {cat.name}
                 </span>
               ))}
@@ -224,7 +224,7 @@ export default function Home() {
                   {p.category_name && <span style={{ padding: '2px 8px', borderRadius: 980, background: '#F2F2F7', color: '#86868B', fontSize: 10, fontWeight: 500 }}>{p.category_name}</span>}
                 </div>
                 <div style={{ fontSize: isMobile ? 14 : 15, fontWeight: 600, marginBottom: isMobile ? 2 : 3, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: isMobile ? 1 : 2, WebkitBoxOrient: 'vertical', lineHeight: 1.4, color: p.stock === 0 ? '#86868B' : '#1d1d1f' }}>{p.name}</div>
-                {!isMobile && p.description && <div style={{ fontSize: 12, color: '#86868B', marginBottom: 4, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', lineHeight: 1.4 }}>{p.description}</div>}
+                {p.description && <div style={{ fontSize: isMobile ? 11 : 12, color: '#86868B', marginBottom: isMobile ? 3 : 4, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: isMobile ? 1 : 1, WebkitBoxOrient: 'vertical', lineHeight: 1.4 }}>{p.description}</div>}
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
                   <span style={{ fontSize: isMobile ? 17 : 22, fontWeight: 700, color: '#FF3B30' }}><span style={{ fontSize: isMobile ? 10 : 13, fontWeight: 600 }}>¥</span>{Number(p.price).toFixed(2)}</span>
                   {p.original_price && Number(p.original_price) > Number(p.price) && <span style={{ fontSize: isMobile ? 10 : 12, color: '#86868B', textDecoration: 'line-through' }}>¥{Number(p.original_price).toFixed(2)}</span>}
@@ -237,9 +237,12 @@ export default function Home() {
                 {isMobile && <div style={{ fontSize: 10, color: '#86868B', marginTop: 2 }}>已售{p.sales || 0} · {p.stock > 0 ? `剩${p.stock}件` : '无货'}</div>}
               </div>
               {isMobile ? (
-                <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>
-                  <span style={{ padding: '6px 14px', borderRadius: 980, background: p.stock > 0 ? '#007AFF' : '#F2F2F7', color: p.stock > 0 ? '#fff' : '#86868B', fontSize: 12, fontWeight: 600, whiteSpace: 'nowrap' }}>{p.stock > 0 ? '购买' : '缺货'}</span>
-                  <span style={{ fontSize: 10, color: p.stock > 0 ? '#34C759' : '#FF3B30', fontWeight: 500 }}>{p.stock > 0 ? `剩${p.stock}件` : '无货'}</span>
+                <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6, justifyContent: 'center' }}>
+                  <span style={{ padding: '7px 18px', borderRadius: 980, background: p.stock > 0 ? 'linear-gradient(135deg, #007AFF, #5856D6)' : '#F2F2F7', color: p.stock > 0 ? '#fff' : '#86868B', fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap', boxShadow: p.stock > 0 ? '0 4px 10px rgba(0,122,255,0.25)' : 'none' }}>{p.stock > 0 ? '购买' : '缺货'}</span>
+                  <span style={{ fontSize: 10, color: p.stock > 0 ? '#34C759' : '#FF3B30', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                    {p.stock > 0 ? `剩${p.stock}件` : '无货'}
+                  </span>
                 </div>
               ) : (
                 <div style={{ marginTop: 8, display: 'flex', justifyContent: 'flex-end' }}>
