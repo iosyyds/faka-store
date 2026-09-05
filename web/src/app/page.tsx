@@ -163,28 +163,28 @@ export default function Home() {
         ) : (
           <div className="product-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 20 }}>
             {filteredProducts.map((p) => (
-              <div key={p.id} onClick={() => openBuy(p)} style={{ background: '#fff', borderRadius: 18, overflow: 'hidden', cursor: 'pointer', transition: 'all .3s cubic-bezier(0.25,0.1,0.25,1)', boxShadow: '0 2px 12px rgba(0,0,0,0.04)', border: '1px solid rgba(0,0,0,0.04)' }}
-                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px) scale(1.01)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.1)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.04)'; }}>
-                {/* 图片区 */}
-                <div style={{ height: 180, background: p.image ? '#fafafa' : 'linear-gradient(135deg,#F2F2F7,#E8E8ED)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-                  {p.image ? <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <span style={{ fontSize: 44, opacity: 0.6 }}>🎁</span>}
-                  <div style={{ position: 'absolute', top: 10, left: 10, display: 'flex', gap: 5 }}>
-                    <span style={{ padding: '3px 9px', background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(10px)', borderRadius: 12, fontSize: 10, fontWeight: 600, color: '#34C759', letterSpacing: 0.2 }}>秒发</span>
-                    {p.is_hot ? <span style={{ padding: '3px 9px', background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(10px)', borderRadius: 12, fontSize: 10, fontWeight: 600, color: '#FF3B30' }}>热门</span> : null}
-                  </div>
-                  {p.stock === 0 && <div style={{ position: 'absolute', inset: 0, background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ padding: '6px 18px', background: '#1D1D1F', color: '#fff', borderRadius: 20, fontSize: 12, fontWeight: 500 }}>已售罄</span></div>}
-                </div>
+              <div key={p.id} onClick={() => openBuy(p)} style={{ background: '#fff', borderRadius: 16, overflow: 'hidden', cursor: 'pointer', transition: 'all .3s cubic-bezier(0.25,0.1,0.25,1)', boxShadow: '0 2px 12px rgba(0,0,0,0.04)', border: '1px solid rgba(0,0,0,0.04)', position: 'relative' }}
+                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.08)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.04)'; }}>
                 {/* 内容区 */}
-                <div style={{ padding: '14px 16px 16px' }}>
-                  <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 6, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', minHeight: 38, lineHeight: 1.35, letterSpacing: -0.2 }}>{p.name}</div>
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 5, marginBottom: 10 }}>
-                    <span style={{ fontSize: 19, fontWeight: 700, color: '#FF3B30', letterSpacing: -0.5 }}><span style={{ fontSize: 12, fontWeight: 600 }}>¥</span>{Number(p.price).toFixed(2)}</span>
+                <div style={{ padding: '16px 18px' }}>
+                  {/* 标签行 */}
+                  <div style={{ display: 'flex', gap: 6, marginBottom: 8 }}>
+                    <span style={{ padding: '3px 8px', background: 'rgba(52,199,89,0.1)', borderRadius: 6, fontSize: 10, fontWeight: 600, color: '#34C759', letterSpacing: 0.2 }}>秒发</span>
+                    {p.is_hot ? <span style={{ padding: '3px 8px', background: 'rgba(255,59,48,0.1)', borderRadius: 6, fontSize: 10, fontWeight: 600, color: '#FF3B30' }}>热门</span> : null}
+                    {p.stock === 0 && <span style={{ padding: '3px 8px', background: 'rgba(0,0,0,0.06)', borderRadius: 6, fontSize: 10, fontWeight: 600, color: appleSubtext }}>已售罄</span>}
+                  </div>
+                  {/* 商品名 */}
+                  <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 10, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', minHeight: 42, lineHeight: 1.4, letterSpacing: -0.2, color: p.stock === 0 ? appleSubtext : appleText }}>{p.name}</div>
+                  {/* 价格行 */}
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 12 }}>
+                    <span style={{ fontSize: 20, fontWeight: 700, color: '#FF3B30', letterSpacing: -0.5 }}><span style={{ fontSize: 12, fontWeight: 600 }}>¥</span>{Number(p.price).toFixed(2)}</span>
                     {p.original_price && Number(p.original_price) > Number(p.price) ? <span style={{ fontSize: 11, color: appleSubtext, textDecoration: 'line-through' }}>¥{Number(p.original_price).toFixed(2)}</span> : null}
                   </div>
+                  {/* 底部行 */}
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ fontSize: 11, color: appleSubtext }}>已售 {p.sales || 0}</span>
-                    <span style={{ padding: '7px 16px', borderRadius: 14, background: p.stock > 0 ? appleBlue : appleGray, color: p.stock > 0 ? '#fff' : appleSubtext, fontSize: 12, fontWeight: 500, transition: '.2s' }}>{p.stock > 0 ? '立即购买' : '缺货'}</span>
+                    <span style={{ fontSize: 11, color: appleSubtext }}>已售 {p.sales || 0} · 库存 {p.stock}</span>
+                    <span style={{ padding: '7px 18px', borderRadius: 12, background: p.stock > 0 ? appleBlue : appleGray, color: p.stock > 0 ? '#fff' : appleSubtext, fontSize: 12, fontWeight: 600, transition: '.2s' }}>{p.stock > 0 ? '立即购买' : '缺货'}</span>
                   </div>
                 </div>
               </div>
