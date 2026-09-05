@@ -22,6 +22,11 @@ export const metadata: Metadata = {
     url: "https://qqqi.top",
   },
   robots: { index: true, follow: true },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
 };
 
 export const viewport = {

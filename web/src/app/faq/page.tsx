@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 
 const API_BASE = 'https://kk.qqqi.top/api';
 interface Faq { id: number; question: string; answer: string; sort: number; }
+interface SiteInfo { site_name: string; site_logo: string; }
 const appleBlue = '#007AFF';
 const appleGray = '#F2F2F7';
 const appleText = '#1D1D1F';
@@ -13,7 +14,11 @@ export default function FaqPage() {
   const router = useRouter();
   const [faqs, setFaqs] = useState<Faq[]>([]);
   const [openId, setOpenId] = useState<number | null>(null);
-  useEffect(() => { fetch(`${API_BASE}/faq.php`).then(r => r.json()).then(d => { if (d.code === 0 && d.data) setFaqs(d.data); }).catch(() => {}); }, []);
+  const [site, setSite] = useState<SiteInfo>({ site_name: '甜甜发卡', site_logo: '' });
+  useEffect(() => {
+    fetch(`${API_BASE}/faq.php`).then(r => r.json()).then(d => { if (d.code === 0 && d.data) setFaqs(d.data); }).catch(() => {});
+    fetch(`${API_BASE}/site.php`, { cache: 'no-store' }).then(r => r.json()).then(d => { if (d.data) setSite(d.data); }).catch(() => {});
+  }, []);
   const defaultFaqs: Faq[] = [
     { id: 1, question: '付款后多久能收到卡密？', answer: '支付成功后系统自动发货，通常1-5秒内即可在订单查询页面看到卡密。', sort: 1 },
     { id: 2, question: '卡密怎么使用？', answer: '支付成功后会在卡密下方显示兑换教程和使用链接，请按照说明操作。', sort: 2 },
@@ -26,8 +31,8 @@ export default function FaqPage() {
       <nav style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(255,255,255,0.72)', backdropFilter: 'saturate(180%) blur(20px)', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
         <div style={{ maxWidth: 1024, margin: '0 auto', padding: '0 22px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }} onClick={() => router.push('/')}>
-            <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#007AFF,#5856D6)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 13 }}>甜</div>
-            <span style={{ fontSize: 17, fontWeight: 600, letterSpacing: -0.3 }}>甜甜发卡</span>
+            <img src="/logo.png" alt="logo" style={{ width: 30, height: 30, borderRadius: 8, objectFit: 'cover', display: 'block' }} />
+            <span style={{ fontSize: 17, fontWeight: 600, letterSpacing: -0.3 }}>{site.site_name || '甜甜发卡'}</span>
           </div>
           <button onClick={() => router.push('/')} style={{ padding: '7px 16px', borderRadius: 20, background: appleGray, color: appleText, border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>返回首页</button>
         </div>

@@ -126,11 +126,7 @@ export default function Home() {
       <nav style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(255,255,255,0.72)', backdropFilter: 'saturate(180%) blur(20px)', WebkitBackdropFilter: 'saturate(180%) blur(20px)', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
         <div style={{ maxWidth: 1024, margin: '0 auto', padding: '0 22px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }} onClick={() => router.push('/')}>
-            {site.site_logo ? (
-              <img src={site.site_logo} alt="logo" style={{ width: 28, height: 28, borderRadius: 8, objectFit: 'cover', display: 'block' }} />
-            ) : (
-              <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#007AFF,#5856D6)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 13, letterSpacing: -0.5 }}>{site.site_name?.[0] || '甜'}</div>
-            )}
+            <img src="/logo.png" alt="logo" style={{ width: 30, height: 30, borderRadius: 8, objectFit: 'cover', display: 'block' }} />
             <span style={{ fontSize: 17, fontWeight: 600, letterSpacing: -0.3 }}>{site.site_name || '甜甜发卡'}</span>
           </div>
           <button onClick={() => router.push('/query')} style={{ padding: '7px 18px', borderRadius: 20, background: appleBlue, color: '#fff', border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer', letterSpacing: -0.1, transition: 'all .2s', boxShadow: '0 2px 8px rgba(0,122,255,0.25)' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.04)'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(0,122,255,0.35)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,122,255,0.25)'; }}>订单查询</button>
@@ -204,7 +200,7 @@ export default function Home() {
             {/* 品牌 */}
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
-                <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#007AFF,#5856D6)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 13 }}>{site.site_name?.[0] || '甜'}</div>
+                <img src="/logo.png" alt="logo" style={{ width: 28, height: 28, borderRadius: 8, objectFit: 'cover', display: 'block' }} />
                 <span style={{ fontSize: 16, fontWeight: 600, letterSpacing: -0.3 }}>{site.site_name || '甜甜发卡'}</span>
               </div>
               <p style={{ fontSize: 12, color: appleSubtext, lineHeight: 1.7, maxWidth: 260, margin: 0 }}>{site.footer_desc || '专业的虚拟商品自动发卡平台，支付宝安全支付，付款后自动秒发卡密，24小时无人值守。'}</p>
