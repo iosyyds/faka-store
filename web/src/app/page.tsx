@@ -162,7 +162,7 @@ export default function Home() {
         <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '0 16px' : '0 22px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', height: '100%' }} onClick={goHome}>
             <img src="/logo.png" alt="logo" style={{ width: 28, height: 28, borderRadius: 7, objectFit: 'cover', display: 'block', flexShrink: 0 }} />
-            <span style={{ fontSize: 17, fontWeight: 600, lineHeight: 1, height: 20, display: 'flex', alignItems: 'center' }}>{site.site_name || '甜甜发卡'}</span>
+            <span style={{ fontSize: 17, fontWeight: 600, lineHeight: '20px', display: 'flex', alignItems: 'center', height: '100%' }}>{site.site_name || '甜甜发卡'}</span>
           </div>
           <button onClick={goQuery} style={{ width: 80, height: 32, padding: 0, borderRadius: 980, background: '#007AFF', color: '#fff', border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>订单查询</button>
         </div>
@@ -187,8 +187,7 @@ export default function Home() {
             <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 4, paddingRight: isMobile ? 30 : 0, scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               <span onClick={() => setActiveCategory('all')} style={{ padding: '6px 14px', borderRadius: 980, fontSize: 13, fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === 'all' ? '#1d1d1f' : '#F5F5F7', color: activeCategory === 'all' ? '#fff' : '#1d1d1f', transition: 'all 0.2s ease', flexShrink: 0 }}>全部</span>
               {categories.map((cat) => (
-                <span key={cat.id} onClick={() => setActiveCategory(cat.id)} style={{ padding: '6px 14px', borderRadius: 980, fontSize: 13, fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === cat.id ? '#1d1d1f' : '#F5F5F7', color: activeCategory === cat.id ? '#fff' : '#1d1d1f', transition: 'all 0.2s ease', flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: 5 }}>
-                  {cat.icon && <span style={{ fontSize: 14 }}>{cat.icon}</span>}
+                <span key={cat.id} onClick={() => setActiveCategory(cat.id)} style={{ padding: '6px 14px', borderRadius: 980, fontSize: 13, fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === cat.id ? '#1d1d1f' : '#F5F5F7', color: activeCategory === cat.id ? '#fff' : '#1d1d1f', transition: 'all 0.2s ease', flexShrink: 0 }}>
                   {cat.name}
                 </span>
               ))}
@@ -298,11 +297,11 @@ export default function Home() {
           <div style={{ background: '#fff', borderRadius: 20, width: '100%', maxWidth: 400, maxHeight: '88vh', overflowY: 'auto', animation: 'scaleIn 0.25s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: '0 20px 60px rgba(0,0,0,0.15)' }}>
             <div style={{ padding: '18px 20px 14px', borderBottom: '1px solid #F2F2F7', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, background: '#fff', zIndex: 1 }}>
               <div style={{ fontSize: 17, fontWeight: 600 }}>{orderResult ? '订单详情' : '确认购买'}</div>
-              <span onClick={closeModal} style={{ cursor: 'pointer', color: '#86868B', width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', background: '#F2F2F7', transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.background = '#E5E5EA'; }} onMouseLeave={(e) => { e.currentTarget.style.background = '#F2F2F7'; }}>
+              <button onClick={closeModal} style={{ cursor: 'pointer', color: '#86868B', width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', background: '#F2F2F7', border: 'none', padding: 0, transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.background = '#E5E5EA'; }} onMouseLeave={(e) => { e.currentTarget.style.background = '#F2F2F7'; }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
                 </svg>
-              </span>
+              </button>
             </div>
             <div style={{ padding: 20 }}>
               {/* 支付中 */}
