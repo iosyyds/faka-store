@@ -34,7 +34,7 @@ export default function Home() {
     if (!loaded) return;
     fetch(`${API_BASE}/site.php`).then(r => r.json()).then(d => setSite(d?.data && typeof d.data === 'object' ? d.data : d && typeof d === 'object' ? d : {})).catch(() => {});
     fetch(`${API_BASE}/products.php`).then(r => r.json()).then(d => {
-      const list = Array.isArray(d?.data) ? d.data : Array.isArray(d?.products) ? d.products : Array.isArray(d?.list) ? d.list : Array.isArray(d) ? d : [];
+      const list = Array.isArray(d?.data?.list) ? d.data.list : Array.isArray(d?.data) ? d.data : Array.isArray(d?.products) ? d.products : Array.isArray(d?.list) ? d.list : Array.isArray(d) ? d : [];
       setProducts(list);
       const cats = Array.from(new Set(list.map((p: any) => p?.category_name || p?.category).filter(Boolean)));
       setCategories(cats as string[]);
@@ -203,7 +203,13 @@ export default function Home() {
 
         {filteredProducts.length === 0 && (
           <div style={{ textAlign: 'center', padding: '60px 20px', color: '#86868B' }}>
-            <div style={{ fontSize: 48, marginBottom: 12, opacity: 0.3 }}>📦</div>
+            <div style={{ marginBottom: 12, opacity: 0.3 }}>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#86868B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+                <path d="m3.3 7 8.7 5 8.7-5"/>
+                <path d="M12 22V12"/>
+              </svg>
+            </div>
             <div style={{ fontSize: 14 }}>该分类暂无商品</div>
           </div>
         )}
@@ -252,7 +258,11 @@ export default function Home() {
           <div style={{ background: '#fff', borderRadius: 20, width: '100%', maxWidth: 400, maxHeight: '88vh', overflowY: 'auto' }}>
             <div style={{ padding: '18px 20px 14px', borderBottom: '1px solid #F2F2F7', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, background: '#fff', zIndex: 1 }}>
               <div style={{ fontSize: 17, fontWeight: 600 }}>{orderResult ? '订单详情' : '确认购买'}</div>
-              {!polling && <span onClick={closeModal} style={{ cursor: 'pointer', color: '#86868B', fontSize: 18, width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', background: '#F2F2F7' }}>✕</span>}
+              {!polling && <span onClick={closeModal} style={{ cursor: 'pointer', color: '#86868B', width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', background: '#F2F2F7' }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                </svg>
+              </span>}
             </div>
             <div style={{ padding: 20 }}>
               {/* 支付中 */}
@@ -272,7 +282,11 @@ export default function Home() {
               {/* 支付成功 */}
               {Array.isArray(orderResult?.cards) && orderResult.cards.length > 0 && (
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ width: 56, height: 56, margin: '0 auto 14px', borderRadius: '50%', background: '#34C759', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ fontSize: 28, color: '#fff' }}>✓</span></div>
+                  <div style={{ width: 56, height: 56, margin: '0 auto 14px', borderRadius: '50%', background: '#34C759', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 6 9 17l-5-5"/>
+                    </svg>
+                  </div>
                   <div style={{ fontSize: 18, fontWeight: 600, marginBottom: 6 }}>支付成功</div>
                   <div style={{ fontSize: 13, color: '#86868B', marginBottom: 16 }}>卡密已自动发送，请妥善保管</div>
                   <div style={{ textAlign: 'left', marginBottom: 16 }}>
@@ -293,7 +307,12 @@ export default function Home() {
               {!qrCode && !orderResult?.cards && (
                 <>
                   <div style={{ padding: 12, background: '#F5F5F7', borderRadius: 12, marginBottom: 16, display: 'flex', gap: 12, alignItems: 'center' }}>
-                    <div style={{ width: 48, height: 48, borderRadius: 10, background: '#E8E8ED', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 20 }}>🎫</div>
+                    <div style={{ width: 48, height: 48, borderRadius: 10, background: '#E8E8ED', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
+                        <path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/>
+                      </svg>
+                    </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{selectedProduct.name}</div>
                       <div style={{ fontSize: 12, color: '#86868B' }}>库存 {selectedProduct.stock} 件</div>
@@ -329,7 +348,12 @@ export default function Home() {
                     </div>
                   </div>
                   <button onClick={handleBuy} disabled={ordering || selectedProduct.stock <= 0} style={{ width: '100%', padding: '13px', borderRadius: 12, border: 'none', background: '#007AFF', color: '#fff', fontSize: 15, fontWeight: 600, cursor: ordering ? 'not-allowed' : 'pointer', opacity: ordering ? 0.6 : 1 }}>{ordering ? '处理中...' : '立即支付'}</button>
-                  <div style={{ marginTop: 12, padding: '10px 14px', background: 'rgba(52,199,89,0.08)', borderRadius: 10, fontSize: 11, color: '#34C759', display: 'flex', alignItems: 'center', gap: 6 }}>🔒 支付成功后自动发货，卡密可在订单查询中查看</div>
+                  <div style={{ marginTop: 12, padding: '10px 14px', background: 'rgba(52,199,89,0.08)', borderRadius: 10, fontSize: 11, color: '#34C759', display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                    支付成功后自动发货，卡密可在订单查询中查看
+                  </div>
                 </>
               )}
             </div>
