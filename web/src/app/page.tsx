@@ -126,7 +126,7 @@ export default function Home() {
         <div style={{ maxWidth: 1024, margin: '0 auto', padding: '0 22px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }} onClick={() => router.push('/')}>
             {site.site_logo ? (
-              <img src={site.site_logo} alt="logo" style={{ width: 28, height: 28, borderRadius: 8, objectFit: 'cover' }} />
+              <img src={site.site_logo} alt="logo" style={{ width: 28, height: 28, borderRadius: 8, objectFit: 'cover', display: 'block' }} />
             ) : (
               <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#007AFF,#5856D6)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 13, letterSpacing: -0.5 }}>{site.site_name?.[0] || '甜'}</div>
             )}

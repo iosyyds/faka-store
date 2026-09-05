@@ -13,6 +13,10 @@ interface OrderInfo {
   status: number; paid_at: string | null; created_at: string; cards: { content: string }[]; contact: string;
 }
 
+interface SiteInfo {
+  site_name: string; site_logo: string; customer_service: string; qq_group: string; copyright: string;
+}
+
 function genCaptchaText() {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   let s = '';
@@ -23,6 +27,7 @@ function genCaptchaText() {
 export default function QueryPage() {
   const router = useRouter();
   const [isWechat, setIsWechat] = useState(false);
+  const [site, setSite] = useState<SiteInfo>({ site_name: '甜甜发卡', site_logo: '', customer_service: '', qq_group: '', copyright: '' });
   const [orderNo, setOrderNo] = useState('');
   const [captchaInput, setCaptchaInput] = useState('');
   const [captchaText, setCaptchaText] = useState(genCaptchaText());
@@ -33,6 +38,7 @@ export default function QueryPage() {
 
   useEffect(() => {
     setIsWechat(/MicroMessenger/i.test(navigator.userAgent));
+    fetch(`${API_BASE}/site.php`, { cache: 'no-store' }).then(r => r.json()).then(d => { if (d.data) setSite(d.data); }).catch(() => {});
   }, []);
 
   useEffect(() => { drawCaptcha(); }, [captchaText]);
@@ -111,8 +117,12 @@ export default function QueryPage() {
       <nav style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(255,255,255,0.72)', backdropFilter: 'saturate(180%) blur(20px)', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
         <div style={{ maxWidth: 1024, margin: '0 auto', padding: '0 22px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }} onClick={() => router.push('/')}>
-            <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#007AFF,#5856D6)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 13 }}>甜</div>
-            <span style={{ fontSize: 17, fontWeight: 600, letterSpacing: -0.3 }}>甜甜发卡</span>
+            {site.site_logo ? (
+              <img src={site.site_logo} alt="logo" style={{ width: 28, height: 28, borderRadius: 8, objectFit: 'cover', display: 'block' }} />
+            ) : (
+              <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#007AFF,#5856D6)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 13, letterSpacing: -0.5 }}>{site.site_name?.[0] || '甜'}</div>
+            )}
+            <span style={{ fontSize: 17, fontWeight: 600, letterSpacing: -0.3 }}>{site.site_name || '甜甜发卡'}</span>
           </div>
           <button onClick={() => router.push('/')} style={{ padding: '7px 16px', borderRadius: 20, background: appleGray, color: appleText, border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>返回首页</button>
         </div>
