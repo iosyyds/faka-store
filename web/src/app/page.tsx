@@ -251,7 +251,7 @@ export default function Home() {
               </div>
               {isMobile ? (
                 <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center' }}>
-                  <span style={{ padding: '7px 18px', borderRadius: 980, background: p.stock > 0 ? 'linear-gradient(135deg, #007AFF, #5856D6)' : '#F2F2F7', color: p.stock > 0 ? '#fff' : '#86868B', fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap', boxShadow: p.stock > 0 ? '0 4px 10px rgba(0,122,255,0.25)' : 'none' }}>{p.stock > 0 ? '购买' : '缺货'}</span>
+                  <span style={{ padding: '6px 16px', borderRadius: 980, background: p.stock > 0 ? '#007AFF' : '#F2F2F7', color: p.stock > 0 ? '#fff' : '#86868B', fontSize: 12, fontWeight: 600, whiteSpace: 'nowrap' }}>{p.stock > 0 ? '立即购买' : '缺货'}</span>
                 </div>
               ) : (
                 <div style={{ marginTop: 8, display: 'flex', justifyContent: 'flex-end' }}>
