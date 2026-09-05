@@ -127,32 +127,40 @@ export default function Home() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1d1d1f', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif' }}>
-      {/* 微信提示 */}
+      {/* 微信提示 - AppStore 风格 */}
       {isWechat && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(30px)', WebkitBackdropFilter: 'blur(30px)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 32, animation: 'fadeIn 0.3s ease' }}>
-          <div style={{ position: 'absolute', top: 24, right: 28, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8, animation: 'bounce 1s infinite' }}>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7"></path><path d="M7 7h10v10"></path></svg>
-            <span style={{ color: '#fff', fontSize: 14, fontWeight: 600, textShadow: '0 1px 4px rgba(0,0,0,0.3)' }}>点击右上角</span>
+        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, animation: 'fadeIn 0.25s ease' }}>
+          <div style={{ background: '#fff', borderRadius: 24, padding: '32px 28px 28px', maxWidth: 360, width: '100%', boxShadow: '0 24px 64px rgba(0,0,0,0.15)', animation: 'scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1)' }}>
+            {/* 图标 */}
+            <div style={{ width: 64, height: 64, margin: '0 auto 20px', borderRadius: 18, background: 'linear-gradient(135deg, #007AFF, #5856D6)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 24px rgba(0,122,255,0.3)' }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M2 12h20"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            {/* 标题 */}
+            <div style={{ fontSize: 20, fontWeight: 700, color: '#1d1d1f', textAlign: 'center', marginBottom: 8, letterSpacing: -0.3 }}>请在浏览器中打开</div>
+            <div style={{ fontSize: 13, color: '#86868B', textAlign: 'center', lineHeight: 1.6, marginBottom: 24 }}>微信内无法正常使用支付功能，请按以下步骤操作</div>
+            {/* 步骤 */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 24 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '12px 14px', background: '#F5F5F7', borderRadius: 12 }}>
+                <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#007AFF', color: '#fff', fontSize: 13, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>1</div>
+                <div style={{ fontSize: 13, color: '#1d1d1f', fontWeight: 500 }}>点击右上角「···」菜单</div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007AFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: 'auto' }}><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '12px 14px', background: '#F5F5F7', borderRadius: 12 }}>
+                <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#007AFF', color: '#fff', fontSize: 13, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>2</div>
+                <div style={{ fontSize: 13, color: '#1d1d1f', fontWeight: 500 }}>选择「在浏览器打开」</div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007AFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: 'auto' }}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </div>
+            </div>
+            {/* 按钮 */}
+            <button onClick={() => setIsWechat(false)} style={{ width: '100%', padding: '14px', borderRadius: 14, background: '#007AFF', color: '#fff', border: 'none', fontSize: 15, fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s ease', boxShadow: '0 4px 12px rgba(0,122,255,0.3)' }} onMouseDown={(e) => { e.currentTarget.style.transform = 'scale(0.98)'; e.currentTarget.style.background = '#0071e3'; }} onMouseUp={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.background = '#007AFF'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.background = '#007AFF'; }}>我知道了</button>
           </div>
-          <div style={{ width: 84, height: 84, marginBottom: 28, borderRadius: 24, background: 'linear-gradient(135deg,#07C160,#06AD56)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 12px 40px rgba(7,193,96,0.5)', animation: 'pulse 2s infinite' }}>
-            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
-          </div>
-          <div style={{ color: '#fff', fontSize: 24, fontWeight: 700, marginBottom: 14, textAlign: 'center', letterSpacing: -0.5, textShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>请在浏览器中打开</div>
-          <div style={{ color: 'rgba(255,255,255,0.85)', fontSize: 15, textAlign: 'center', lineHeight: 1.8, maxWidth: 320, marginBottom: 32 }}>
-            微信内无法正常使用支付功能<br/>
-            点击右上角「···」菜单<br/>
-            选择「在浏览器打开」即可正常访问
-          </div>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-            <div style={{ padding: '8px 16px', background: 'rgba(255,255,255,0.15)', borderRadius: 980, fontSize: 12, color: '#fff', fontWeight: 500, backdropFilter: 'blur(10px)' }}>🔒 安全支付</div>
-            <div style={{ padding: '8px 16px', background: 'rgba(255,255,255,0.15)', borderRadius: 980, fontSize: 12, color: '#fff', fontWeight: 500, backdropFilter: 'blur(10px)' }}>⚡ 自动秒发</div>
-            <div style={{ padding: '8px 16px', background: 'rgba(255,255,255,0.15)', borderRadius: 980, fontSize: 12, color: '#fff', fontWeight: 500, backdropFilter: 'blur(10px)' }}>🎫 卡密加密</div>
-          </div>
-          <button onClick={() => setIsWechat(false)} style={{ marginTop: 32, padding: '10px 28px', borderRadius: 980, background: 'rgba(255,255,255,0.2)', color: '#fff', border: '1px solid rgba(255,255,255,0.3)', fontSize: 14, fontWeight: 500, cursor: 'pointer', backdropFilter: 'blur(10px)', transition: 'all 0.2s ease' }} onMouseDown={(e) => { e.currentTarget.style.transform = 'scale(0.95)'; }} onMouseUp={(e) => { e.currentTarget.style.transform = 'scale(1)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}>我知道了</button>
           <style>{`
             @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-            @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-            @keyframes pulse { 0%, 100% { box-shadow: 0 12px 40px rgba(7,193,96,0.5); } 50% { box-shadow: 0 12px 60px rgba(7,193,96,0.8); } }
+            @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
           `}</style>
         </div>
       )}
@@ -264,57 +272,53 @@ export default function Home() {
         )}
       </div>
 
-      {/* 页脚 */}
-      <footer style={{ borderTop: '1px solid rgba(0,0,0,0.06)', background: '#FAFAFA' }}>
-        <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '28px 16px 24px' : '40px 22px 28px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '2fr 1fr 1fr', gap: isMobile ? 24 : 48, marginBottom: isMobile ? 24 : 32 }}>
+      {/* 页脚 - AppStore 风格 */}
+      <footer style={{ borderTop: '1px solid rgba(0,0,0,0.05)', background: '#F5F5F7' }}>
+        <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '32px 20px 28px' : '48px 22px 36px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.5fr 1fr 1fr', gap: isMobile ? 28 : 40, marginBottom: isMobile ? 28 : 36 }}>
+            {/* 品牌区 */}
             <div style={{ textAlign: isMobile ? 'center' : 'left' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12, justifyContent: isMobile ? 'center' : 'flex-start' }}>
-                <img src="/logo.png" alt="logo" style={{ width: 28, height: 28, borderRadius: 8, objectFit: 'cover', display: 'block', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
-                <span style={{ fontSize: 16, fontWeight: 700, color: '#1d1d1f' }}>{site.site_name || '甜甜发卡'}</span>
+                <img src="/logo.png" alt="logo" style={{ width: 32, height: 32, borderRadius: 9, objectFit: 'cover', display: 'block' }} />
+                <span style={{ fontSize: 17, fontWeight: 700, color: '#1d1d1f' }}>{site.site_name || '甜甜发卡'}</span>
               </div>
-              <p style={{ fontSize: 12, color: '#86868B', lineHeight: 1.7, maxWidth: isMobile ? '100%' : 320, margin: isMobile ? '0 auto' : 0 }}>{site.footer_desc || '专业的虚拟商品自动发卡平台，支付宝安全支付，付款后自动秒发卡密，24小时无人值守。'}</p>
-              {!isMobile && (
-                <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
-                  <span style={{ padding: '4px 10px', background: '#fff', borderRadius: 980, fontSize: 11, color: '#34C759', fontWeight: 600, border: '1px solid rgba(52,199,89,0.2)' }}>自动秒发</span>
-                  <span style={{ padding: '4px 10px', background: '#fff', borderRadius: 980, fontSize: 11, color: '#007AFF', fontWeight: 600, border: '1px solid rgba(0,122,255,0.2)' }}>安全支付</span>
-                  <span style={{ padding: '4px 10px', background: '#fff', borderRadius: 980, fontSize: 11, color: '#AF52DE', fontWeight: 600, border: '1px solid rgba(175,82,222,0.2)' }}>加密存储</span>
-                </div>
-              )}
+              <p style={{ fontSize: 12, color: '#86868B', lineHeight: 1.7, maxWidth: isMobile ? 280 : 300, margin: isMobile ? '0 auto' : 0 }}>{site.footer_desc || '专业的虚拟商品自动发卡平台，支付宝安全支付，付款后自动秒发卡密，24小时无人值守。'}</p>
             </div>
+            {/* 快速链接 - 手机端横向排列，电脑端纵向 */}
             <div style={{ textAlign: isMobile ? 'center' : 'left' }}>
-              <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 14, color: '#1d1d1f' }}>快速链接</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: isMobile ? 'center' : 'flex-start' }}>
-                <a href="/" style={{ fontSize: 12, color: '#86868B', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#007AFF'} onMouseLeave={(e) => e.currentTarget.style.color = '#86868B'}>首页</a>
-                <a href="/query" style={{ fontSize: 12, color: '#86868B', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#007AFF'} onMouseLeave={(e) => e.currentTarget.style.color = '#86868B'}>订单查询</a>
-                <a href="/faq" style={{ fontSize: 12, color: '#86868B', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#007AFF'} onMouseLeave={(e) => e.currentTarget.style.color = '#86868B'}>常见问题</a>
-                <a href="/after-sale" style={{ fontSize: 12, color: '#86868B', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#007AFF'} onMouseLeave={(e) => e.currentTarget.style.color = '#86868B'}>售后反馈</a>
+              <div style={{ fontSize: 12, fontWeight: 600, marginBottom: isMobile ? 14 : 16, color: '#1d1d1f', letterSpacing: 0.3 }}>快速链接</div>
+              <div style={{ display: 'flex', flexDirection: isMobile ? 'row' : 'column', gap: isMobile ? 6 : 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+                <a href="/" style={{ padding: isMobile ? '6px 14px' : 0, background: isMobile ? '#fff' : 'transparent', borderRadius: isMobile ? 980 : 0, fontSize: 12, color: isMobile ? '#1d1d1f' : '#86868B', textDecoration: 'none', fontWeight: isMobile ? 500 : 400, transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.color = '#007AFF'; if (isMobile) e.currentTarget.style.background = 'rgba(0,122,255,0.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.color = isMobile ? '#1d1d1f' : '#86868B'; if (isMobile) e.currentTarget.style.background = '#fff'; }}>首页</a>
+                <a href="/query" style={{ padding: isMobile ? '6px 14px' : 0, background: isMobile ? '#fff' : 'transparent', borderRadius: isMobile ? 980 : 0, fontSize: 12, color: isMobile ? '#1d1d1f' : '#86868B', textDecoration: 'none', fontWeight: isMobile ? 500 : 400, transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.color = '#007AFF'; if (isMobile) e.currentTarget.style.background = 'rgba(0,122,255,0.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.color = isMobile ? '#1d1d1f' : '#86868B'; if (isMobile) e.currentTarget.style.background = '#fff'; }}>订单查询</a>
+                <a href="/faq" style={{ padding: isMobile ? '6px 14px' : 0, background: isMobile ? '#fff' : 'transparent', borderRadius: isMobile ? 980 : 0, fontSize: 12, color: isMobile ? '#1d1d1f' : '#86868B', textDecoration: 'none', fontWeight: isMobile ? 500 : 400, transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.color = '#007AFF'; if (isMobile) e.currentTarget.style.background = 'rgba(0,122,255,0.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.color = isMobile ? '#1d1d1f' : '#86868B'; if (isMobile) e.currentTarget.style.background = '#fff'; }}>常见问题</a>
+                <a href="/after-sale" style={{ padding: isMobile ? '6px 14px' : 0, background: isMobile ? '#fff' : 'transparent', borderRadius: isMobile ? 980 : 0, fontSize: 12, color: isMobile ? '#1d1d1f' : '#86868B', textDecoration: 'none', fontWeight: isMobile ? 500 : 400, transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.color = '#007AFF'; if (isMobile) e.currentTarget.style.background = 'rgba(0,122,255,0.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.color = isMobile ? '#1d1d1f' : '#86868B'; if (isMobile) e.currentTarget.style.background = '#fff'; }}>售后反馈</a>
               </div>
             </div>
+            {/* 服务保障 - 仅电脑端 */}
             {!isMobile && (
               <div>
-                <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 14, color: '#1d1d1f' }}>服务保障</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 16, color: '#1d1d1f', letterSpacing: 0.3 }}>服务保障</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#86868B' }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#34C759" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#34C759" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     支付宝安全支付
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#86868B' }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#007AFF" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#007AFF" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                     24小时自动发货
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#86868B' }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#AF52DE" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#AF52DE" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                     卡密加密存储
                   </div>
                 </div>
               </div>
             )}
           </div>
-          <div style={{ borderTop: '1px solid rgba(0,0,0,0.06)', paddingTop: 18, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 6 : 16 }}>
-            <div style={{ fontSize: 11, color: '#86868B' }}>© {new Date().getFullYear()} {site.site_name || '甜甜发卡'}</div>
-            {!isMobile && <div style={{ width: 3, height: 3, borderRadius: '50%', background: '#D2D2D7' }}/>}
-            <div style={{ fontSize: 11, color: '#86868B' }}>{site.icp_number || ''} 虚拟商品自动发卡平台</div>
+          {/* 底部版权 */}
+          <div style={{ borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: 20, textAlign: 'center' }}>
+            <div style={{ fontSize: 11, color: '#86868B', marginBottom: 4 }}>© {new Date().getFullYear()} {site.site_name || '甜甜发卡'}</div>
+            <div style={{ fontSize: 11, color: '#AEAEB2' }}>{site.icp_number || ''} 虚拟商品自动发卡平台</div>
           </div>
         </div>
       </footer>
