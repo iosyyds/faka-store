@@ -186,12 +186,7 @@ export default function Home() {
         {/* Hero */}
         <div style={{ textAlign: 'center', marginBottom: isMobile ? 20 : 36 }}>
           <h1 style={{ fontSize: isMobile ? 26 : 44, fontWeight: 700, marginBottom: 8, lineHeight: 1.1 }}>{site.banner_title || '虚拟商品，即拍即发。'}</h1>
-          <p style={{ fontSize: isMobile ? 13 : 16, color: '#86868B', marginBottom: 16 }}>{site.banner_subtitle || '支付宝安全支付，付款后自动秒发卡密。'}</p>
-          <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
-            {['自动秒发', '加密存储', '安全支付'].map((t, i) => (
-              <span key={i} style={{ padding: '5px 14px', background: '#F5F5F7', borderRadius: 980, fontSize: 12, color: '#1d1d1f', fontWeight: 500 }}>{t}</span>
-            ))}
-          </div>
+          <p style={{ fontSize: isMobile ? 13 : 16, color: '#86868B', marginBottom: 0 }}>{site.banner_subtitle || '支付宝安全支付，付款后自动秒发卡密。'}</p>
         </div>
 
         {/* 分类 */}
