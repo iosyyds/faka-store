@@ -1,4 +1,4 @@
-# 虚拟商品自动发卡系统（faka-store）
+# 虚拟商品自动发卡系统（faka-store） 
 
 支付宝当面付 · 自动秒发 · 前端 GitHub Pages（Next.js）+ 后端宝塔（PHP + MySQL）
 
