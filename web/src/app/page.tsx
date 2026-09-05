@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 const API_BASE = 'https://kk.qqqi.top/api';
 
@@ -22,6 +22,8 @@ export default function Home() {
   const [hoveredProduct, setHoveredProduct] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [toast, setToast] = useState('');
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const pollTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const showToast = (msg: string) => {
     setToast(msg);
@@ -63,7 +65,7 @@ export default function Home() {
   };
 
   const closeModal = () => {
-    if (polling) return;
+    if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
     setShowBuy(false);
     setOrderResult(null);
     setQrCode('');
@@ -77,16 +79,18 @@ export default function Home() {
     let count = 0;
     const timer = setInterval(() => {
       count++;
-      if (count > 60) { clearInterval(timer); setPolling(false); return; }
+      if (count > 60) { clearInterval(timer); timerRef.current = null; setPolling(false); return; }
       fetch(`${API_BASE}/order_query.php?order_no=${orderId}&contact=${encodeURIComponent(contact)}`).then(r => r.json()).then(data => {
         const order = data.data || data.order || data;
         if (order.status === 'paid' || order.status === 1 || order.status === 'success') {
           clearInterval(timer);
+          timerRef.current = null;
           setPolling(false);
           setOrderResult((prev: any) => ({ ...prev, ...order, cards: Array.isArray(order.cards) ? order.cards : [] }));
         }
       }).catch(() => {});
     }, 2000);
+    timerRef.current = timer;
   }, [contact]);
 
   const handleBuy = () => {
@@ -160,7 +164,7 @@ export default function Home() {
             <img src="/logo.png" alt="logo" style={{ width: 28, height: 28, borderRadius: 7, objectFit: 'cover', display: 'block', flexShrink: 0 }} />
             <span style={{ fontSize: 17, fontWeight: 600, lineHeight: 1, height: 20, display: 'flex', alignItems: 'center' }}>{site.site_name || '甜甜发卡'}</span>
           </div>
-          <button onClick={goQuery} style={{ padding: '7px 16px', borderRadius: 980, background: '#007AFF', color: '#fff', border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>订单查询</button>
+          <button onClick={goQuery} style={{ width: 80, height: 32, padding: 0, borderRadius: 980, background: '#007AFF', color: '#fff', border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>订单查询</button>
         </div>
       </nav>
 
@@ -215,16 +219,6 @@ export default function Home() {
               transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)'
             }}>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: 'flex', gap: 6, marginBottom: isMobile ? 4 : 8, flexWrap: 'wrap' }}>
-                  {p.tags && Array.isArray(p.tags) ? p.tags.map((tag: any, i: number) => (
-                    <span key={i} style={{ padding: '2px 7px', background: tag.bg || '#F5F5F7', borderRadius: 5, fontSize: 10, fontWeight: 600, color: tag.color || '#34C759' }}>{tag.text || tag.name}</span>
-                  )) : (
-                    <>
-                      <span style={{ padding: '2px 7px', background: '#F5F5F7', borderRadius: 5, fontSize: 10, fontWeight: 600, color: '#34C759' }}>秒发</span>
-                      {p.is_hot && p.is_hot !== '0' && <span style={{ padding: '2px 7px', background: '#F5F5F7', borderRadius: 5, fontSize: 10, fontWeight: 600, color: '#FF3B30' }}>热门</span>}
-                    </>
-                  )}
-                </div>
                 <div style={{ fontSize: isMobile ? 14 : 15, fontWeight: 600, marginBottom: isMobile ? 3 : 8, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: isMobile ? 1 : 2, WebkitBoxOrient: 'vertical', lineHeight: 1.4, color: p.stock === 0 ? '#86868B' : '#1d1d1f' }}>{p.name}</div>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
                   <span style={{ fontSize: isMobile ? 17 : 20, fontWeight: 700, color: '#FF3B30' }}><span style={{ fontSize: isMobile ? 10 : 12, fontWeight: 600 }}>¥</span>{Number(p.price).toFixed(2)}</span>
