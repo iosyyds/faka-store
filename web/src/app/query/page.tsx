@@ -35,6 +35,7 @@ export default function QueryPage() {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState('');
   const [order, setOrder] = useState<OrderInfo | null>(null);
+  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
 
   useEffect(() => {
     setIsWechat(/MicroMessenger/i.test(navigator.userAgent));
@@ -92,7 +93,12 @@ export default function QueryPage() {
     finally { setLoading(false); refreshCaptcha(); }
   }
 
-  function copy(text: string) { navigator.clipboard?.writeText(text).catch(() => {}); }
+  function copy(text: string, idx: number) {
+    navigator.clipboard?.writeText(text).then(() => {
+      setCopiedIdx(idx);
+      setTimeout(() => setCopiedIdx(null), 1500);
+    }).catch(() => {});
+  }
 
   const statusMap: Record<number, { label: string; color: string }> = {
     0: { label: '待支付', color: '#FF9500' },
@@ -140,7 +146,7 @@ export default function QueryPage() {
 
           <div style={{ marginBottom: 14 }}>
             <label style={{ display: 'block', fontSize: 12, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>订单号</label>
-            <input type="text" placeholder="FK 开头的订单号" value={orderNo} onChange={(e) => setOrderNo(e.target.value)} style={inputStyle} onKeyDown={(e) => e.key === 'Enter' && handleQuery()} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
+            <input type="text" placeholder="请输入订单号" value={orderNo} onChange={(e) => setOrderNo(e.target.value)} style={inputStyle} onKeyDown={(e) => e.key === 'Enter' && handleQuery()} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
           </div>
 
           <div style={{ marginBottom: 20 }}>
@@ -174,7 +180,7 @@ export default function QueryPage() {
                   <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: appleGray, borderRadius: 10, marginBottom: 8 }}>
                     <span style={{ width: 22, height: 22, borderRadius: '50%', background: appleBlue, color: '#fff', fontSize: 11, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{i + 1}</span>
                     <span style={{ flex: 1, fontFamily: 'monospace', fontSize: 12, wordBreak: 'break-all' }}>{c.content}</span>
-                    <button onClick={() => copy(c.content)} style={{ padding: '5px 12px', background: appleBlue, color: '#fff', border: 'none', borderRadius: 8, fontSize: 11, fontWeight: 500, cursor: 'pointer', flexShrink: 0 }}>复制</button>
+                    <button onClick={() => copy(c.content, i)} style={{ padding: '5px 12px', background: copiedIdx === i ? '#34C759' : appleBlue, color: '#fff', border: 'none', borderRadius: 8, fontSize: 11, fontWeight: 500, cursor: 'pointer', flexShrink: 0, transition: 'all .2s', minWidth: 44 }}>{copiedIdx === i ? '已复制' : '复制'}</button>
                   </div>
                 ))}
               </div>

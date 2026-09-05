@@ -34,6 +34,7 @@ export default function Home() {
   const [order, setOrder] = useState<OrderInfo | null>(null);
   const [qrCode, setQrCode] = useState('');
   const [errMsg, setErrMsg] = useState('');
+  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
@@ -277,7 +278,7 @@ export default function Home() {
                         <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: appleGray, borderRadius: 10, marginBottom: 8 }}>
                           <span style={{ width: 22, height: 22, borderRadius: '50%', background: appleBlue, color: '#fff', fontSize: 11, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{i + 1}</span>
                           <span style={{ flex: 1, fontFamily: 'monospace', fontSize: 12, wordBreak: 'break-all' }}>{c.content}</span>
-                          <button onClick={() => navigator.clipboard?.writeText(c.content).catch(() => {})} style={{ padding: '5px 12px', background: appleBlue, color: '#fff', border: 'none', borderRadius: 8, fontSize: 11, fontWeight: 500, cursor: 'pointer', flexShrink: 0 }}>复制</button>
+                          <button onClick={() => { navigator.clipboard?.writeText(c.content).then(() => { setCopiedIdx(i); setTimeout(() => setCopiedIdx(null), 1500); }).catch(() => {}); }} style={{ padding: '5px 12px', background: copiedIdx === i ? '#34C759' : appleBlue, color: '#fff', border: 'none', borderRadius: 8, fontSize: 11, fontWeight: 500, cursor: 'pointer', flexShrink: 0, transition: 'all .2s', minWidth: 44 }}>{copiedIdx === i ? '已复制' : '复制'}</button>
                         </div>
                       ))}
                     </div>
