@@ -30,26 +30,29 @@
 ## 🏗️ 系统架构
 
 ```
-┌──────────────────────────────────┐
-│        前台 · Next.js             │
-│    GitHub Pages 静态托管          │
-│    自定义域名（如 qqqi.top）      │
-│                                  │
-│  商品展示 · 扫码支付 · 订单查询    │
-│  AppStore 风格 UI                 │
-└──────────────┬───────────────────┘
-               │
-               │  HTTPS / JSON API
-               │
-┌──────────────▼───────────────────┐
-│        后端 · PHP + MySQL         │
-│      宝塔面板部署                 │
-│      独立域名（如 kk.qqqi.top）   │
-│                                  │
-│  商品 API · 下单 · 支付回调        │
-│  支付宝当面付 · 自动发卡           │
-│  卡密 AES 加密 · 管理员后台        │
-└──────────────────────────────────┘
+```mermaid
+flowchart TD
+    subgraph FRONT["🖥️ 前台 · Next.js"]
+        direction TB
+        A1["GitHub Pages 静态托管"]
+        A2["自定义域名（如 qqqi.top）"]
+        A3["商品展示 · 扫码支付 · 订单查询"]
+        A4["AppStore 风格 UI"]
+    end
+
+    subgraph BACK["⚙️ 后端 · PHP + MySQL"]
+        direction TB
+        B1["宝塔面板部署"]
+        B2["独立域名（如 abc.qqqi.top）"]
+        B3["商品 API · 下单 · 支付回调"]
+        B4["支付宝当面付 · 自动发卡"]
+        B5["卡密 AES 加密 · 管理员后台"]
+    end
+
+    FRONT -- HTTPS / JSON API --> BACK
+```
+
+
 ```
 
 | 目录 | 说明 |
