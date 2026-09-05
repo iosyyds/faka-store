@@ -21,6 +21,7 @@ interface OrderInfo {
 export default function Home() {
   const router = useRouter();
   const [isWechat, setIsWechat] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [site, setSite] = useState<SiteInfo>({ site_name: '甜甜发卡', site_logo: '', customer_service: '', qq_group: '', copyright: '' });
   const [categories, setCategories] = useState<string[]>([]);
@@ -39,8 +40,11 @@ export default function Home() {
 
   useEffect(() => {
     setIsWechat(/MicroMessenger/i.test(navigator.userAgent));
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
     loadData();
-    return () => { if (pollRef.current) clearInterval(pollRef.current); };
+    return () => { window.removeEventListener('resize', checkMobile); if (pollRef.current) clearInterval(pollRef.current); };
   }, []);
 
   const loadData = async () => {
@@ -136,8 +140,8 @@ export default function Home() {
       <div style={{ maxWidth: 1024, margin: '0 auto', padding: '32px 22px 48px' }}>
         {/* Hero - Apple 大标题风格 */}
         <div style={{ textAlign: 'center', marginBottom: 36 }}>
-          <h1 style={{ fontSize: 40, fontWeight: 700, letterSpacing: -1.2, margin: '0 0 8px', background: 'linear-gradient(135deg,#1D1D1F 0%,#5856D6 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', lineHeight: 1.1 }}>{site.banner_title || '虚拟商品，即拍即发。'}</h1>
-          <p style={{ fontSize: 17, color: appleSubtext, margin: '0 0 20px', letterSpacing: -0.2 }}>{site.banner_subtitle || '支付宝安全支付，付款后自动秒发卡密。'}</p>
+          <h1 style={{ fontSize: isMobile ? 28 : 40, fontWeight: 700, letterSpacing: isMobile ? -0.6 : -1.2, margin: '0 0 8px', background: 'linear-gradient(135deg,#1D1D1F 0%,#5856D6 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', lineHeight: 1.2 }}>{site.banner_title || '虚拟商品，即拍即发。'}</h1>
+          <p style={{ fontSize: isMobile ? 14 : 17, color: appleSubtext, margin: '0 0 20px', letterSpacing: -0.2 }}>{site.banner_subtitle || '支付宝安全支付，付款后自动秒发卡密。'}</p>
           <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
             {['自动秒发', '加密存储', '安全支付'].map((tag, i) => (
               <span key={i} style={{ padding: '5px 14px', borderRadius: 20, background: appleGray, fontSize: 12, color: appleSubtext, fontWeight: 400 }}>{tag}</span>
@@ -161,31 +165,45 @@ export default function Home() {
         ) : filteredProducts.length === 0 ? (
           <div style={{ textAlign: 'center', padding: 80, color: appleSubtext, fontSize: 14 }}>暂无商品</div>
         ) : (
-          <div className="product-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 20 }}>
+          <div className="product-grid" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(260px, 1fr))', gap: isMobile ? 10 : 20 }}>
             {filteredProducts.map((p) => (
-              <div key={p.id} onClick={() => openBuy(p)} style={{ background: '#fff', borderRadius: 16, overflow: 'hidden', cursor: 'pointer', transition: 'all .3s cubic-bezier(0.25,0.1,0.25,1)', boxShadow: '0 2px 12px rgba(0,0,0,0.04)', border: '1px solid rgba(0,0,0,0.04)', position: 'relative' }}
-                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.08)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.04)'; }}>
-                {/* 内容区 */}
-                <div style={{ padding: '16px 18px' }}>
-                  {/* 标签行 */}
-                  <div style={{ display: 'flex', gap: 6, marginBottom: 8 }}>
-                    <span style={{ padding: '3px 8px', background: 'rgba(52,199,89,0.1)', borderRadius: 6, fontSize: 10, fontWeight: 600, color: '#34C759', letterSpacing: 0.2 }}>秒发</span>
-                    {p.is_hot ? <span style={{ padding: '3px 8px', background: 'rgba(255,59,48,0.1)', borderRadius: 6, fontSize: 10, fontWeight: 600, color: '#FF3B30' }}>热门</span> : null}
-                    {p.stock === 0 && <span style={{ padding: '3px 8px', background: 'rgba(0,0,0,0.06)', borderRadius: 6, fontSize: 10, fontWeight: 600, color: appleSubtext }}>已售罄</span>}
+              <div key={p.id} onClick={() => openBuy(p)} style={{ background: '#ffffff', borderRadius: isMobile ? 12 : 16, overflow: 'hidden', cursor: 'pointer', transition: 'all .3s cubic-bezier(0.25,0.1,0.25,1)', boxShadow: '0 1px 6px rgba(0,0,0,0.04)', border: '1px solid rgba(0,0,0,0.05)', position: 'relative' }}
+                onMouseEnter={(e) => { if (!isMobile) { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(0,0,0,0.08)'; } }}
+                onMouseLeave={(e) => { if (!isMobile) { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 1px 6px rgba(0,0,0,0.04)'; } }}>
+                {/* 右下角装饰图标（仅桌面端） */}
+                {!isMobile && <div style={{ position: 'absolute', right: -10, bottom: -10, fontSize: 80, opacity: 0.05, pointerEvents: 'none', lineHeight: 1 }}>🎁</div>}
+                {/* 内容区 - 移动端横向，桌面端纵向 */}
+                <div style={{ padding: isMobile ? '12px 14px' : '18px 20px', position: 'relative', zIndex: 1, display: 'flex', flexDirection: isMobile ? 'row' : 'column', gap: isMobile ? 12 : 0, alignItems: isMobile ? 'center' : 'stretch' }}>
+                  {/* 左侧信息区 */}
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    {/* 标签行 */}
+                    <div style={{ display: 'flex', gap: 6, marginBottom: isMobile ? 6 : 12 }}>
+                      <span style={{ padding: isMobile ? '2px 7px' : '4px 10px', background: 'rgba(52,199,89,0.1)', borderRadius: 6, fontSize: isMobile ? 10 : 11, fontWeight: 600, color: '#248A3D' }}>秒发</span>
+                      {p.is_hot && <span style={{ padding: isMobile ? '2px 7px' : '4px 10px', background: 'rgba(255,59,48,0.1)', borderRadius: 6, fontSize: isMobile ? 10 : 11, fontWeight: 600, color: '#D70015' }}>热门</span>}
+                      {p.stock === 0 && <span style={{ padding: isMobile ? '2px 7px' : '4px 10px', background: 'rgba(0,0,0,0.06)', borderRadius: 6, fontSize: isMobile ? 10 : 11, fontWeight: 600, color: appleSubtext }}>已售罄</span>}
+                    </div>
+                    {/* 商品名 */}
+                    <div style={{ fontSize: isMobile ? 14 : 16, fontWeight: 600, marginBottom: isMobile ? 4 : 14, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: isMobile ? 1 : 2, WebkitBoxOrient: 'vertical', lineHeight: 1.4, letterSpacing: -0.2, color: p.stock === 0 ? appleSubtext : appleText }}>{p.name}</div>
+                    {/* 价格 + 销量 */}
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+                      <span style={{ fontSize: isMobile ? 18 : 24, fontWeight: 700, color: '#FF3B30', letterSpacing: -0.5 }}><span style={{ fontSize: isMobile ? 11 : 14, fontWeight: 600 }}>¥</span>{Number(p.price).toFixed(2)}</span>
+                      {!isMobile && p.original_price && Number(p.original_price) > Number(p.price) && <span style={{ fontSize: 12, color: appleSubtext, textDecoration: 'line-through' }}>¥{Number(p.original_price).toFixed(2)}</span>}
+                      {isMobile && <span style={{ fontSize: 11, color: appleSubtext }}>已售{p.sales || 0}</span>}
+                    </div>
+                    {!isMobile && <div style={{ fontSize: 11, color: p.stock > 0 ? '#34C759' : '#FF3B30', marginTop: 6, fontWeight: 500 }}>{p.stock > 0 ? `库存 ${p.stock} 件` : '暂时缺货'}</div>}
                   </div>
-                  {/* 商品名 */}
-                  <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 10, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', minHeight: 42, lineHeight: 1.4, letterSpacing: -0.2, color: p.stock === 0 ? appleSubtext : appleText }}>{p.name}</div>
-                  {/* 价格行 */}
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 12 }}>
-                    <span style={{ fontSize: 20, fontWeight: 700, color: '#FF3B30', letterSpacing: -0.5 }}><span style={{ fontSize: 12, fontWeight: 600 }}>¥</span>{Number(p.price).toFixed(2)}</span>
-                    {p.original_price && Number(p.original_price) > Number(p.price) ? <span style={{ fontSize: 11, color: appleSubtext, textDecoration: 'line-through' }}>¥{Number(p.original_price).toFixed(2)}</span> : null}
-                  </div>
-                  {/* 底部行 */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ fontSize: 11, color: appleSubtext }}>已售 {p.sales || 0} · 库存 {p.stock}</span>
-                    <span style={{ padding: '7px 18px', borderRadius: 12, background: p.stock > 0 ? appleBlue : appleGray, color: p.stock > 0 ? '#fff' : appleSubtext, fontSize: 12, fontWeight: 600, transition: '.2s' }}>{p.stock > 0 ? '立即购买' : '缺货'}</span>
-                  </div>
+                  {/* 右侧按钮区（移动端） / 底部按钮区（桌面端） */}
+                  {isMobile ? (
+                    <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>
+                      <span style={{ padding: '8px 16px', borderRadius: 10, background: p.stock > 0 ? '#007AFF' : appleGray, color: p.stock > 0 ? '#fff' : appleSubtext, fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap' }}>{p.stock > 0 ? '购买' : '缺货'}</span>
+                      <span style={{ fontSize: 10, color: p.stock > 0 ? '#34C759' : '#FF3B30' }}>{p.stock > 0 ? `剩${p.stock}` : '无货'}</span>
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 16 }}>
+                      <span style={{ fontSize: 11, color: appleSubtext }}>已售 {p.sales || 0} 件</span>
+                      <span style={{ padding: '9px 22px', borderRadius: 12, background: p.stock > 0 ? '#007AFF' : appleGray, color: p.stock > 0 ? '#fff' : appleSubtext, fontSize: 13, fontWeight: 600, boxShadow: p.stock > 0 ? '0 4px 12px rgba(0,122,255,0.2)' : 'none' }}>{p.stock > 0 ? '立即购买' : '缺货'}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -196,7 +214,7 @@ export default function Home() {
       {/* Apple 风格页脚 */}
       <footer style={{ borderTop: '1px solid rgba(0,0,0,0.06)', background: '#F5F5F7' }}>
         <div style={{ maxWidth: 1024, margin: '0 auto', padding: '36px 22px 24px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr', gap: 32, marginBottom: 28 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.5fr 1fr 1fr', gap: isMobile ? 20 : 32, marginBottom: isMobile ? 20 : 28 }}>
             {/* 品牌 */}
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
@@ -226,7 +244,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div style={{ borderTop: '1px solid rgba(0,0,0,0.06)', paddingTop: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+          <div style={{ borderTop: '1px solid rgba(0,0,0,0.06)', paddingTop: 16, display: 'flex', justifyContent: isMobile ? 'center' : 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8, textAlign: 'center' }}>
             <div style={{ fontSize: 11, color: appleSubtext }}>© {new Date().getFullYear()} {site.site_name || '甜甜发卡'}</div>
             <div style={{ fontSize: 11, color: appleSubtext }}>{site.icp_number || ''} 虚拟商品自动发卡平台</div>
           </div>
