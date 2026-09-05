@@ -255,7 +255,11 @@ export default function Home() {
                   <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 16px', background: '#F2F2F7', borderRadius: 16, fontSize: 13, color: appleBlue, marginBottom: 12 }}>
                     <span style={{ width: 12, height: 12, border: '2px solid #007AFF', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin .8s linear infinite' }}></span>等待支付中...
                   </div>
-                  <div style={{ fontSize: 24, fontWeight: 700, color: '#FF3B30', marginBottom: 6, letterSpacing: -0.5 }}>¥{order.total_amount}</div>
+                  <div style={{ fontSize: 24, fontWeight: 700, color: '#FF3B30', marginBottom: 12, letterSpacing: -0.5 }}>¥{order.total_amount}</div>
+                  <a href={qrCode} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 24px', background: 'linear-gradient(135deg,#1677FF,#0958D9)', color: '#fff', borderRadius: 20, fontSize: 14, fontWeight: 600, textDecoration: 'none', boxShadow: '0 4px 12px rgba(22,119,255,0.3)' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.5 17.1c-.5-1.5-1.8-2.7-3.5-3.1.7-1.2 1.1-2.5 1.1-3.9 0-3.9-3.1-7-7-7s-7 3.1-7 7 3.1 7 7 7c1.1 0 2.1-.2 3-.6 1.5.9 3.3 1.5 5.3 1.5.6 0 1.1-.1 1.6-.3l-1.5-2.6zM12 17c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5z"/></svg>
+                    打开支付宝支付
+                  </a>
                 </div>
               ) : order?.status === 1 ? (
                 <div style={{ textAlign: 'center' }}>
