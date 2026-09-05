@@ -5,7 +5,7 @@ const API_BASE = 'https://kk.qqqi.top/api';
 
 export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<{id: string, name: string}[]>([]);
   const [activeCategory, setActiveCategory] = useState('all');
   const [site, setSite] = useState<any>({});
   const [showBuy, setShowBuy] = useState(false);
@@ -37,12 +37,14 @@ export default function Home() {
     fetch(`${API_BASE}/products.php`).then(r => r.json()).then(d => {
       const list = Array.isArray(d?.data?.list) ? d.data.list : Array.isArray(d?.data) ? d.data : Array.isArray(d?.products) ? d.products : Array.isArray(d?.list) ? d.list : Array.isArray(d) ? d : [];
       setProducts(list);
-      const cats = Array.from(new Set(list.map((p: any) => p?.category_name || p?.category).filter(Boolean)));
-      setCategories(cats as string[]);
+    }).catch(() => {});
+    fetch(`${API_BASE}/categories.php`).then(r => r.json()).then(d => {
+      const cats = Array.isArray(d?.data) ? d.data.filter((c: any) => c && c.name) : [];
+      setCategories(cats);
     }).catch(() => {});
   }, [loaded]);
 
-  const filteredProducts = Array.isArray(products) ? (activeCategory === 'all' ? products : products.filter(p => (p?.category_name || p?.category) === activeCategory)) : [];
+  const filteredProducts = Array.isArray(products) ? (activeCategory === 'all' ? products : products.filter(p => String(p?.category_id) === String(activeCategory))) : [];
 
   const openBuy = (p: any) => {
     setSelectedProduct(p);
@@ -148,20 +150,20 @@ export default function Home() {
       {/* 导航栏 */}
       <nav style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(255,255,255,0.8)', backdropFilter: 'saturate(180%) blur(20px)', WebkitBackdropFilter: 'saturate(180%) blur(20px)', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
         <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '0 16px' : '0 22px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }} onClick={goHome}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', height: '100%' }} onClick={goHome}>
             <img src="/logo.png" alt="logo" style={{ width: 28, height: 28, borderRadius: 7, objectFit: 'cover', display: 'block' }} />
-            <span style={{ fontSize: 17, fontWeight: 600 }}>{site.site_name || '甜甜发卡'}</span>
+            <span style={{ fontSize: 17, fontWeight: 600, lineHeight: 1, display: 'flex', alignItems: 'center' }}>{site.site_name || '甜甜发卡'}</span>
           </div>
           <button onClick={goQuery} style={{ padding: '7px 16px', borderRadius: 980, background: '#007AFF', color: '#fff', border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>订单查询</button>
         </div>
       </nav>
 
       {/* 主内容 */}
-      <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '24px 16px 40px' : '48px 22px 64px' }}>
+      <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '20px 14px 32px' : '40px 22px 56px' }}>
         {/* Hero */}
-        <div style={{ textAlign: 'center', marginBottom: isMobile ? 28 : 48 }}>
-          <h1 style={{ fontSize: isMobile ? 28 : 48, fontWeight: 700, marginBottom: 10, lineHeight: 1.1 }}>{site.banner_title || '虚拟商品，即拍即发。'}</h1>
-          <p style={{ fontSize: isMobile ? 14 : 17, color: '#86868B', marginBottom: 20 }}>{site.banner_subtitle || '支付宝安全支付，付款后自动秒发卡密。'}</p>
+        <div style={{ textAlign: 'center', marginBottom: isMobile ? 20 : 36 }}>
+          <h1 style={{ fontSize: isMobile ? 26 : 44, fontWeight: 700, marginBottom: 8, lineHeight: 1.1 }}>{site.banner_title || '虚拟商品，即拍即发。'}</h1>
+          <p style={{ fontSize: isMobile ? 13 : 16, color: '#86868B', marginBottom: 16 }}>{site.banner_subtitle || '支付宝安全支付，付款后自动秒发卡密。'}</p>
           <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
             {['自动秒发', '加密存储', '安全支付'].map((t, i) => (
               <span key={i} style={{ padding: '5px 14px', background: '#F5F5F7', borderRadius: 980, fontSize: 12, color: '#1d1d1f', fontWeight: 500 }}>{t}</span>
@@ -171,46 +173,52 @@ export default function Home() {
 
         {/* 分类 */}
         {Array.isArray(categories) && categories.length > 0 && (
-          <div style={{ display: 'flex', gap: 8, marginBottom: isMobile ? 20 : 28, overflowX: 'auto', paddingBottom: 4 }}>
-            <span onClick={() => setActiveCategory('all')} style={{ padding: '7px 16px', borderRadius: 980, fontSize: 13, fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === 'all' ? '#1d1d1f' : '#F5F5F7', color: activeCategory === 'all' ? '#fff' : '#1d1d1f' }}>全部</span>
-            {categories.map((cat, i) => (
-              <span key={i} onClick={() => setActiveCategory(cat)} style={{ padding: '7px 16px', borderRadius: 980, fontSize: 13, fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === cat ? '#1d1d1f' : '#F5F5F7', color: activeCategory === cat ? '#fff' : '#1d1d1f' }}>{cat}</span>
+          <div style={{ display: 'flex', gap: 8, marginBottom: isMobile ? 16 : 24, overflowX: 'auto', paddingBottom: 4 }}>
+            <span onClick={() => setActiveCategory('all')} style={{ padding: '6px 14px', borderRadius: 980, fontSize: 13, fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === 'all' ? '#1d1d1f' : '#F5F5F7', color: activeCategory === 'all' ? '#fff' : '#1d1d1f', transition: 'all 0.2s ease' }}>全部</span>
+            {categories.map((cat) => (
+              <span key={cat.id} onClick={() => setActiveCategory(cat.id)} style={{ padding: '6px 14px', borderRadius: 980, fontSize: 13, fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === cat.id ? '#1d1d1f' : '#F5F5F7', color: activeCategory === cat.id ? '#fff' : '#1d1d1f', transition: 'all 0.2s ease' }}>{cat.name}</span>
             ))}
           </div>
         )}
 
         {/* 商品列表 */}
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(280px, 1fr))', gap: isMobile ? 0 : 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(260px, 1fr))', gap: isMobile ? 10 : 14, padding: isMobile ? '0 4px' : 0 }}>
           {filteredProducts.map((p) => (
             <div key={p.id} onClick={() => openBuy(p)} onMouseEnter={() => setHoveredProduct(p.id)} onMouseLeave={() => setHoveredProduct(null)} style={{
-              background: '#fff', borderRadius: isMobile ? 0 : 16, cursor: 'pointer',
-              borderBottom: isMobile ? '1px solid #F2F2F7' : '1px solid rgba(0,0,0,0.05)',
-              boxShadow: isMobile ? 'none' : (hoveredProduct === p.id ? '0 8px 24px rgba(0,0,0,0.08)' : '0 1px 3px rgba(0,0,0,0.03)'),
-              padding: isMobile ? '14px 0' : '18px',
-              display: 'flex', flexDirection: isMobile ? 'row' : 'column', gap: isMobile ? 14 : 0, alignItems: isMobile ? 'center' : 'stretch',
-              transform: isMobile ? 'none' : (hoveredProduct === p.id ? 'translateY(-3px) scale(1.01)' : 'translateY(0) scale(1)'),
+              background: '#fff', borderRadius: isMobile ? 14 : 16, cursor: 'pointer',
+              border: isMobile ? '1px solid rgba(0,0,0,0.08)' : (hoveredProduct === p.id ? '1px solid rgba(0,122,255,0.25)' : '1px solid rgba(0,0,0,0.08)'),
+              boxShadow: isMobile ? '0 1px 4px rgba(0,0,0,0.04)' : (hoveredProduct === p.id ? '0 12px 32px rgba(0,0,0,0.1)' : '0 2px 10px rgba(0,0,0,0.05)'),
+              padding: isMobile ? '12px 14px' : '16px',
+              display: 'flex', flexDirection: isMobile ? 'row' : 'column', gap: isMobile ? 12 : 0, alignItems: isMobile ? 'center' : 'stretch',
+              transform: isMobile ? 'none' : (hoveredProduct === p.id ? 'translateY(-2px) scale(1.01)' : 'translateY(0) scale(1)'),
               transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)'
             }}>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: 'flex', gap: 6, marginBottom: isMobile ? 5 : 10 }}>
-                  <span style={{ padding: '2px 7px', background: '#F5F5F7', borderRadius: 5, fontSize: 10, fontWeight: 600, color: '#34C759' }}>秒发</span>
-                  {p.is_hot && <span style={{ padding: '2px 7px', background: '#F5F5F7', borderRadius: 5, fontSize: 10, fontWeight: 600, color: '#FF3B30' }}>热门</span>}
+                <div style={{ display: 'flex', gap: 6, marginBottom: isMobile ? 4 : 8, flexWrap: 'wrap' }}>
+                  {p.tags && Array.isArray(p.tags) ? p.tags.map((tag: any, i: number) => (
+                    <span key={i} style={{ padding: '2px 7px', background: tag.bg || '#F5F5F7', borderRadius: 5, fontSize: 10, fontWeight: 600, color: tag.color || '#34C759' }}>{tag.text || tag.name}</span>
+                  )) : (
+                    <>
+                      <span style={{ padding: '2px 7px', background: '#F5F5F7', borderRadius: 5, fontSize: 10, fontWeight: 600, color: '#34C759' }}>秒发</span>
+                      {p.is_hot && p.is_hot !== '0' && <span style={{ padding: '2px 7px', background: '#F5F5F7', borderRadius: 5, fontSize: 10, fontWeight: 600, color: '#FF3B30' }}>热门</span>}
+                    </>
+                  )}
                 </div>
-                <div style={{ fontSize: isMobile ? 15 : 16, fontWeight: 600, marginBottom: isMobile ? 4 : 10, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: isMobile ? 1 : 2, WebkitBoxOrient: 'vertical', lineHeight: 1.4, color: p.stock === 0 ? '#86868B' : '#1d1d1f' }}>{p.name}</div>
+                <div style={{ fontSize: isMobile ? 14 : 15, fontWeight: 600, marginBottom: isMobile ? 3 : 8, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: isMobile ? 1 : 2, WebkitBoxOrient: 'vertical', lineHeight: 1.4, color: p.stock === 0 ? '#86868B' : '#1d1d1f' }}>{p.name}</div>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-                  <span style={{ fontSize: isMobile ? 18 : 22, fontWeight: 700, color: '#FF3B30' }}><span style={{ fontSize: isMobile ? 11 : 13, fontWeight: 600 }}>¥</span>{Number(p.price).toFixed(2)}</span>
-                  {isMobile && <span style={{ fontSize: 11, color: '#86868B' }}>已售{p.sales || 0}</span>}
+                  <span style={{ fontSize: isMobile ? 17 : 20, fontWeight: 700, color: '#FF3B30' }}><span style={{ fontSize: isMobile ? 10 : 12, fontWeight: 600 }}>¥</span>{Number(p.price).toFixed(2)}</span>
+                  {isMobile && <span style={{ fontSize: 10, color: '#86868B' }}>已售{p.sales || 0}</span>}
                 </div>
-                {!isMobile && <div style={{ fontSize: 12, color: '#86868B', marginTop: 8 }}>已售 {p.sales || 0} 件 · {p.stock > 0 ? `库存 ${p.stock}` : '已售罄'}</div>}
+                {!isMobile && <div style={{ fontSize: 11, color: '#86868B', marginTop: 6 }}>已售 {p.sales || 0} 件 · {p.stock > 0 ? `库存 ${p.stock}` : '已售罄'}</div>}
               </div>
               {isMobile ? (
                 <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>
-                  <span style={{ padding: '7px 16px', borderRadius: 980, background: p.stock > 0 ? '#007AFF' : '#F2F2F7', color: p.stock > 0 ? '#fff' : '#86868B', fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap' }}>{p.stock > 0 ? '购买' : '缺货'}</span>
+                  <span style={{ padding: '6px 14px', borderRadius: 980, background: p.stock > 0 ? '#007AFF' : '#F2F2F7', color: p.stock > 0 ? '#fff' : '#86868B', fontSize: 12, fontWeight: 600, whiteSpace: 'nowrap' }}>{p.stock > 0 ? '购买' : '缺货'}</span>
                   <span style={{ fontSize: 10, color: p.stock > 0 ? '#34C759' : '#FF3B30', fontWeight: 500 }}>{p.stock > 0 ? `剩${p.stock}件` : '无货'}</span>
                 </div>
               ) : (
-                <div style={{ marginTop: 14, display: 'flex', justifyContent: 'flex-end' }}>
-                  <span style={{ padding: '7px 18px', borderRadius: 980, background: p.stock > 0 ? '#007AFF' : '#F2F2F7', color: p.stock > 0 ? '#fff' : '#86868B', fontSize: 13, fontWeight: 600, transition: 'all 0.2s ease', transform: hoveredProduct === p.id ? 'scale(1.05)' : 'scale(1)' }}>{p.stock > 0 ? '立即购买' : '缺货'}</span>
+                <div style={{ marginTop: 12, display: 'flex', justifyContent: 'flex-end' }}>
+                  <span style={{ padding: '6px 16px', borderRadius: 980, background: p.stock > 0 ? '#007AFF' : '#F2F2F7', color: p.stock > 0 ? '#fff' : '#86868B', fontSize: 12, fontWeight: 600, transition: 'all 0.2s ease', transform: hoveredProduct === p.id ? 'scale(1.05)' : 'scale(1)' }}>{p.stock > 0 ? '立即购买' : '缺货'}</span>
                 </div>
               )}
             </div>
@@ -285,7 +293,7 @@ export default function Home() {
               {qrCode && !orderResult?.cards && (
                 <div style={{ textAlign: 'center' }}>
                   <div style={{ width: 180, height: 180, margin: '0 auto 16px', padding: 12, background: '#fff', border: '1px solid #E5E5EA', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <img src={qrCode} alt="支付二维码" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                    <img src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrCode)}`} alt="支付二维码" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                   </div>
                   <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 16px', background: '#F2F2F7', borderRadius: 980, fontSize: 13, color: '#007AFF', marginBottom: 12 }}>
                     <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#007AFF' }}></span>等待支付中...

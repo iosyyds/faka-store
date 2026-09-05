@@ -54,30 +54,39 @@ export default function QueryPage() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     const w = canvas.width, h = canvas.height;
-    ctx.fillStyle = '#F2F2F7';
+    ctx.fillStyle = '#FAFAFA';
     ctx.fillRect(0, 0, w, h);
-    for (let i = 0; i < 4; i++) {
-      ctx.strokeStyle = `rgba(${Math.random()*100+100},${Math.random()*100+100},${Math.random()*100+100},0.4)`;
+    ctx.strokeStyle = '#E5E5EA';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i < w; i += 15) {
       ctx.beginPath();
-      ctx.moveTo(Math.random() * w, Math.random() * h);
-      ctx.lineTo(Math.random() * w, Math.random() * h);
+      ctx.moveTo(i, 0);
+      ctx.lineTo(i, h);
       ctx.stroke();
     }
-    for (let i = 0; i < 30; i++) {
-      ctx.fillStyle = `rgba(${Math.random()*150+50},${Math.random()*150+50},${Math.random()*150+50},0.5)`;
-      ctx.fillRect(Math.random() * w, Math.random() * h, 1.5, 1.5);
+    for (let i = 0; i < h; i += 15) {
+      ctx.beginPath();
+      ctx.moveTo(0, i);
+      ctx.lineTo(w, i);
+      ctx.stroke();
     }
-    const colors = ['#007AFF', '#5856D6', '#FF2D55', '#34C759', '#FF9500'];
+    const colors = ['#1d1d1f', '#007AFF', '#5856D6', '#FF2D55', '#34C759'];
     for (let i = 0; i < captchaText.length; i++) {
       ctx.save();
-      ctx.font = `bold ${18 + Math.random() * 4}px -apple-system, sans-serif`;
+      ctx.font = `bold 20px -apple-system, "SF Pro Display", sans-serif`;
       ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
-      const x = 12 + i * 20;
-      const y = 22 + Math.random() * 6 - 3;
+      const x = 10 + i * 20;
+      const y = 26 + Math.random() * 4 - 2;
       ctx.translate(x, y);
-      ctx.rotate((Math.random() - 0.5) * 0.4);
+      ctx.rotate((Math.random() - 0.5) * 0.25);
       ctx.fillText(captchaText[i], 0, 0);
       ctx.restore();
+    }
+    for (let i = 0; i < 20; i++) {
+      ctx.fillStyle = `rgba(0,0,0,${Math.random() * 0.15})`;
+      ctx.beginPath();
+      ctx.arc(Math.random() * w, Math.random() * h, 1, 0, Math.PI * 2);
+      ctx.fill();
     }
   }
 
