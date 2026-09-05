@@ -288,15 +288,6 @@ export default function Home() {
                 <a href="/after-sale" style={{ fontSize: 12, color: '#6E6E73' }}>售后反馈</a>
               </div>
             </div>
-            <div>
-              <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 10 }}>联系我们</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-                {site.customer_service && <div style={{ fontSize: 12, color: '#6E6E73' }}>客服：{site.customer_service}</div>}
-                {site.qq_group && <div style={{ fontSize: 12, color: '#6E6E73' }}>QQ群：{site.qq_group}</div>}
-                <div style={{ fontSize: 12, color: '#6E6E73' }}>支付方式：支付宝</div>
-                <div style={{ fontSize: 12, color: '#6E6E73' }}>工作时间：24小时自动发货</div>
-              </div>
-            </div>
           </div>
           <div style={{ borderTop: '1px solid #D2D2D7', paddingTop: 14, display: 'flex', justifyContent: isMobile ? 'center' : 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 6 }}>
             <div style={{ fontSize: 11, color: '#86868B' }}>© {new Date().getFullYear()} {site.site_name || '甜甜发卡'}</div>
