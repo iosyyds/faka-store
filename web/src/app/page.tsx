@@ -21,6 +21,12 @@ export default function Home() {
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
   const [hoveredProduct, setHoveredProduct] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const [toast, setToast] = useState('');
+
+  const showToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(''), 2000);
+  };
 
   useEffect(() => {
     setLoaded(true);
@@ -173,24 +179,36 @@ export default function Home() {
 
         {/* 分类 */}
         {Array.isArray(categories) && categories.length > 0 && (
-          <div style={{ display: 'flex', gap: 8, marginBottom: isMobile ? 16 : 24, overflowX: 'auto', paddingBottom: 4 }}>
-            <span onClick={() => setActiveCategory('all')} style={{ padding: '6px 14px', borderRadius: 980, fontSize: 13, fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === 'all' ? '#1d1d1f' : '#F5F5F7', color: activeCategory === 'all' ? '#fff' : '#1d1d1f', transition: 'all 0.2s ease' }}>全部</span>
-            {categories.map((cat) => (
-              <span key={cat.id} onClick={() => setActiveCategory(cat.id)} style={{ padding: '6px 14px', borderRadius: 980, fontSize: 13, fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === cat.id ? '#1d1d1f' : '#F5F5F7', color: activeCategory === cat.id ? '#fff' : '#1d1d1f', transition: 'all 0.2s ease' }}>{cat.name}</span>
-            ))}
+          <div style={{ position: 'relative', marginBottom: isMobile ? 16 : 24 }}>
+            <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 4, paddingRight: isMobile ? 30 : 0, scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              <span onClick={() => setActiveCategory('all')} style={{ padding: '6px 14px', borderRadius: 980, fontSize: 13, fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === 'all' ? '#1d1d1f' : '#F5F5F7', color: activeCategory === 'all' ? '#fff' : '#1d1d1f', transition: 'all 0.2s ease', flexShrink: 0 }}>全部</span>
+              {categories.map((cat) => (
+                <span key={cat.id} onClick={() => setActiveCategory(cat.id)} style={{ padding: '6px 14px', borderRadius: 980, fontSize: 13, fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === cat.id ? '#1d1d1f' : '#F5F5F7', color: activeCategory === cat.id ? '#fff' : '#1d1d1f', transition: 'all 0.2s ease', flexShrink: 0 }}>{cat.name}</span>
+              ))}
+            </div>
+            {isMobile && categories.length > 3 && (
+              <div style={{ position: 'absolute', right: 0, top: 0, bottom: 4, width: 30, background: 'linear-gradient(to right, transparent, #fff)', pointerEvents: 'none', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#86868B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style={{ marginRight: 4 }}>
+                  <path d="m9 18 6-6-6-6"/>
+                </svg>
+              </div>
+            )}
           </div>
         )}
 
         {/* 商品列表 */}
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(260px, 1fr))', gap: isMobile ? 10 : 14, padding: isMobile ? '0 4px' : 0 }}>
-          {filteredProducts.map((p) => (
-            <div key={p.id} onClick={() => openBuy(p)} onMouseEnter={() => setHoveredProduct(p.id)} onMouseLeave={() => setHoveredProduct(null)} style={{
-              background: '#fff', borderRadius: isMobile ? 14 : 16, cursor: 'pointer',
+          {filteredProducts.map((p) => {
+            const isSoldOut = Number(p.stock) === 0;
+            return (
+            <div key={p.id} onClick={() => { if (isSoldOut) { showToast('该商品已缺货'); } else { openBuy(p); } }} onMouseEnter={() => !isSoldOut && setHoveredProduct(p.id)} onMouseLeave={() => setHoveredProduct(null)} style={{
+              background: '#fff', borderRadius: isMobile ? 14 : 16, cursor: isSoldOut ? 'not-allowed' : 'pointer',
+              opacity: isSoldOut ? 0.55 : 1,
               border: isMobile ? '1px solid rgba(0,0,0,0.08)' : (hoveredProduct === p.id ? '1px solid rgba(0,122,255,0.25)' : '1px solid rgba(0,0,0,0.08)'),
               boxShadow: isMobile ? '0 1px 4px rgba(0,0,0,0.04)' : (hoveredProduct === p.id ? '0 12px 32px rgba(0,0,0,0.1)' : '0 2px 10px rgba(0,0,0,0.05)'),
               padding: isMobile ? '12px 14px' : '16px',
               display: 'flex', flexDirection: isMobile ? 'row' : 'column', gap: isMobile ? 12 : 0, alignItems: isMobile ? 'center' : 'stretch',
-              transform: isMobile ? 'none' : (hoveredProduct === p.id ? 'translateY(-2px) scale(1.01)' : 'translateY(0) scale(1)'),
+              transform: isMobile || isSoldOut ? 'none' : (hoveredProduct === p.id ? 'translateY(-2px) scale(1.01)' : 'translateY(0) scale(1)'),
               transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)'
             }}>
               <div style={{ flex: 1, minWidth: 0 }}>
@@ -348,13 +366,13 @@ export default function Home() {
                   </div>
                   <div style={{ marginBottom: 14 }}>
                     <div style={{ fontSize: 13, fontWeight: 500, marginBottom: 6 }}>联系方式</div>
-                    <input type="text" placeholder="手机号 / 邮箱 / QQ号" value={contact} onChange={(e) => setContact(e.target.value)} style={{ width: '100%', padding: '10px 12px', border: '1px solid #E5E5EA', background: '#fff', borderRadius: 10, fontSize: 14, outline: 'none' }} />
+                    <input type="tel" placeholder="请输入手机号" value={contact} onChange={(e) => setContact(e.target.value.replace(/[^0-9]/g, ''))} maxLength={11} style={{ width: '100%', padding: '10px 12px', border: '1px solid #E5E5EA', background: '#fff', borderRadius: 10, fontSize: 14, outline: 'none' }} />
                   </div>
                   <div style={{ marginBottom: 16 }}>
                     <div style={{ fontSize: 13, fontWeight: 500, marginBottom: 6 }}>购买数量</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                       <button onClick={() => setQuantity(Math.max(1, quantity - 1))} style={{ width: 36, height: 36, border: 'none', background: '#F5F5F7', borderRadius: 10, cursor: 'pointer', fontSize: 16, fontWeight: 500 }}>-</button>
-                      <span style={{ fontSize: 16, fontWeight: 600, minWidth: 32, textAlign: 'center' }}>{quantity}</span>
+                      <span style={{ fontSize: 16, fontWeight: 600, minWidth: 48, height: 36, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E5E5EA', borderRadius: 10, background: '#fff' }}>{quantity}</span>
                       <button onClick={() => setQuantity(Math.min(selectedProduct.stock, quantity + 1))} style={{ width: 36, height: 36, border: 'none', background: '#F5F5F7', borderRadius: 10, cursor: 'pointer', fontSize: 16, fontWeight: 500 }}>+</button>
                     </div>
                   </div>
@@ -386,6 +404,13 @@ export default function Home() {
               )}
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Toast 提示 */}
+      {toast && (
+        <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 9999, background: 'rgba(0,0,0,0.75)', color: '#fff', padding: '12px 24px', borderRadius: 12, fontSize: 14, fontWeight: 500, backdropFilter: 'blur(10px)', animation: 'fadeIn 0.2s ease', boxShadow: '0 8px 32px rgba(0,0,0,0.2)' }}>
+          {toast}
         </div>
       )}
     </div>
