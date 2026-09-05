@@ -19,6 +19,7 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [isWechat, setIsWechat] = useState(false);
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+  const [hoveredProduct, setHoveredProduct] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -116,18 +117,31 @@ export default function Home() {
     <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1d1d1f', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif' }}>
       {/* 微信提示 */}
       {isWechat && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
-          <div style={{ position: 'absolute', top: 20, right: 24, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7"></path><path d="M7 7h10v10"></path></svg>
-            <span style={{ color: '#fff', fontSize: 13, fontWeight: 500 }}>右上角</span>
+        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(30px)', WebkitBackdropFilter: 'blur(30px)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 32, animation: 'fadeIn 0.3s ease' }}>
+          <div style={{ position: 'absolute', top: 24, right: 28, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8, animation: 'bounce 1s infinite' }}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7"></path><path d="M7 7h10v10"></path></svg>
+            <span style={{ color: '#fff', fontSize: 14, fontWeight: 600, textShadow: '0 1px 4px rgba(0,0,0,0.3)' }}>点击右上角</span>
           </div>
-          <div style={{ width: 72, height: 72, marginBottom: 24, borderRadius: 20, background: '#07C160', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 32px rgba(7,193,96,0.4)' }}>
-            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
+          <div style={{ width: 84, height: 84, marginBottom: 28, borderRadius: 24, background: 'linear-gradient(135deg,#07C160,#06AD56)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 12px 40px rgba(7,193,96,0.5)', animation: 'pulse 2s infinite' }}>
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
           </div>
-          <div style={{ color: '#fff', fontSize: 22, fontWeight: 700, marginBottom: 12, textAlign: 'center' }}>请在浏览器中打开</div>
-          <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 15, textAlign: 'center', lineHeight: 1.7, maxWidth: 300 }}>
-            微信内无法正常使用支付功能<br/>点击右上角「···」<br/>选择「在浏览器打开」即可正常访问
+          <div style={{ color: '#fff', fontSize: 24, fontWeight: 700, marginBottom: 14, textAlign: 'center', letterSpacing: -0.5, textShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>请在浏览器中打开</div>
+          <div style={{ color: 'rgba(255,255,255,0.85)', fontSize: 15, textAlign: 'center', lineHeight: 1.8, maxWidth: 320, marginBottom: 32 }}>
+            微信内无法正常使用支付功能<br/>
+            点击右上角「···」菜单<br/>
+            选择「在浏览器打开」即可正常访问
           </div>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
+            <div style={{ padding: '8px 16px', background: 'rgba(255,255,255,0.15)', borderRadius: 980, fontSize: 12, color: '#fff', fontWeight: 500, backdropFilter: 'blur(10px)' }}>🔒 安全支付</div>
+            <div style={{ padding: '8px 16px', background: 'rgba(255,255,255,0.15)', borderRadius: 980, fontSize: 12, color: '#fff', fontWeight: 500, backdropFilter: 'blur(10px)' }}>⚡ 自动秒发</div>
+            <div style={{ padding: '8px 16px', background: 'rgba(255,255,255,0.15)', borderRadius: 980, fontSize: 12, color: '#fff', fontWeight: 500, backdropFilter: 'blur(10px)' }}>🎫 卡密加密</div>
+          </div>
+          <button onClick={() => setIsWechat(false)} style={{ marginTop: 32, padding: '10px 28px', borderRadius: 980, background: 'rgba(255,255,255,0.2)', color: '#fff', border: '1px solid rgba(255,255,255,0.3)', fontSize: 14, fontWeight: 500, cursor: 'pointer', backdropFilter: 'blur(10px)', transition: 'all 0.2s ease' }} onMouseDown={(e) => { e.currentTarget.style.transform = 'scale(0.95)'; }} onMouseUp={(e) => { e.currentTarget.style.transform = 'scale(1)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}>我知道了</button>
+          <style>{`
+            @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+            @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+            @keyframes pulse { 0%, 100% { box-shadow: 0 12px 40px rgba(7,193,96,0.5); } 50% { box-shadow: 0 12px 60px rgba(7,193,96,0.8); } }
+          `}</style>
         </div>
       )}
 
@@ -168,12 +182,14 @@ export default function Home() {
         {/* 商品列表 */}
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(280px, 1fr))', gap: isMobile ? 0 : 16 }}>
           {filteredProducts.map((p) => (
-            <div key={p.id} onClick={() => openBuy(p)} style={{
-              background: '#fff', borderRadius: isMobile ? 0 : 18, cursor: 'pointer',
-              borderBottom: isMobile ? '1px solid #F2F2F7' : '1px solid rgba(0,0,0,0.06)',
-              boxShadow: isMobile ? 'none' : '0 1px 3px rgba(0,0,0,0.04)',
-              padding: isMobile ? '14px 0' : '20px',
-              display: 'flex', flexDirection: isMobile ? 'row' : 'column', gap: isMobile ? 14 : 0, alignItems: isMobile ? 'center' : 'stretch'
+            <div key={p.id} onClick={() => openBuy(p)} onMouseEnter={() => setHoveredProduct(p.id)} onMouseLeave={() => setHoveredProduct(null)} style={{
+              background: '#fff', borderRadius: isMobile ? 0 : 16, cursor: 'pointer',
+              borderBottom: isMobile ? '1px solid #F2F2F7' : '1px solid rgba(0,0,0,0.05)',
+              boxShadow: isMobile ? 'none' : (hoveredProduct === p.id ? '0 8px 24px rgba(0,0,0,0.08)' : '0 1px 3px rgba(0,0,0,0.03)'),
+              padding: isMobile ? '14px 0' : '18px',
+              display: 'flex', flexDirection: isMobile ? 'row' : 'column', gap: isMobile ? 14 : 0, alignItems: isMobile ? 'center' : 'stretch',
+              transform: isMobile ? 'none' : (hoveredProduct === p.id ? 'translateY(-3px) scale(1.01)' : 'translateY(0) scale(1)'),
+              transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)'
             }}>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', gap: 6, marginBottom: isMobile ? 5 : 10 }}>
@@ -193,8 +209,8 @@ export default function Home() {
                   <span style={{ fontSize: 10, color: p.stock > 0 ? '#34C759' : '#FF3B30', fontWeight: 500 }}>{p.stock > 0 ? `剩${p.stock}件` : '无货'}</span>
                 </div>
               ) : (
-                <div style={{ marginTop: 16, display: 'flex', justifyContent: 'flex-end' }}>
-                  <span style={{ padding: '8px 20px', borderRadius: 980, background: p.stock > 0 ? '#007AFF' : '#F2F2F7', color: p.stock > 0 ? '#fff' : '#86868B', fontSize: 13, fontWeight: 600 }}>{p.stock > 0 ? '立即购买' : '缺货'}</span>
+                <div style={{ marginTop: 14, display: 'flex', justifyContent: 'flex-end' }}>
+                  <span style={{ padding: '7px 18px', borderRadius: 980, background: p.stock > 0 ? '#007AFF' : '#F2F2F7', color: p.stock > 0 ? '#fff' : '#86868B', fontSize: 13, fontWeight: 600, transition: 'all 0.2s ease', transform: hoveredProduct === p.id ? 'scale(1.05)' : 'scale(1)' }}>{p.stock > 0 ? '立即购买' : '缺货'}</span>
                 </div>
               )}
             </div>
@@ -254,8 +270,8 @@ export default function Home() {
 
       {/* 购买弹窗 */}
       {showBuy && selectedProduct && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 200, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
-          <div style={{ background: '#fff', borderRadius: 20, width: '100%', maxWidth: 400, maxHeight: '88vh', overflowY: 'auto' }}>
+        <div style={{ position: 'fixed', inset: 0, zIndex: 200, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20, animation: 'fadeIn 0.2s ease' }}>
+          <div style={{ background: '#fff', borderRadius: 20, width: '100%', maxWidth: 400, maxHeight: '88vh', overflowY: 'auto', animation: 'scaleIn 0.25s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: '0 20px 60px rgba(0,0,0,0.15)' }}>
             <div style={{ padding: '18px 20px 14px', borderBottom: '1px solid #F2F2F7', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, background: '#fff', zIndex: 1 }}>
               <div style={{ fontSize: 17, fontWeight: 600 }}>{orderResult ? '订单详情' : '确认购买'}</div>
               {!polling && <span onClick={closeModal} style={{ cursor: 'pointer', color: '#86868B', width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', background: '#F2F2F7' }}>
@@ -276,7 +292,10 @@ export default function Home() {
                   </div>
                   <div style={{ fontSize: 13, color: '#86868B', marginBottom: 16 }}>订单号：{orderResult?.order_no || ''}</div>
                   <div style={{ fontSize: 24, fontWeight: 700, marginBottom: 16 }}>¥{Number(selectedProduct.price * quantity).toFixed(2)}</div>
-                  <a href={qrCode} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 24px', background: '#1677FF', color: '#fff', borderRadius: 980, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>打开支付宝支付</a>
+                  <a href={qrCode} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 24px', background: '#1677FF', color: '#fff', borderRadius: 980, fontSize: 14, fontWeight: 600, textDecoration: 'none', transition: 'all 0.2s ease' }} onMouseDown={(e) => { e.currentTarget.style.transform = 'scale(0.97)'; }} onMouseUp={(e) => { e.currentTarget.style.transform = 'scale(1)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}>
+                    <img src="/alipay-icon.png" alt="支付宝" style={{ width: 20, height: 20, borderRadius: 5, objectFit: 'cover', display: 'block' }} />
+                    打开支付宝支付
+                  </a>
                 </div>
               )}
               {/* 支付成功 */}
@@ -337,17 +356,18 @@ export default function Home() {
                   </div>
                   <div style={{ marginBottom: 16 }}>
                     <div style={{ fontSize: 13, fontWeight: 500, marginBottom: 8 }}>支付方式</div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px', border: '1.5px solid #007AFF', borderRadius: 12, background: 'rgba(0,122,255,0.04)' }}>
-                      <div style={{ width: 32, height: 32, borderRadius: 8, background: '#1677FF', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                        <svg width="18" height="18" viewBox="0 0 1024 1024" fill="#fff"><path d="M230.4 788.48c-14.336 0-28.672-5.12-38.912-15.36-20.992-20.992-20.992-55.296 0-76.288l307.2-307.2c20.992-20.992 55.296-20.992 76.288 0s20.992 55.296 0 76.288l-307.2 307.2c-10.24 10.24-24.576 15.36-37.376 15.36z"/><path d="M788.48 788.48h-184.32c-30.72 0-55.296-24.576-55.296-55.296s24.576-55.296 55.296-55.296h184.32c30.72 0 55.296 24.576 55.296 55.296s-24.576 55.296-55.296 55.296z"/><path d="M230.4 368.64h-76.288C123.392 368.64 98.816 344.064 98.816 313.344V128.96c0-30.72 24.576-55.296 55.296-55.296h184.32c30.72 0 55.296 24.576 55.296 55.296s-24.576 55.296-55.296 55.296h-128v128c0 30.72-24.576 55.296-55.296 55.296z"/><path d="M788.48 368.64h-184.32c-30.72 0-55.296-24.576-55.296-55.296V128.96c0-30.72 24.576-55.296 55.296-55.296h184.32c30.72 0 55.296 24.576 55.296 55.296v184.32c0 30.72-24.576 55.296-55.296 55.296z"/></svg>
-                      </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', border: '1.5px solid #007AFF', borderRadius: 12, background: 'rgba(0,122,255,0.04)', transition: 'all 0.2s ease' }}>
+                      <img src="/alipay-icon.png" alt="支付宝" style={{ width: 32, height: 32, borderRadius: 8, objectFit: 'cover', display: 'block', flexShrink: 0 }} />
                       <span style={{ fontSize: 14, fontWeight: 500, flex: 1 }}>支付宝</span>
                       <div style={{ width: 18, height: 18, borderRadius: '50%', border: '2px solid #007AFF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#007AFF' }}></div>
                       </div>
                     </div>
                   </div>
-                  <button onClick={handleBuy} disabled={ordering || selectedProduct.stock <= 0} style={{ width: '100%', padding: '13px', borderRadius: 12, border: 'none', background: '#007AFF', color: '#fff', fontSize: 15, fontWeight: 600, cursor: ordering ? 'not-allowed' : 'pointer', opacity: ordering ? 0.6 : 1 }}>{ordering ? '处理中...' : '立即支付'}</button>
+                  <div style={{ display: 'flex', gap: 10 }}>
+                    <button onClick={closeModal} style={{ flex: 1, padding: '11px', borderRadius: 10, border: '1px solid #E5E5EA', background: '#fff', color: '#1d1d1f', fontSize: 14, fontWeight: 500, cursor: 'pointer', transition: 'all 0.2s ease' }} onMouseDown={(e) => { e.currentTarget.style.transform = 'scale(0.97)'; }} onMouseUp={(e) => { e.currentTarget.style.transform = 'scale(1)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}>取消</button>
+                    <button onClick={handleBuy} disabled={ordering || selectedProduct.stock <= 0} style={{ flex: 2, padding: '11px', borderRadius: 10, border: 'none', background: '#007AFF', color: '#fff', fontSize: 14, fontWeight: 600, cursor: ordering ? 'not-allowed' : 'pointer', opacity: ordering ? 0.6 : 1, transition: 'all 0.2s ease' }} onMouseDown={(e) => { if (!ordering) e.currentTarget.style.transform = 'scale(0.97)'; }} onMouseUp={(e) => { e.currentTarget.style.transform = 'scale(1)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}>{ordering ? '处理中...' : '立即支付'}</button>
+                  </div>
                   <div style={{ marginTop: 12, padding: '10px 14px', background: 'rgba(52,199,89,0.08)', borderRadius: 10, fontSize: 11, color: '#34C759', display: 'flex', alignItems: 'center', gap: 6 }}>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>

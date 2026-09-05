@@ -111,7 +111,7 @@ export default function QueryPage() {
     3: { label: '已退款', color: '#FF3B30' },
   };
 
-  const inputStyle: React.CSSProperties = { width: '100%', padding: '10px 14px', border: '1px solid #E5E5EA', background: '#fff', borderRadius: 10, fontSize: 14, outline: 'none', height: 44, boxSizing: 'border-box', color: appleText };
+  const inputStyle: React.CSSProperties = { width: '100%', padding: '8px 12px', border: '1px solid #E5E5EA', background: '#fff', borderRadius: 10, fontSize: 13, outline: 'none', height: 38, boxSizing: 'border-box', color: appleText, transition: 'all 0.2s ease' };
 
   if (!loaded) {
     return <div style={{ minHeight: '100vh', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: appleSubtext, fontSize: 14 }}>加载中...</div>;
@@ -178,10 +178,10 @@ export default function QueryPage() {
             <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 8 }}>验证码</label>
             <div style={{ display: 'flex', gap: 10 }}>
               <input type="text" placeholder="请输入验证码" value={captchaInput} onChange={(e) => setCaptchaInput(e.target.value)} style={{ ...inputStyle, flex: 1 }} maxLength={4} onKeyDown={(e) => e.key === 'Enter' && handleQuery()} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
-              <canvas ref={canvasRef} width={90} height={44} onClick={refreshCaptcha} style={{ borderRadius: 10, cursor: 'pointer', border: '1px solid #E5E5EA', height: 44, flexShrink: 0, boxSizing: 'border-box' }} title="点击刷新" />
+              <canvas ref={canvasRef} width={90} height={38} onClick={refreshCaptcha} style={{ borderRadius: 10, cursor: 'pointer', border: '1px solid #E5E5EA', height: 38, flexShrink: 0, boxSizing: 'border-box' }} title="点击刷新" />
             </div>
           </div>
-          <button onClick={handleQuery} disabled={loading} style={{ width: '100%', padding: '12px', borderRadius: 12, border: 'none', background: appleBlue, color: '#fff', fontSize: 15, fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.6 : 1, boxShadow: '0 3px 10px rgba(0,122,255,0.25)' }}>
+          <button onClick={handleQuery} disabled={loading} style={{ width: '100%', padding: '10px', borderRadius: 10, border: 'none', background: appleBlue, color: '#fff', fontSize: 14, fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.6 : 1, boxShadow: '0 2px 8px rgba(0,122,255,0.2)', transition: 'all 0.2s ease', transform: 'scale(1)' }} onMouseDown={(e) => { if (!loading) e.currentTarget.style.transform = 'scale(0.97)'; }} onMouseUp={(e) => { e.currentTarget.style.transform = 'scale(1)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}>
             {loading ? '查询中...' : '立即查询'}
           </button>
         </div>
