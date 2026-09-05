@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import Navbar from '@/components/Navbar';
 import { useRouter } from 'next/navigation';
 
 const API_BASE = 'https://kk.qqqi.top/api';
@@ -28,16 +29,8 @@ export default function FaqPage() {
   const list = faqs.length > 0 ? faqs : defaultFaqs;
   return (
     <div style={{ minHeight: '100vh', background: '#FBFBFD', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif', color: appleText }}>
-      <nav style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(255,255,255,0.72)', backdropFilter: 'saturate(180%) blur(20px)', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
-        <div style={{ maxWidth: 1024, margin: '0 auto', padding: '0 22px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }} onClick={() => router.push('/')}>
-            <img src="/logo.png" alt="logo" style={{ width: 30, height: 30, borderRadius: 8, objectFit: 'cover', display: 'block' }} />
-            <span style={{ fontSize: 17, fontWeight: 600, letterSpacing: -0.3 }}>{site.site_name || '甜甜发卡'}</span>
-          </div>
-          <button onClick={() => router.push('/')} style={{ padding: '7px 16px', borderRadius: 20, background: appleGray, color: appleText, border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>返回首页</button>
-        </div>
-      </nav>
-      <div style={{ maxWidth: 600, margin: '0 auto', padding: '36px 20px' }}>
+      <Navbar buttonText="返回首页" buttonHref="/" isMobile={false} />
+      <div style={{ maxWidth: 600, margin: '0 auto', padding: '88px 20px 36px' }}>
         <h2 style={{ fontSize: 28, fontWeight: 700, margin: '0 0 24px', textAlign: 'center', letterSpacing: -0.8 }}>常见问题</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {list.map((f) => (

@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import Navbar from '@/components/Navbar';
 import { useRouter } from 'next/navigation';
 
 const API_BASE = 'https://kk.qqqi.top/api';
