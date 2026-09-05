@@ -32,16 +32,16 @@ export default function Home() {
 
   useEffect(() => {
     if (!loaded) return;
-    fetch(`${API_BASE}/site.php`).then(r => r.json()).then(d => setSite(d.data || d || {})).catch(() => {});
+    fetch(`${API_BASE}/site.php`).then(r => r.json()).then(d => setSite(d?.data && typeof d.data === 'object' ? d.data : d && typeof d === 'object' ? d : {})).catch(() => {});
     fetch(`${API_BASE}/products.php`).then(r => r.json()).then(d => {
-      const list = d.data || d.products || d.list || [];
+      const list = Array.isArray(d?.data) ? d.data : Array.isArray(d?.products) ? d.products : Array.isArray(d?.list) ? d.list : Array.isArray(d) ? d : [];
       setProducts(list);
-      const cats = Array.from(new Set(list.map((p: any) => p.category_name || p.category).filter(Boolean)));
+      const cats = Array.from(new Set(list.map((p: any) => p?.category_name || p?.category).filter(Boolean)));
       setCategories(cats as string[]);
     }).catch(() => {});
   }, [loaded]);
 
-  const filteredProducts = activeCategory === 'all' ? products : products.filter(p => (p.category_name || p.category) === activeCategory);
+  const filteredProducts = Array.isArray(products) ? (activeCategory === 'all' ? products : products.filter(p => (p?.category_name || p?.category) === activeCategory)) : [];
 
   const openBuy = (p: any) => {
     setSelectedProduct(p);
@@ -74,7 +74,7 @@ export default function Home() {
         if (order.status === 'paid' || order.status === 1 || order.status === 'success') {
           clearInterval(timer);
           setPolling(false);
-          setOrderResult((prev: any) => ({ ...prev, ...order, cards: order.cards || [] }));
+          setOrderResult((prev: any) => ({ ...prev, ...order, cards: Array.isArray(order.cards) ? order.cards : [] }));
         }
       }).catch(() => {});
     }, 2000);
@@ -156,7 +156,7 @@ export default function Home() {
         </div>
 
         {/* 分类 */}
-        {categories.length > 0 && (
+        {Array.isArray(categories) && categories.length > 0 && (
           <div style={{ display: 'flex', gap: 8, marginBottom: isMobile ? 20 : 28, overflowX: 'auto', paddingBottom: 4 }}>
             <span onClick={() => setActiveCategory('all')} style={{ padding: '7px 16px', borderRadius: 980, fontSize: 13, fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === 'all' ? '#1d1d1f' : '#F5F5F7', color: activeCategory === 'all' ? '#fff' : '#1d1d1f' }}>全部</span>
             {categories.map((cat, i) => (
@@ -270,7 +270,7 @@ export default function Home() {
                 </div>
               )}
               {/* 支付成功 */}
-              {orderResult?.cards && orderResult.cards.length > 0 && (
+              {Array.isArray(orderResult?.cards) && orderResult.cards.length > 0 && (
                 <div style={{ textAlign: 'center' }}>
                   <div style={{ width: 56, height: 56, margin: '0 auto 14px', borderRadius: '50%', background: '#34C759', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ fontSize: 28, color: '#fff' }}>✓</span></div>
                   <div style={{ fontSize: 18, fontWeight: 600, marginBottom: 6 }}>支付成功</div>
