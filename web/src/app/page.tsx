@@ -162,7 +162,7 @@ export default function Home() {
         <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '0 16px' : '0 22px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', height: '100%' }} onClick={goHome}>
             <img src="/logo.png" alt="logo" style={{ width: 28, height: 28, borderRadius: 7, objectFit: 'cover', display: 'block', flexShrink: 0 }} />
-            <span style={{ fontSize: 17, fontWeight: 600, lineHeight: '20px', display: 'flex', alignItems: 'center', marginTop: isMobile ? 0 : 5 }}>{site.site_name || '甜甜发卡'}</span>
+            <span style={{ fontSize: 17, fontWeight: 600, lineHeight: '20px', display: 'flex', alignItems: 'center', marginTop: isMobile ? 0 : 5.5 }}>{site.site_name || '甜甜发卡'}</span>
           </div>
           <button onClick={goQuery} style={{ width: 80, height: 32, padding: 0, borderRadius: 980, background: '#007AFF', color: '#fff', border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>订单查询</button>
         </div>
@@ -237,12 +237,8 @@ export default function Home() {
                 {isMobile && <div style={{ fontSize: 10, color: '#86868B', marginTop: 2 }}>已售{p.sales || 0} · {p.stock > 0 ? `剩${p.stock}件` : '无货'}</div>}
               </div>
               {isMobile ? (
-                <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6, justifyContent: 'center' }}>
+                <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center' }}>
                   <span style={{ padding: '7px 18px', borderRadius: 980, background: p.stock > 0 ? 'linear-gradient(135deg, #007AFF, #5856D6)' : '#F2F2F7', color: p.stock > 0 ? '#fff' : '#86868B', fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap', boxShadow: p.stock > 0 ? '0 4px 10px rgba(0,122,255,0.25)' : 'none' }}>{p.stock > 0 ? '购买' : '缺货'}</span>
-                  <span style={{ fontSize: 10, color: p.stock > 0 ? '#34C759' : '#FF3B30', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-                    {p.stock > 0 ? `剩${p.stock}件` : '无货'}
-                  </span>
                 </div>
               ) : (
                 <div style={{ marginTop: 8, display: 'flex', justifyContent: 'flex-end' }}>
@@ -269,28 +265,55 @@ export default function Home() {
       </div>
 
       {/* 页脚 */}
-      <footer style={{ borderTop: '1px solid #D2D2D7', background: '#F5F5F7' }}>
-        <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '24px 16px 20px' : '32px 22px 24px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.5fr 1fr 1fr', gap: isMobile ? 20 : 40, marginBottom: isMobile ? 20 : 28 }}>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
-                <img src="/logo.png" alt="logo" style={{ width: 24, height: 24, borderRadius: 6, objectFit: 'cover', display: 'block' }} />
-                <span style={{ fontSize: 14, fontWeight: 600 }}>{site.site_name || '甜甜发卡'}</span>
+      <footer style={{ borderTop: '1px solid rgba(0,0,0,0.06)', background: '#FAFAFA' }}>
+        <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '28px 16px 24px' : '40px 22px 28px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '2fr 1fr 1fr', gap: isMobile ? 24 : 48, marginBottom: isMobile ? 24 : 32 }}>
+            <div style={{ textAlign: isMobile ? 'center' : 'left' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12, justifyContent: isMobile ? 'center' : 'flex-start' }}>
+                <img src="/logo.png" alt="logo" style={{ width: 28, height: 28, borderRadius: 8, objectFit: 'cover', display: 'block', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                <span style={{ fontSize: 16, fontWeight: 700, color: '#1d1d1f' }}>{site.site_name || '甜甜发卡'}</span>
               </div>
-              <p style={{ fontSize: 12, color: '#6E6E73', lineHeight: 1.6, maxWidth: 280, margin: 0 }}>{site.footer_desc || '专业的虚拟商品自动发卡平台，支付宝安全支付，付款后自动秒发卡密，24小时无人值守。'}</p>
+              <p style={{ fontSize: 12, color: '#86868B', lineHeight: 1.7, maxWidth: isMobile ? '100%' : 320, margin: isMobile ? '0 auto' : 0 }}>{site.footer_desc || '专业的虚拟商品自动发卡平台，支付宝安全支付，付款后自动秒发卡密，24小时无人值守。'}</p>
+              {!isMobile && (
+                <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
+                  <span style={{ padding: '4px 10px', background: '#fff', borderRadius: 980, fontSize: 11, color: '#34C759', fontWeight: 600, border: '1px solid rgba(52,199,89,0.2)' }}>自动秒发</span>
+                  <span style={{ padding: '4px 10px', background: '#fff', borderRadius: 980, fontSize: 11, color: '#007AFF', fontWeight: 600, border: '1px solid rgba(0,122,255,0.2)' }}>安全支付</span>
+                  <span style={{ padding: '4px 10px', background: '#fff', borderRadius: 980, fontSize: 11, color: '#AF52DE', fontWeight: 600, border: '1px solid rgba(175,82,222,0.2)' }}>加密存储</span>
+                </div>
+              )}
             </div>
-            <div>
-              <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 10 }}>快速链接</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-                <a href="/" style={{ fontSize: 12, color: '#6E6E73' }}>首页</a>
-                <a href="/query" style={{ fontSize: 12, color: '#6E6E73' }}>订单查询</a>
-                <a href="/faq" style={{ fontSize: 12, color: '#6E6E73' }}>常见问题</a>
-                <a href="/after-sale" style={{ fontSize: 12, color: '#6E6E73' }}>售后反馈</a>
+            <div style={{ textAlign: isMobile ? 'center' : 'left' }}>
+              <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 14, color: '#1d1d1f' }}>快速链接</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: isMobile ? 'center' : 'flex-start' }}>
+                <a href="/" style={{ fontSize: 12, color: '#86868B', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#007AFF'} onMouseLeave={(e) => e.currentTarget.style.color = '#86868B'}>首页</a>
+                <a href="/query" style={{ fontSize: 12, color: '#86868B', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#007AFF'} onMouseLeave={(e) => e.currentTarget.style.color = '#86868B'}>订单查询</a>
+                <a href="/faq" style={{ fontSize: 12, color: '#86868B', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#007AFF'} onMouseLeave={(e) => e.currentTarget.style.color = '#86868B'}>常见问题</a>
+                <a href="/after-sale" style={{ fontSize: 12, color: '#86868B', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#007AFF'} onMouseLeave={(e) => e.currentTarget.style.color = '#86868B'}>售后反馈</a>
               </div>
             </div>
+            {!isMobile && (
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 14, color: '#1d1d1f' }}>服务保障</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#86868B' }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#34C759" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    支付宝安全支付
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#86868B' }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#007AFF" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    24小时自动发货
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#86868B' }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#AF52DE" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    卡密加密存储
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
-          <div style={{ borderTop: '1px solid #D2D2D7', paddingTop: 14, display: 'flex', justifyContent: isMobile ? 'center' : 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 6 }}>
+          <div style={{ borderTop: '1px solid rgba(0,0,0,0.06)', paddingTop: 18, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 6 : 16 }}>
             <div style={{ fontSize: 11, color: '#86868B' }}>© {new Date().getFullYear()} {site.site_name || '甜甜发卡'}</div>
+            {!isMobile && <div style={{ width: 3, height: 3, borderRadius: '50%', background: '#D2D2D7' }}/>}
             <div style={{ fontSize: 11, color: '#86868B' }}>{site.icp_number || ''} 虚拟商品自动发卡平台</div>
           </div>
         </div>
