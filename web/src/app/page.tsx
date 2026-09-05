@@ -171,18 +171,18 @@ export default function Home() {
       )}
 
       {/* 导航栏 */}
-      <nav style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(255,255,255,0.8)', backdropFilter: 'saturate(180%) blur(20px)', WebkitBackdropFilter: 'saturate(180%) blur(20px)', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
+      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, background: 'rgba(255,255,255,0.8)', backdropFilter: 'saturate(180%) blur(20px)', WebkitBackdropFilter: 'saturate(180%) blur(20px)', borderBottom: '1px solid rgba(0,0,0,0.06)', transform: 'translateZ(0)' }}>
         <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '0 16px' : '0 22px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', height: '100%' }} onClick={goHome}>
             <img src="/logo.png" alt="logo" style={{ width: 28, height: 28, borderRadius: 7, objectFit: 'cover', display: 'block', flexShrink: 0 }} />
-            <span style={{ fontSize: 17, fontWeight: 600, lineHeight: '52px', height: 52, display: 'inline-block', verticalAlign: 'middle' }}>{site.site_name || '甜甜发卡'}</span>
+            <span style={{ fontSize: 17, fontWeight: 600, lineHeight: '52px', height: 52, display: 'inline-flex', alignItems: 'center', margin: 0, padding: 0, whiteSpace: 'nowrap' }}>{site.site_name || '甜甜发卡'}</span>
           </div>
           <button onClick={goQuery} style={{ width: 80, height: 32, padding: 0, borderRadius: 980, background: '#007AFF', color: '#fff', border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>订单查询</button>
         </div>
       </nav>
 
       {/* 主内容 */}
-      <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '20px 14px 32px' : '40px 22px 56px' }}>
+      <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '72px 14px 32px' : '92px 22px 56px' }}>
         {/* Hero */}
         <div style={{ textAlign: 'center', marginBottom: isMobile ? 20 : 36 }}>
           <h1 style={{ fontSize: isMobile ? 26 : 44, fontWeight: 700, marginBottom: 8, lineHeight: 1.1 }}>{site.banner_title || '虚拟商品，即拍即发。'}</h1>
