@@ -220,23 +220,23 @@ export default function Home() {
               transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)'
             }}>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: isMobile ? 2 : 3 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6, flexWrap: 'wrap' }}>
                   {p.tag_text && <span style={{ padding: '2px 8px', borderRadius: 980, background: p.tag_color || '#FF9500', color: '#fff', fontSize: 10, fontWeight: 700, letterSpacing: 0.5 }}>{p.tag_text}</span>}
                   {p.is_top == 1 && <span style={{ padding: '2px 8px', borderRadius: 980, background: 'linear-gradient(135deg, #AF52DE, #5856D6)', color: '#fff', fontSize: 10, fontWeight: 700, letterSpacing: 0.5 }}>置顶</span>}
                   {p.category_name && <span style={{ padding: '2px 8px', borderRadius: 980, background: '#F2F2F7', color: '#86868B', fontSize: 10, fontWeight: 500 }}>{p.category_name}</span>}
                 </div>
-                <div style={{ fontSize: isMobile ? 14 : 15, fontWeight: 600, marginBottom: isMobile ? 2 : 3, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: isMobile ? 1 : 2, WebkitBoxOrient: 'vertical', lineHeight: 1.4, color: p.stock === 0 ? '#86868B' : '#1d1d1f' }}>{p.name}</div>
-                {p.description && <div style={{ fontSize: isMobile ? 11 : 12, color: '#86868B', marginBottom: isMobile ? 3 : 4, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: isMobile ? 1 : 1, WebkitBoxOrient: 'vertical', lineHeight: 1.4 }}>{p.description}</div>}
+                <div style={{ fontSize: isMobile ? 14 : 15, fontWeight: 600, marginBottom: 6, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: isMobile ? 1 : 2, WebkitBoxOrient: 'vertical', lineHeight: 1.4, color: p.stock === 0 ? '#86868B' : '#1d1d1f' }}>{p.name}</div>
+                {p.description && <div style={{ fontSize: isMobile ? 11 : 12, color: '#86868B', marginBottom: 6, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: isMobile ? 1 : 1, WebkitBoxOrient: 'vertical', lineHeight: 1.4 }}>{p.description}</div>}
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
                   <span style={{ fontSize: isMobile ? 17 : 22, fontWeight: 700, color: '#FF3B30' }}><span style={{ fontSize: isMobile ? 10 : 13, fontWeight: 600 }}>¥</span>{Number(p.price).toFixed(2)}</span>
                   {p.original_price && Number(p.original_price) > Number(p.price) && <span style={{ fontSize: isMobile ? 10 : 12, color: '#86868B', textDecoration: 'line-through' }}>¥{Number(p.original_price).toFixed(2)}</span>}
                 </div>
-                {!isMobile && <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 4, fontSize: 11, color: '#86868B' }}>
+                {!isMobile && <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8, fontSize: 11, color: '#86868B' }}>
                   <span style={{ display: 'flex', alignItems: 'center', gap: 3 }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>已售 {p.sales || 0}</span>
                   <span style={{ width: 3, height: 3, borderRadius: '50%', background: '#E5E5EA' }}/>
                   <span style={{ color: p.stock > 0 ? '#34C759' : '#FF3B30', fontWeight: 500 }}>{p.stock > 0 ? `库存 ${p.stock}` : '已售罄'}</span>
                 </div>}
-                {isMobile && <div style={{ fontSize: 10, color: '#86868B', marginTop: 2 }}>已售{p.sales || 0} · {p.stock > 0 ? `剩${p.stock}件` : '无货'}</div>}
+                {isMobile && <div style={{ fontSize: 10, color: '#86868B', marginTop: 6 }}>已售{p.sales || 0} · {p.stock > 0 ? `剩${p.stock}件` : '无货'}</div>}
               </div>
               {isMobile ? (
                 <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center' }}>
