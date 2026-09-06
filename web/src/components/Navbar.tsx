@@ -25,10 +25,12 @@ export default function Navbar({ buttonText, buttonHref }: { buttonText: string;
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         boxSizing: 'border-box'
       }}>
+        {/* 左侧：logo + 文字，统一用 flex 垂直居中 */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', height: 52 }} onClick={() => { window.location.href = '/'; }}>
           <img src="/logo.png" alt="logo" style={{ width: 28, height: 28, borderRadius: 7, objectFit: 'cover', display: 'block' }} />
-          <span style={{ fontSize: 17, fontWeight: 600, lineHeight: '52px', height: 52, display: 'inline-block' }}>甜甜发卡</span>
+          <span style={{ fontSize: 17, fontWeight: 600, lineHeight: '20px', display: 'block', margin: 0, padding: 0 }}>甜甜发卡</span>
         </div>
+        {/* 右侧按钮 */}
         <button onClick={() => { window.location.href = buttonHref; }} style={{
           width: 80, height: 32, padding: 0, borderRadius: 980,
           background: '#007AFF', color: '#fff', border: 'none',
