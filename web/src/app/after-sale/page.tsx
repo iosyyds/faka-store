@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
-import { useRouter } from 'next/navigation';
 
 const API_BASE = 'https://kk.qqqi.top/api';
 const appleBlue = '#007AFF';
@@ -10,7 +9,6 @@ const appleText = '#1D1D1F';
 const appleSubtext = '#86868B';
 
 export default function AfterSalePage() {
-  const router = useRouter();
   const [orderNo, setOrderNo] = useState('');
   const [contact, setContact] = useState('');
   const [desc, setDesc] = useState('');
@@ -35,9 +33,9 @@ export default function AfterSalePage() {
   const inputStyle: React.CSSProperties = { width: '100%', padding: '12px 14px', border: 'none', background: appleGray, borderRadius: 12, fontSize: 14, outline: 'none' };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#FBFBFD', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif', color: appleText }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif', color: appleText }}>
       <Navbar buttonText="返回首页" buttonHref="/" />
-      <div style={{ maxWidth: 440, margin: '0 auto', padding: '92px 20px 40px' }}>
+      <div style={{ maxWidth: 440, margin: '0 auto', padding: '92px 22px 40px' }}>
         <div style={{ background: '#fff', borderRadius: 20, padding: 28, boxShadow: '0 4px 24px rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.04)' }}>
           <div style={{ textAlign: 'center', marginBottom: 24 }}>
             <div style={{ width: 48, height: 48, margin: '0 auto 12px', borderRadius: 14, background: 'linear-gradient(135deg,#FF9500,#FF3B30)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 16px rgba(255,59,48,0.2)' }}>
@@ -48,11 +46,11 @@ export default function AfterSalePage() {
           </div>
           <div style={{ marginBottom: 14 }}>
             <label style={{ display: 'block', fontSize: 12, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>订单号 *</label>
-            <input type="text" placeholder="FK 开头的订单号" value={orderNo} onChange={(e) => setOrderNo(e.target.value)} style={inputStyle} onFocus={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.boxShadow = '0 0 0 2px rgba(0,122,255,0.3)'; }} onBlur={(e) => { e.currentTarget.style.background = appleGray; e.currentTarget.style.boxShadow = 'none'; }} />
+            <input type="text" placeholder="请输入您的订单号" value={orderNo} onChange={(e) => setOrderNo(e.target.value)} style={inputStyle} onFocus={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.boxShadow = '0 0 0 2px rgba(0,122,255,0.3)'; }} onBlur={(e) => { e.currentTarget.style.background = appleGray; e.currentTarget.style.boxShadow = 'none'; }} />
           </div>
           <div style={{ marginBottom: 14 }}>
-            <label style={{ display: 'block', fontSize: 12, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>联系方式 *</label>
-            <input type="text" placeholder="QQ / 微信 / 手机号" value={contact} onChange={(e) => setContact(e.target.value)} style={inputStyle} onFocus={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.boxShadow = '0 0 0 2px rgba(0,122,255,0.3)'; }} onBlur={(e) => { e.currentTarget.style.background = appleGray; e.currentTarget.style.boxShadow = 'none'; }} />
+            <label style={{ display: 'block', fontSize: 12, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>微信号 *</label>
+            <input type="text" placeholder="请输入微信号" value={contact} onChange={(e) => setContact(e.target.value)} style={inputStyle} onFocus={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.boxShadow = '0 0 0 2px rgba(0,122,255,0.3)'; }} onBlur={(e) => { e.currentTarget.style.background = appleGray; e.currentTarget.style.boxShadow = 'none'; }} />
           </div>
           <div style={{ marginBottom: 20 }}>
             <label style={{ display: 'block', fontSize: 12, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>问题描述 *</label>

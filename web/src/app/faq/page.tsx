@@ -1,24 +1,19 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
-import { useRouter } from 'next/navigation';
 
 const API_BASE = 'https://kk.qqqi.top/api';
 interface Faq { id: number; question: string; answer: string; sort: number; }
-interface SiteInfo { site_name: string; site_logo: string; }
 const appleBlue = '#007AFF';
 const appleGray = '#F2F2F7';
 const appleText = '#1D1D1F';
 const appleSubtext = '#86868B';
 
 export default function FaqPage() {
-  const router = useRouter();
   const [faqs, setFaqs] = useState<Faq[]>([]);
   const [openId, setOpenId] = useState<number | null>(null);
-  const [site, setSite] = useState<SiteInfo>({ site_name: '甜甜发卡', site_logo: '' });
   useEffect(() => {
     fetch(`${API_BASE}/faq.php`).then(r => r.json()).then(d => { if (d.code === 0 && d.data) setFaqs(d.data); }).catch(() => {});
-    fetch(`${API_BASE}/site.php`, { cache: 'no-store' }).then(r => r.json()).then(d => { if (d.data) setSite(d.data); }).catch(() => {});
   }, []);
   const defaultFaqs: Faq[] = [
     { id: 1, question: '付款后多久能收到卡密？', answer: '支付成功后系统自动发货，通常1-5秒内即可在订单查询页面看到卡密。', sort: 1 },
@@ -28,9 +23,9 @@ export default function FaqPage() {
   ];
   const list = faqs.length > 0 ? faqs : defaultFaqs;
   return (
-    <div style={{ minHeight: '100vh', background: '#FBFBFD', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif', color: appleText }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif', color: appleText }}>
       <Navbar buttonText="返回首页" buttonHref="/" />
-      <div style={{ maxWidth: 600, margin: '0 auto', padding: '88px 20px 36px' }}>
+      <div style={{ maxWidth: 600, margin: '0 auto', padding: '92px 22px 36px' }}>
         <h2 style={{ fontSize: 28, fontWeight: 700, margin: '0 0 24px', textAlign: 'center', letterSpacing: -0.8 }}>常见问题</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {list.map((f) => (

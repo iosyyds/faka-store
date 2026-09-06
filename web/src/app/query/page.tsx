@@ -138,7 +138,7 @@ export default function QueryPage() {
       <Navbar buttonText="返回首页" buttonHref="/" />
 
       {/* 主内容 */}
-      <div style={{ maxWidth: 440, margin: '0 auto', padding: isMobile ? '84px 16px 40px' : '100px 22px 64px' }}>
+      <div style={{ maxWidth: 440, margin: '0 auto', padding: isMobile ? '72px 16px 40px' : '92px 22px 64px' }}>
         <div style={{ background: '#fff', borderRadius: 18, padding: isMobile ? 20 : 28, boxShadow: '0 2px 16px rgba(0,0,0,0.04)', border: '1px solid rgba(0,0,0,0.04)' }}>
           <div style={{ textAlign: 'center', marginBottom: 24 }}>
             <div style={{ width: 48, height: 48, margin: '0 auto 12px', borderRadius: 14, background: 'linear-gradient(135deg,#007AFF,#5856D6)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 16px rgba(0,122,255,0.25)' }}>
