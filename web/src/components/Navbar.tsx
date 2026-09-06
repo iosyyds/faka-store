@@ -1,6 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 
+const NAV_FONT = '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif';
+
 export default function Navbar({ buttonText, buttonHref }: { buttonText: string; buttonHref: string }) {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -17,7 +19,8 @@ export default function Navbar({ buttonText, buttonHref }: { buttonText: string;
       backdropFilter: 'saturate(180%) blur(20px)',
       WebkitBackdropFilter: 'saturate(180%) blur(20px)',
       borderBottom: '1px solid rgba(0,0,0,0.06)',
-      height: 52
+      height: 52,
+      fontFamily: NAV_FONT
     }}>
       <div style={{
         maxWidth: 980, height: 52, margin: '0 auto',
@@ -25,17 +28,16 @@ export default function Navbar({ buttonText, buttonHref }: { buttonText: string;
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         boxSizing: 'border-box'
       }}>
-        {/* 左侧：logo + 文字，统一用 flex 垂直居中 */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', height: 52 }} onClick={() => { window.location.href = '/'; }}>
           <img src="/logo.png" alt="logo" style={{ width: 28, height: 28, borderRadius: 7, objectFit: 'cover', display: 'block' }} />
-          <span style={{ fontSize: 17, fontWeight: 600, lineHeight: '20px', display: 'block', margin: 0, padding: 0 }}>甜甜发卡</span>
+          <span style={{ fontSize: 17, fontWeight: 600, lineHeight: '20px', display: 'block', margin: 0, padding: 0, fontFamily: NAV_FONT }}>甜甜发卡</span>
         </div>
-        {/* 右侧按钮 */}
         <button onClick={() => { window.location.href = buttonHref; }} style={{
           width: 80, height: 32, padding: 0, borderRadius: 980,
           background: '#007AFF', color: '#fff', border: 'none',
           fontSize: 13, fontWeight: 500, cursor: 'pointer',
-          display: 'flex', alignItems: 'center', justifyContent: 'center'
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontFamily: NAV_FONT
         }}>{buttonText}</button>
       </div>
     </nav>
