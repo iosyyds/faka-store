@@ -29,7 +29,7 @@ export default function FaqPage() {
   const list = faqs.length > 0 ? faqs : defaultFaqs;
   return (
     <div style={{ minHeight: '100vh', background: '#FBFBFD', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif', color: appleText }}>
-      <Navbar buttonText="返回首页" buttonHref="/" isMobile={false} />
+      <Navbar buttonText="返回首页" buttonHref="/" />
       <div style={{ maxWidth: 600, margin: '0 auto', padding: '88px 20px 36px' }}>
         <h2 style={{ fontSize: 28, fontWeight: 700, margin: '0 0 24px', textAlign: 'center', letterSpacing: -0.8 }}>常见问题</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>

@@ -135,7 +135,7 @@ export default function QueryPage() {
       )}
 
       {/* 导航栏 - 与首页完全一致 */}
-      <Navbar buttonText="返回首页" buttonHref="/" isMobile={isMobile} />
+      <Navbar buttonText="返回首页" buttonHref="/" />
 
       {/* 主内容 */}
       <div style={{ maxWidth: 440, margin: '0 auto', padding: isMobile ? '84px 16px 40px' : '100px 22px 64px' }}>

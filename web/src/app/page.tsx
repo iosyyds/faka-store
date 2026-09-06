@@ -172,7 +172,7 @@ export default function Home() {
       )}
 
       {/* 导航栏 */}
-      <Navbar buttonText="订单查询" buttonHref="/query" isMobile={isMobile} />
+      <Navbar buttonText="订单查询" buttonHref="/query" />
 
       {/* 主内容 */}
       <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '72px 14px 32px' : '92px 22px 56px' }}>
