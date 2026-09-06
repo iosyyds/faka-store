@@ -221,7 +221,7 @@ export default function Home() {
             }}>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: isMobile ? 2 : 3 }}>
-                  {p.is_hot == 1 && <span style={{ padding: '2px 8px', borderRadius: 980, background: 'linear-gradient(135deg, #FF9500, #FF3B30)', color: '#fff', fontSize: 10, fontWeight: 700, letterSpacing: 0.5 }}>HOT</span>}
+                  {p.tag_text && <span style={{ padding: '2px 8px', borderRadius: 980, background: p.tag_color || '#FF9500', color: '#fff', fontSize: 10, fontWeight: 700, letterSpacing: 0.5 }}>{p.tag_text}</span>}
                   {p.is_top == 1 && <span style={{ padding: '2px 8px', borderRadius: 980, background: 'linear-gradient(135deg, #AF52DE, #5856D6)', color: '#fff', fontSize: 10, fontWeight: 700, letterSpacing: 0.5 }}>置顶</span>}
                   {p.category_name && <span style={{ padding: '2px 8px', borderRadius: 980, background: '#F2F2F7', color: '#86868B', fontSize: 10, fontWeight: 500 }}>{p.category_name}</span>}
                 </div>
