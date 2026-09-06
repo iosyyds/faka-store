@@ -122,10 +122,6 @@ export default function Home() {
     }
   };
 
-  if (!loaded) {
-    return <div style={{ minHeight: '100vh', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><div style={{ color: '#86868B', fontSize: 14 }}>加载中...</div></div>;
-  }
-
   return (
     <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1d1d1f', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif' }}>
       {/* 微信提示 - AppStore 风格 */}
@@ -175,6 +171,11 @@ export default function Home() {
       <Navbar buttonText="订单查询" buttonHref="/query" />
 
       {/* 主内容 */}
+      {!loaded ? (
+        <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '72px 14px 32px' : '92px 22px 56px', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
+          <div style={{ color: '#86868B', fontSize: 14 }}>加载中...</div>
+        </div>
+      ) : (
       <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '72px 14px 32px' : '92px 22px 56px' }}>
         {/* Hero */}
         <div style={{ textAlign: 'center', marginBottom: isMobile ? 20 : 36 }}>
@@ -264,6 +265,7 @@ export default function Home() {
           </div>
         )}
       </div>
+      )}
 
       {/* 页脚 - AppStore 风格 */}
       <footer style={{ borderTop: '1px solid rgba(0,0,0,0.05)', background: '#F5F5F7' }}>
