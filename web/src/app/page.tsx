@@ -222,6 +222,7 @@ export default function Home() {
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginBottom: 4, flexWrap: 'wrap' }}>
                   {p.tag_text && <span style={{ padding: '2px 8px', borderRadius: 980, background: p.tag_color || '#FF9500', color: '#fff', fontSize: 10, fontWeight: 700, letterSpacing: 0.5 }}>{p.tag_text}</span>}
+                  {p.is_hot == 1 && <span style={{ padding: '2px 8px', borderRadius: 980, background: 'linear-gradient(135deg, #FF9500, #FF3B30)', color: '#fff', fontSize: 10, fontWeight: 700, letterSpacing: 0.5 }}>热门</span>}
                   {p.is_top == 1 && <span style={{ padding: '2px 8px', borderRadius: 980, background: 'linear-gradient(135deg, #AF52DE, #5856D6)', color: '#fff', fontSize: 10, fontWeight: 700, letterSpacing: 0.5 }}>置顶</span>}
                   {p.category_name && <span style={{ padding: '2px 8px', borderRadius: 980, background: '#F2F2F7', color: '#86868B', fontSize: 10, fontWeight: 500 }}>{p.category_name}</span>}
                 </div>
@@ -234,9 +235,9 @@ export default function Home() {
                 {!isMobile && <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 6, fontSize: 11, color: '#86868B' }}>
                   <span style={{ display: 'flex', alignItems: 'center', gap: 3 }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>已售 {p.sales || 0}</span>
                   <span style={{ width: 3, height: 3, borderRadius: '50%', background: '#E5E5EA' }}/>
-                  <span style={{ color: p.stock > 0 ? '#34C759' : '#FF3B30', fontWeight: 500 }}>{p.stock > 0 ? `库存 ${p.stock}` : '已售罄'}</span>
+                  <span style={{ color: p.stock === 0 ? '#FF3B30' : (p.stock <= 10 ? '#FF9500' : '#34C759'), fontWeight: 500 }}>{p.stock === 0 ? '已售罄' : (p.stock <= 10 ? '库存紧张' : '库存充足')}</span>
                 </div>}
-                {isMobile && <div style={{ fontSize: 10, color: '#86868B', marginTop: 4 }}>已售{p.sales || 0} · {p.stock > 0 ? `剩${p.stock}件` : '无货'}</div>}
+                {isMobile && <div style={{ fontSize: 10, color: '#86868B', marginTop: 4 }}>已售{p.sales || 0} · <span style={{ color: p.stock === 0 ? '#FF3B30' : (p.stock <= 10 ? '#FF9500' : '#34C759') }}>{p.stock === 0 ? '无货' : (p.stock <= 10 ? '仅剩少量' : '库存充足')}</span></div>}
               </div>
               {isMobile ? (
                 <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center' }}>

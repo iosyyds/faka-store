@@ -4,6 +4,8 @@ import type { Product } from "@/lib/api";
 
 export default function ProductCard({ product }: { product: Product }) {
   const soldout = product.stock <= 0;
+  const stockText = soldout ? "已售罄" : (product.stock <= 10 ? "库存紧张" : "库存充足");
+  const stockColor = soldout ? "#FF3B30" : (product.stock <= 10 ? "#FF9500" : "#34C759");
   return (
     <Link href={`/product?id=${product.id}`} className="product-card">
       {product.is_top ? <span className="badge badge-top">置顶</span> : null}
@@ -29,7 +31,7 @@ export default function ProductCard({ product }: { product: Product }) {
             ) : null}
           </div>
           <div className="product-stock">
-            {soldout ? "已售罄" : `库存 ${product.stock}`}
+            <span style={{ color: stockColor, fontWeight: 500 }}>{stockText}</span>
             <span style={{ marginLeft: 6, color: "#d1d5db" }}>|</span>
             <span style={{ marginLeft: 6 }}>已售{product.sales}</span>
           </div>
