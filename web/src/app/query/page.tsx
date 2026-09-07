@@ -55,25 +55,20 @@ export default function QueryPage() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     const w = canvas.width, h = canvas.height;
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, w, h);
-    const blues = ['#007AFF', '#5856D6', '#00C7BE', '#34C759'];
+    ctx.clearRect(0, 0, w, h);
+    const charWidth = w / captchaText.length;
     for (let i = 0; i < captchaText.length; i++) {
       ctx.save();
-      ctx.font = `bold 22px -apple-system, "SF Pro Display", sans-serif`;
-      ctx.fillStyle = blues[Math.floor(Math.random() * blues.length)];
-      const x = 12 + i * 20;
-      const y = 27 + Math.random() * 4 - 2;
+      ctx.font = `bold 24px -apple-system, "SF Pro Display", sans-serif`;
+      ctx.fillStyle = '#007AFF';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      const x = charWidth * i + charWidth / 2;
+      const y = h / 2 + (Math.random() - 0.5) * 4;
       ctx.translate(x, y);
-      ctx.rotate((Math.random() - 0.5) * 0.2);
+      ctx.rotate((Math.random() - 0.5) * 0.15);
       ctx.fillText(captchaText[i], 0, 0);
       ctx.restore();
-    }
-    for (let i = 0; i < 15; i++) {
-      ctx.fillStyle = `rgba(0,122,255,${Math.random() * 0.1})`;
-      ctx.beginPath();
-      ctx.arc(Math.random() * w, Math.random() * h, 1, 0, Math.PI * 2);
-      ctx.fill();
     }
   }
 
