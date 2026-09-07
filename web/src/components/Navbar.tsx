@@ -66,7 +66,7 @@ export default function Navbar({ buttonText, buttonHref }: { buttonText: string;
         </div>
         <button onClick={() => { window.location.href = buttonHref; }} style={{
           width: 80, height: 32, padding: 0, borderRadius: 980,
-          background: 'linear-gradient(135deg, #007AFF, #5856D6)',
+          background: '#007AFF',
           color: '#fff', border: 'none',
           fontSize: 13, fontWeight: 500, cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',

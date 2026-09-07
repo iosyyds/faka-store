@@ -174,13 +174,19 @@ export default function QueryPage() {
           </button>
         </div>
 
-        {/* 查询结果 */}
+        {/* 查询结果弹窗 */}
         {order && (
-          <div style={{ background: '#fff', borderRadius: 18, padding: isMobile ? 20 : 24, marginTop: 16, boxShadow: '0 2px 16px rgba(0,0,0,0.04)', border: '1px solid rgba(0,0,0,0.04)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14, paddingBottom: 14, borderBottom: '1px solid #F2F2F7' }}>
-              <span style={{ fontWeight: 600, fontSize: 16, letterSpacing: -0.2 }}>{order.product_name}</span>
-              <span style={{ padding: '5px 14px', borderRadius: 980, fontSize: 12, fontWeight: 600, background: statusMap[order.status]?.color + '15', color: statusMap[order.status]?.color }}>{statusMap[order.status]?.label}</span>
-            </div>
+          <div style={{ position: 'fixed', inset: 0, zIndex: 9998, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+            <div style={{ background: '#fff', borderRadius: 18, padding: isMobile ? 20 : 24, width: '100%', maxWidth: 420, maxHeight: '85vh', overflowY: 'auto', boxShadow: '0 20px 60px rgba(0,0,0,0.15)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14, paddingBottom: 14, borderBottom: '1px solid #F2F2F7' }}>
+                <span style={{ fontWeight: 600, fontSize: 16, letterSpacing: -0.2 }}>{order.product_name}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <span style={{ padding: '5px 14px', borderRadius: 980, fontSize: 12, fontWeight: 600, background: statusMap[order.status]?.color + '15', color: statusMap[order.status]?.color }}>{statusMap[order.status]?.label}</span>
+                  <button onClick={() => setOrder(null)} style={{ cursor: 'pointer', color: '#86868B', width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', background: '#F2F2F7', border: 'none', padding: 0, transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.background = '#E5E5EA'; }} onMouseLeave={(e) => { e.currentTarget.style.background = '#F2F2F7'; }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                  </button>
+                </div>
+              </div>
             <div style={{ fontSize: 13, color: appleSubtext, marginBottom: 6 }}>订单号：<span style={{ color: appleText, fontFamily: 'monospace' }}>{order.order_no}</span></div>
             <div style={{ fontSize: 13, color: appleSubtext, marginBottom: 6 }}>数量：{order.quantity} · 金额：<span style={{ color: '#FF3B30', fontWeight: 600 }}>¥{order.total_amount}</span></div>
             <div style={{ fontSize: 13, color: appleSubtext, marginBottom: 16 }}>下单时间：{order.created_at}</div>
@@ -223,6 +229,7 @@ export default function QueryPage() {
                 <span style={{ fontSize: 13, color: '#FF9500', fontWeight: 500 }}>订单待支付，请尽快完成付款</span>
               </div>
             )}
+            </div>
           </div>
         )}
       </div>

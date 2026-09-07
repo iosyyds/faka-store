@@ -22,7 +22,7 @@ export default function AfterSalePage() {
     if (!desc.trim()) { setErr('请描述问题'); return; }
     setSubmitting(true); setErr(''); setMsg('');
     try {
-      const res = await fetch(`${API_BASE}/after_sale.php`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ order_no: orderNo.trim(), contact: contact.trim(), description: desc.trim() }) });
+      const res = await fetch(`${API_BASE}/after_sale.php`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ order_no: orderNo.trim(), contact: contact.trim(), content: desc.trim() }) });
       const data = await res.json();
       if (data.code === 0) { setMsg('提交成功，客服会尽快处理'); setOrderNo(''); setContact(''); setDesc(''); }
       else setErr(data.msg || '提交失败');
