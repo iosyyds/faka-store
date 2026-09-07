@@ -81,6 +81,7 @@ export default function QueryPage() {
 
   async function handleQuery() {
     if (!orderNo.trim()) { setErr('请输入订单号'); return; }
+    if (!/^\d{18}$/.test(orderNo.trim())) { setErr('订单号为18位数字，请检查后重新输入'); return; }
     if (!captchaInput.trim()) { setErr('请输入验证码'); return; }
     if (captchaInput.trim().toUpperCase() !== captchaText) { setErr('验证码错误，请重新输入'); refreshCaptcha(); return; }
     setLoading(true); setErr(''); setOrder(null);
@@ -88,7 +89,7 @@ export default function QueryPage() {
       const res = await fetch(`${API_BASE}/order_query.php?order_no=${encodeURIComponent(orderNo.trim())}`);
       const data = await res.json();
       if (data.code === 0 && data.data) setOrder(data.data);
-      else setErr(data.msg || '查询失败，请检查订单号是否正确');
+      else setErr(data.msg || '未找到该订单，请确认订单号是否正确');
     } catch { setErr('网络异常，请稍后重试'); }
     finally { setLoading(false); refreshCaptcha(); }
   }
@@ -160,7 +161,7 @@ export default function QueryPage() {
 
           <div style={{ marginBottom: 14 }}>
             <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 8 }}>订单号</label>
-            <input type="text" placeholder="请输入订单号" value={orderNo} onChange={(e) => setOrderNo(e.target.value)} style={inputStyle} onKeyDown={(e) => e.key === 'Enter' && handleQuery()} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
+            <input type="text" placeholder="请输入18位订单号" value={orderNo} onChange={(e) => setOrderNo(e.target.value)} style={inputStyle} onKeyDown={(e) => e.key === 'Enter' && handleQuery()} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
           </div>
           <div style={{ marginBottom: 20 }}>
             <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 8 }}>验证码</label>

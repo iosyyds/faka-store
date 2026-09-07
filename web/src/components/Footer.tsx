@@ -24,7 +24,6 @@ export default function Footer({
           <Link href="/">首页</Link>
           <Link href="/query">查卡密</Link>
           <Link href="/faq">常见问题</Link>
-          <Link href="/after-sale">售后反馈</Link>
         </div>
         <div>
           <h4>联系客服</h4>
