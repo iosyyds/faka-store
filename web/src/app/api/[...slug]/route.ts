@@ -3,8 +3,9 @@ import { NextRequest, NextResponse } from 'next/server';
 const BACKEND_API = 'https://kk.qqqi.top/api';
 
 // 动态代理所有 /api/* 请求到后端
-export async function GET(request: NextRequest, { params }: { params: { slug: string[] } }) {
-  const path = params.slug.join('/');
+export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string[] }> }) {
+  const { slug } = await params;
+  const path = slug.join('/');
   const url = new URL(request.url);
   const queryString = url.search;
   
@@ -21,7 +22,6 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
       status: response.status,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
       },
     });
   } catch (error) {
@@ -29,8 +29,9 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
   }
 }
 
-export async function POST(request: NextRequest, { params }: { params: { slug: string[] } }) {
-  const path = params.slug.join('/');
+export async function POST(request: NextRequest, { params }: { params: Promise<{ slug: string[] }> }) {
+  const { slug } = await params;
+  const path = slug.join('/');
   const body = await request.text();
   
   try {
@@ -47,7 +48,6 @@ export async function POST(request: NextRequest, { params }: { params: { slug: s
       status: response.status,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
       },
     });
   } catch (error) {
