@@ -44,11 +44,17 @@ export default function Home() {
   useEffect(() => {
     if (!loaded) return;
     fetch(`${API_BASE}/site.php`).then(r => r.json()).then(d => setSite(d?.data && typeof d.data === 'object' ? d.data : d && typeof d === 'object' ? d : {})).catch(() => {});
-    fetch(`${API_BASE}/products.php`).then(r => r.json()).then(d => {
+    fetch(`${API_BASE}/products.php`).then(r => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.json();
+    }).then(d => {
       const list = Array.isArray(d?.data?.list) ? d.data.list : Array.isArray(d?.data) ? d.data : Array.isArray(d?.products) ? d.products : Array.isArray(d?.list) ? d.list : Array.isArray(d) ? d : [];
       setProducts(list);
       if (list.length === 0) setLoadError('暂无商品数据');
-    }).catch((e) => { setLoadError('商品加载失败，请检查网络后刷新'); console.error('products error:', e); });
+    }).catch((e) => { 
+      console.error('products error:', e); 
+      setLoadError('加载失败: ' + e.message + ' (API: ' + API_BASE + ')'); 
+    });
     fetch(`${API_BASE}/categories.php`).then(r => r.json()).then(d => {
       const cats = Array.isArray(d?.data) ? d.data.filter((c: any) => c && c.name) : [];
       setCategories(cats);
@@ -264,7 +270,7 @@ export default function Home() {
                 <path d="M12 22V12"/>
               </svg>
             </div>
-            <div style={{ fontSize: 14 }}>{loadError || '该分类暂无商品'}</div>
+            <div style={{ fontSize: 14, wordBreak: 'break-all', padding: '0 20px' }}>{loadError || '该分类暂无商品'}</div>
             {loadError && <button onClick={() => window.location.reload()} style={{ marginTop: 12, padding: '8px 20px', borderRadius: 980, background: '#007AFF', color: '#fff', border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>刷新重试</button>}
           </div>
         )}
