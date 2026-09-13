@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 
-const API_BASE = 'https://kk.qqqi.top/api';
+const API_BASE = 'https://api.puaaa.cn/api';
 
 export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
