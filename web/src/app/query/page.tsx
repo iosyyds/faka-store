@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 
-const API_BASE = '/api';
+const API_BASE = 'https://api.puaaa.cn/api';
 const appleBlue = '#007AFF';
 const appleGray = '#F2F2F7';
 const appleText = '#1D1D1F';
