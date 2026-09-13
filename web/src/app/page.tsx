@@ -7,6 +7,7 @@ const API_BASE = 'https://kk.qqqi.top/api';
 export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
   const [categories, setCategories] = useState<{id: string, name: string, icon?: string}[]>([]);
+  const [loadError, setLoadError] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   const [site, setSite] = useState<any>({});
   const [showBuy, setShowBuy] = useState(false);
@@ -46,7 +47,8 @@ export default function Home() {
     fetch(`${API_BASE}/products.php`).then(r => r.json()).then(d => {
       const list = Array.isArray(d?.data?.list) ? d.data.list : Array.isArray(d?.data) ? d.data : Array.isArray(d?.products) ? d.products : Array.isArray(d?.list) ? d.list : Array.isArray(d) ? d : [];
       setProducts(list);
-    }).catch(() => {});
+      if (list.length === 0) setLoadError('暂无商品数据');
+    }).catch((e) => { setLoadError('商品加载失败，请检查网络后刷新'); console.error('products error:', e); });
     fetch(`${API_BASE}/categories.php`).then(r => r.json()).then(d => {
       const cats = Array.isArray(d?.data) ? d.data.filter((c: any) => c && c.name) : [];
       setCategories(cats);
@@ -262,7 +264,8 @@ export default function Home() {
                 <path d="M12 22V12"/>
               </svg>
             </div>
-            <div style={{ fontSize: 14 }}>该分类暂无商品</div>
+            <div style={{ fontSize: 14 }}>{loadError || '该分类暂无商品'}</div>
+            {loadError && <button onClick={() => window.location.reload()} style={{ marginTop: 12, padding: '8px 20px', borderRadius: 980, background: '#007AFF', color: '#fff', border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>刷新重试</button>}
           </div>
         )}
       </div>
