@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 
-const API_BASE = 'https://kk.qqqi.top/api';
+const API_BASE = '/api';
 
 export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
@@ -53,7 +53,7 @@ export default function Home() {
       if (list.length === 0) setLoadError('暂无商品数据');
     }).catch((e) => { 
       console.error('products error:', e); 
-      setLoadError('加载失败: ' + e.message + ' (API: ' + API_BASE + ')'); 
+      setLoadError('商品加载失败，请刷新重试'); 
     });
     fetch(`${API_BASE}/categories.php`).then(r => r.json()).then(d => {
       const cats = Array.isArray(d?.data) ? d.data.filter((c: any) => c && c.name) : [];
@@ -270,7 +270,7 @@ export default function Home() {
                 <path d="M12 22V12"/>
               </svg>
             </div>
-            <div style={{ fontSize: 14, wordBreak: 'break-all', padding: '0 20px' }}>{loadError || '该分类暂无商品'}</div>
+            <div style={{ fontSize: 14 }}>{loadError || '该分类暂无商品'}</div>
             {loadError && <button onClick={() => window.location.reload()} style={{ marginTop: 12, padding: '8px 20px', borderRadius: 980, background: '#007AFF', color: '#fff', border: 'none', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>刷新重试</button>}
           </div>
         )}
