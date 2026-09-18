@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 
-const API_BASE = 'https://api.puaaa.cn/kss_proxy.php?action=';
+const API_BASE = 'https://api.puaaa.cn/api';
 
 export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
@@ -43,8 +43,8 @@ export default function Home() {
 
   useEffect(() => {
     if (!loaded) return;
-    fetch(`${API_BASE}site`).then(r => r.json()).then(d => setSite(d?.data && typeof d.data === 'object' ? d.data : d && typeof d === 'object' ? d : {})).catch(() => {});
-    fetch(`${API_BASE}products`).then(r => {
+    fetch(`${API_BASE}/site.php`).then(r => r.json()).then(d => setSite(d?.data && typeof d.data === 'object' ? d.data : d && typeof d === 'object' ? d : {})).catch(() => {});
+    fetch(`${API_BASE}/products.php`).then(r => {
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       return r.json();
     }).then(d => {
@@ -55,7 +55,7 @@ export default function Home() {
       console.error('products error:', e); 
       setLoadError('商品加载失败，请刷新重试'); 
     });
-    fetch(`${API_BASE}categories`).then(r => r.json()).then(d => {
+    fetch(`${API_BASE}/categories.php`).then(r => r.json()).then(d => {
       const cats = Array.isArray(d?.data) ? d.data.filter((c: any) => c && c.name) : [];
       setCategories(cats);
     }).catch(() => {});
@@ -89,7 +89,7 @@ export default function Home() {
     const timer = setInterval(() => {
       count++;
       if (count > 60) { clearInterval(timer); timerRef.current = null; setPolling(false); return; }
-      fetch(`${API_BASE}order_query&order_no=${orderId}&contact=${encodeURIComponent(contact)}`).then(r => r.json()).then(data => {
+      fetch(`${API_BASE}/order_query.php?order_no=${orderId}&contact=${encodeURIComponent(contact)}`).then(r => r.json()).then(data => {
         const order = data.data || data.order || data;
         if (order.status === 'paid' || order.status === 1 || order.status === 'success') {
           clearInterval(timer);
@@ -105,7 +105,7 @@ export default function Home() {
   const handleBuy = () => {
     if (!contact.trim()) { showToast('请填写手机号'); return; }
     setOrdering(true);
-    fetch(`${API_BASE}order_create`, {
+    fetch(`${API_BASE}/order_create.php`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ product_id: selectedProduct.id, quantity, contact, pay_method: 'alipay' })
@@ -204,7 +204,7 @@ export default function Home() {
             </div>
             {isMobile && categories.length > 3 && (
               <div style={{ position: 'absolute', right: 0, top: 0, bottom: 4, width: 30, background: 'linear-gradient(to right, transparent, #fff)', pointerEvents: 'none', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#86868B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style={{ marginRight: 4 }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#86868B" stroke-width="2.5" stroke-linecap="round" strokeLinejoin="round" style={{ marginRight: 4 }}>
                   <path d="m9 18 6-6-6-6"/>
                 </svg>
               </div>
