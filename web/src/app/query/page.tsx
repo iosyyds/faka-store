@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 
-const API_BASE = 'https://api.puaaa.cn/api';
+const API_BASE = 'https://api.puaaa.cn/kss_proxy.php?action=';
 const appleBlue = '#007AFF';
 const appleGray = '#F2F2F7';
 const appleText = '#1D1D1F';
@@ -41,7 +41,7 @@ export default function QueryPage() {
     setLoaded(true);
     setIsMobile(window.innerWidth < 768);
     setIsWechat(/MicroMessenger/i.test(navigator.userAgent));
-    fetch(`${API_BASE}/site.php`, { cache: 'no-store' }).then(r => r.json()).then(d => {
+    fetch(`${API_BASE}site`, { cache: 'no-store' }).then(r => r.json()).then(d => {
       const data = d?.data && typeof d.data === 'object' ? d.data : d && typeof d === 'object' ? d : {};
       setSite(data);
     }).catch(() => {});
@@ -81,7 +81,7 @@ export default function QueryPage() {
     if (captchaInput.trim().toUpperCase() !== captchaText) { setErr('验证码错误，请重新输入'); refreshCaptcha(); return; }
     setLoading(true); setErr(''); setOrder(null);
     try {
-      const res = await fetch(`${API_BASE}/order_query.php?order_no=${encodeURIComponent(orderNo.trim())}`);
+      const res = await fetch(`${API_BASE}order_query&order_no=${encodeURIComponent(orderNo.trim())}`);
       const data = await res.json();
       if (data.code === 0 && data.data) setOrder(data.data);
       else setErr(data.msg || '未找到该订单，请确认订单号是否正确');
@@ -159,7 +159,7 @@ export default function QueryPage() {
             <input type="text" placeholder="请输入18位订单号" value={orderNo} onChange={(e) => setOrderNo(e.target.value)} style={inputStyle} onKeyDown={(e) => e.key === 'Enter' && handleQuery()} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
           </div>
           <div style={{ marginBottom: 20 }}>
-            <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 8 }}>验证码</label>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 500, marginBottom: 8 }}>验证码</label>
             <div style={{ display: 'flex', gap: 10 }}>
               <input type="text" placeholder="请输入验证码" value={captchaInput} onChange={(e) => setCaptchaInput(e.target.value)} style={{ ...inputStyle, flex: 1 }} maxLength={4} onKeyDown={(e) => e.key === 'Enter' && handleQuery()} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
               <canvas ref={canvasRef} width={90} height={38} onClick={refreshCaptcha} style={{ borderRadius: 10, cursor: 'pointer', border: '1px solid #E5E5EA', height: 38, flexShrink: 0, boxSizing: 'border-box' }} title="点击刷新" />
