@@ -28,13 +28,15 @@ export default function QueryPage() {
   const [isMobile, setIsMobile] = useState(false);
   const [isWechat, setIsWechat] = useState(false);
   const [site, setSite] = useState<SiteInfo>({ site_name: '甜甜发卡', site_logo: '', customer_service: '', qq_group: '', copyright: '' });
-  const [orderNo, setOrderNo] = useState('');
+  const [phone, setPhone] = useState('');
   const [captchaInput, setCaptchaInput] = useState('');
   const [captchaText, setCaptchaText] = useState(genCaptchaText());
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState('');
-  const [order, setOrder] = useState<OrderInfo | null>(null);
+  const [orders, setOrders] = useState<OrderInfo[]>([]);
+  const [searched, setSearched] = useState(false);
+  const [detail, setDetail] = useState<OrderInfo | null>(null);
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
 
   useEffect(() => {
@@ -75,18 +77,21 @@ export default function QueryPage() {
   const refreshCaptcha = () => { setCaptchaText(genCaptchaText()); setCaptchaInput(''); };
 
   async function handleQuery() {
-    if (!orderNo.trim()) { setErr('请输入订单号'); return; }
-    if (!/^\d{18}$/.test(orderNo.trim())) { setErr('订单号为18位数字，请检查后重新输入'); return; }
+    if (!phone.trim()) { setErr('请输入手机号'); return; }
+    if (!/^1\d{10}$/.test(phone.trim())) { setErr('手机号格式不正确，请检查后重新输入'); return; }
     if (!captchaInput.trim()) { setErr('请输入验证码'); return; }
     if (captchaInput.trim().toUpperCase() !== captchaText) { setErr('验证码错误，请重新输入'); refreshCaptcha(); return; }
-    setLoading(true); setErr(''); setOrder(null);
+    setLoading(true); setErr(''); setOrders([]); setSearched(false);
     try {
-      const res = await fetch(`${API_BASE}/order_query.php?order_no=${encodeURIComponent(orderNo.trim())}`);
+      const res = await fetch(`${API_BASE}/order_query.php?contact=${encodeURIComponent(phone.trim())}`);
       const data = await res.json();
-      if (data.code === 0 && data.data) setOrder(data.data);
-      else setErr(data.msg || '未找到该订单，请确认订单号是否正确');
+      if (data.code === 0 && data.data) {
+        setOrders((data.data.list || []).map((o: any) => o));
+      } else {
+        setErr(data.msg || '查询失败，请稍后重试');
+      }
     } catch { setErr('网络异常，请稍后重试'); }
-    finally { setLoading(false); refreshCaptcha(); }
+    finally { setLoading(false); setSearched(true); refreshCaptcha(); }
   }
 
   function copy(text: string, idx: number) {
@@ -141,7 +146,7 @@ export default function QueryPage() {
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </div>
             <h2 style={{ fontSize: 22, fontWeight: 700, margin: '0 0 4px', letterSpacing: -0.5 }}>订单查询</h2>
-            <p style={{ fontSize: 13, color: appleSubtext, margin: 0 }}>输入订单号和验证码查看卡密</p>
+            <p style={{ fontSize: 13, color: appleSubtext, margin: 0 }}>输入下单手机号和验证码查询订单</p>
           </div>
 
           {/* 错误提示 - Apple 风格 */}
@@ -155,8 +160,11 @@ export default function QueryPage() {
           )}
 
           <div style={{ marginBottom: 14 }}>
-            <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 8 }}>订单号</label>
-            <input type="text" placeholder="请输入18位订单号" value={orderNo} onChange={(e) => setOrderNo(e.target.value)} style={inputStyle} onKeyDown={(e) => e.key === 'Enter' && handleQuery()} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 8 }}>手机号</label>
+            <div style={{ position: 'relative' }}>
+              <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#C7C7CC', fontSize: 13, fontWeight: 600, pointerEvents: 'none' }}>+86</span>
+              <input type="tel" placeholder="请输入下单手机号" value={phone} maxLength={11} onChange={(e) => setPhone(e.target.value.replace(/[^0-9]/g, ''))} style={{ ...inputStyle, paddingLeft: 44 }} onKeyDown={(e) => e.key === 'Enter' && handleQuery()} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
+            </div>
           </div>
           <div style={{ marginBottom: 20 }}>
             <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 8 }}>验证码</label>
@@ -170,61 +178,100 @@ export default function QueryPage() {
           </button>
         </div>
 
-        {/* 查询结果弹窗 */}
-        {order && (
+        {/* 订单列表 */}
+        {searched && (
+          <div style={{ marginTop: 20 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={appleText} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              <span style={{ fontSize: 16, fontWeight: 700, letterSpacing: -0.2 }}>我的订单</span>
+              <span style={{ fontSize: 12, color: appleSubtext, background: appleGray, borderRadius: 980, padding: '2px 10px', fontWeight: 500 }}>{orders.length} 笔</span>
+            </div>
+            {orders.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '48px 20px', background: '#fff', borderRadius: 18, border: '1px solid rgba(0,0,0,0.04)', boxShadow: '0 2px 16px rgba(0,0,0,0.04)' }}>
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C7C7CC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: 12 }}><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <div style={{ fontSize: 15, fontWeight: 600, color: appleText, marginBottom: 4 }}>暂无订单</div>
+                <div style={{ fontSize: 12, color: appleSubtext }}>该手机号下没有查到订单</div>
+              </div>
+            ) : (
+              orders.map((o) => {
+                const st = statusMap[o.status] || { label: '-', color: appleSubtext };
+                return (
+                  <div key={o.order_no} onClick={() => setDetail(o)} style={{ background: '#fff', borderRadius: 14, padding: 16, marginBottom: 10, cursor: 'pointer', border: '1px solid rgba(0,0,0,0.04)', boxShadow: '0 2px 16px rgba(0,0,0,0.04)', transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.08)'; e.currentTarget.style.transform = 'translateY(-1px)'; }} onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 2px 16px rgba(0,0,0,0.04)'; e.currentTarget.style.transform = 'translateY(0)'; }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                      <span style={{ fontSize: 14, fontWeight: 600, color: appleText, letterSpacing: -0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {o.product_name}{o.spec_name ? <span style={{ color: appleSubtext, fontWeight: 400, fontSize: 12 }}> {o.spec_name}</span> : null}
+                      </span>
+                      <span style={{ padding: '4px 12px', borderRadius: 980, fontSize: 11, fontWeight: 600, background: st.color + '15', color: st.color, flexShrink: 0 }}>{st.label}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: 12, color: appleSubtext }}>{o.created_at}<span style={{ margin: '0 8px' }}>·</span>{o.quantity} 件</span>
+                      <span style={{ fontSize: 15, fontWeight: 700, color: '#FF3B30' }}>¥{parseFloat(o.total_amount || '0').toFixed(2)}</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginTop: 12, paddingTop: 12, borderTop: '1px solid #F2F2F7', color: appleBlue, fontSize: 12, fontWeight: 500 }}>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={appleBlue} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                      查看详情
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+        )}
+
+        {/* 订单详情弹窗 */}
+        {detail && (
           <div style={{ position: 'fixed', inset: 0, zIndex: 9998, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
             <div style={{ background: '#fff', borderRadius: 18, padding: isMobile ? 20 : 24, width: '100%', maxWidth: 420, maxHeight: '85vh', overflowY: 'auto', boxShadow: '0 20px 60px rgba(0,0,0,0.15)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14, paddingBottom: 14, borderBottom: '1px solid #F2F2F7' }}>
-                <span style={{ fontWeight: 600, fontSize: 16, letterSpacing: -0.2 }}>{order.product_name}</span>
+                <span style={{ fontWeight: 600, fontSize: 16, letterSpacing: -0.2 }}>{detail.product_name}</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <span style={{ padding: '5px 14px', borderRadius: 980, fontSize: 12, fontWeight: 600, background: statusMap[order.status]?.color + '15', color: statusMap[order.status]?.color }}>{statusMap[order.status]?.label}</span>
-                  <button onClick={() => setOrder(null)} style={{ cursor: 'pointer', color: '#86868B', width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', background: '#F2F2F7', border: 'none', padding: 0, transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.background = '#E5E5EA'; }} onMouseLeave={(e) => { e.currentTarget.style.background = '#F2F2F7'; }}>
+                  <span style={{ padding: '5px 14px', borderRadius: 980, fontSize: 12, fontWeight: 600, background: statusMap[detail.status]?.color + '15', color: statusMap[detail.status]?.color }}>{statusMap[detail.status]?.label}</span>
+                  <button onClick={() => setDetail(null)} style={{ cursor: 'pointer', color: '#86868B', width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', background: '#F2F2F7', border: 'none', padding: 0, transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.background = '#E5E5EA'; }} onMouseLeave={(e) => { e.currentTarget.style.background = '#F2F2F7'; }}>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                   </button>
                 </div>
               </div>
-            <div style={{ fontSize: 13, color: appleSubtext, marginBottom: 6 }}>订单号：<span style={{ color: appleText, fontFamily: 'monospace' }}>{order.order_no}</span></div>
-            <div style={{ fontSize: 13, color: appleSubtext, marginBottom: 6 }}>数量：{order.quantity} · 金额：<span style={{ color: '#FF3B30', fontWeight: 600 }}>¥{order.total_amount}</span></div>
-            <div style={{ fontSize: 13, color: appleSubtext, marginBottom: 16 }}>下单时间：{order.created_at}</div>
+              <div style={{ fontSize: 13, color: appleSubtext, marginBottom: 6 }}>订单号：<span style={{ color: appleText, fontFamily: 'monospace' }}>{detail.order_no}</span></div>
+              <div style={{ fontSize: 13, color: appleSubtext, marginBottom: 6 }}>数量：{detail.quantity} · 金额：<span style={{ color: '#FF3B30', fontWeight: 600 }}>¥{detail.total_amount}</span></div>
+              <div style={{ fontSize: 13, color: appleSubtext, marginBottom: 16 }}>下单时间：{detail.created_at}</div>
 
-            {/* 卡密列表 */}
-            {order.status === 1 && Array.isArray(order.cards) && order.cards.length > 0 && (
-              <div>
-                <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#007AFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
-                    <path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/>
-                  </svg>
-                  卡密 ({order.cards.length}条)
-                </div>
-                {order.cards.map((c, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px', background: appleGray, borderRadius: 12, marginBottom: 8 }}>
-                    <span style={{ width: 24, height: 24, borderRadius: '50%', background: appleBlue, color: '#fff', fontSize: 12, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{i + 1}</span>
-                    <span style={{ flex: 1, fontFamily: 'monospace', fontSize: 13, wordBreak: 'break-all', color: appleText }}>{c.content}</span>
-                    <button onClick={() => copy(c.content, i)} style={{ padding: '6px 14px', background: copiedIdx === i ? '#34C759' : appleBlue, color: '#fff', border: 'none', borderRadius: 980, fontSize: 12, fontWeight: 500, cursor: 'pointer', flexShrink: 0, transition: 'all .2s', minWidth: 56 }}>{copiedIdx === i ? '已复制' : '复制'}</button>
-                  </div>
-                ))}
-                {/* 复制成功提示 */}
-                {copiedIdx !== null && (
-                  <div style={{ marginTop: 8, padding: '10px 14px', background: 'rgba(52,199,89,0.08)', borderRadius: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34C759" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-                      <path d="M20 6 9 17l-5-5"/>
+              {/* 卡密列表 */}
+              {detail.status === 1 && Array.isArray(detail.cards) && detail.cards.length > 0 && (
+                <div>
+                  <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#007AFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
+                      <path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/>
                     </svg>
-                    <span style={{ fontSize: 13, color: '#34C759', fontWeight: 500 }}>卡密已复制到剪贴板</span>
+                    卡密 ({detail.cards.length}条)
                   </div>
-                )}
-              </div>
-            )}
+                  {detail.cards.map((c, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px', background: appleGray, borderRadius: 12, marginBottom: 8 }}>
+                      <span style={{ width: 24, height: 24, borderRadius: '50%', background: appleBlue, color: '#fff', fontSize: 12, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{i + 1}</span>
+                      <span style={{ flex: 1, fontFamily: 'monospace', fontSize: 13, wordBreak: 'break-all', color: appleText }}>{c.content}</span>
+                      <button onClick={() => copy(c.content, i)} style={{ padding: '6px 14px', background: copiedIdx === i ? '#34C759' : appleBlue, color: '#fff', border: 'none', borderRadius: 980, fontSize: 12, fontWeight: 500, cursor: 'pointer', flexShrink: 0, transition: 'all .2s', minWidth: 56 }}>{copiedIdx === i ? '已复制' : '复制'}</button>
+                    </div>
+                  ))}
+                  {copiedIdx !== null && (
+                    <div style={{ marginTop: 8, padding: '10px 14px', background: 'rgba(52,199,89,0.08)', borderRadius: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34C759" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                        <path d="M20 6 9 17l-5-5"/>
+                      </svg>
+                      <span style={{ fontSize: 13, color: '#34C759', fontWeight: 500 }}>卡密已复制到剪贴板</span>
+                    </div>
+                  )}
+                </div>
+              )}
 
-            {/* 待支付提示 */}
-            {order.status === 0 && (
-              <div style={{ padding: '12px 14px', background: 'rgba(255,149,0,0.08)', borderRadius: 12, display: 'flex', alignItems: 'center', gap: 10 }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF9500" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-                  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-                <span style={{ fontSize: 13, color: '#FF9500', fontWeight: 500 }}>订单待支付，请尽快完成付款</span>
-              </div>
-            )}
+              {/* 待支付提示 */}
+              {detail.status === 0 && (
+                <div style={{ padding: '12px 14px', background: 'rgba(255,149,0,0.08)', borderRadius: 12, display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF9500" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                    <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span style={{ fontSize: 13, color: '#FF9500', fontWeight: 500 }}>订单待支付，请尽快完成付款</span>
+                </div>
+              )}
             </div>
           </div>
         )}
