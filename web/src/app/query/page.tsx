@@ -161,10 +161,7 @@ export default function QueryPage() {
 
           <div style={{ marginBottom: 14 }}>
             <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 8 }}>手机号</label>
-            <div style={{ position: 'relative' }}>
-              <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#C7C7CC', fontSize: 13, fontWeight: 600, pointerEvents: 'none' }}>+86</span>
-              <input type="tel" placeholder="请输入下单手机号" value={phone} maxLength={11} onChange={(e) => setPhone(e.target.value.replace(/[^0-9]/g, ''))} style={{ ...inputStyle, paddingLeft: 44 }} onKeyDown={(e) => e.key === 'Enter' && handleQuery()} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
-            </div>
+            <input type="tel" placeholder="请输入下单手机号" value={phone} maxLength={11} onChange={(e) => setPhone(e.target.value.replace(/[^0-9]/g, ''))} style={inputStyle} onKeyDown={(e) => e.key === 'Enter' && handleQuery()} onFocus={(e) => { e.currentTarget.style.borderColor = appleBlue; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,122,255,0.1)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = '#E5E5EA'; e.currentTarget.style.boxShadow = 'none'; }} />
           </div>
           <div style={{ marginBottom: 20 }}>
             <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 8 }}>验证码</label>
