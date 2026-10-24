@@ -4,11 +4,11 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://qqqi.top"),
   title: {
-    default: "甜甜发卡 - 24小时自动发卡平台 | 虚拟商品卡密自动发货秒发卡",
-    template: "%s | 甜甜发卡 - 自动发卡平台",
+    default: "甜甜发卡 - 苹果P12证书签名 | 全能签万能签轻松签 iOS自签IPA签名工具 微信软件多开",
+    template: "%s | 甜甜发卡 - 苹果证书签名平台",
   },
-  description: "甜甜发卡是专业的24小时自动发卡平台，支持支付宝在线支付，付款后自动秒发卡密。提供虚拟商品、软件授权、会员账号、游戏点卡、激活码、CDKEY、充值卡等自助购买服务，安全可靠，即买即得。",
-  keywords: "自动发卡,发卡平台,虚拟商品,卡密购买,自动发货,支付宝支付,24小时发卡,秒发卡,自助购买,软件授权,会员账号,游戏点卡,激活码,CDKEY,充值卡",
+  description: "甜甜发卡是苹果手机证书签名与应用多开自助购买平台，提供P12证书、iOS自签证书、全能签、万能签、轻松签、IPA签名工具、软件签名，支持微信多开、软件多开、应用分身。支付宝在线支付，付款后自动秒发卡密，24小时无人值守，即买即得。",
+  keywords: "苹果P12证书,苹果证书签名,iOS签名,苹果签名平台,全能签,万能签,轻松签,苹果手机自签,P12证书,IPA签名工具,软件签名,微信多开,软件多开,应用多开,多开分身,企业证书,超级签名,UDID注册,自签证书,不越狱签名,签名工具下载,自动发卡,秒发卡密",
   authors: [{ name: "甜甜发卡" }],
   creator: "甜甜发卡",
   publisher: "甜甜发卡",
@@ -16,9 +16,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "zh_CN",
-    siteName: "甜甜发卡 - 24小时自动发卡平台",
-    title: "甜甜发卡 - 24小时自动发卡平台 | 虚拟商品卡密自动发货秒发卡",
-    description: "专业的24小时自动发卡平台，支付宝支付，自动秒发卡密。",
+    siteName: "甜甜发卡 - 苹果证书签名平台",
+    title: "甜甜发卡 - 苹果P12证书签名 | 全能签万能签轻松签 iOS自签IPA签名工具 微信软件多开",
+    description: "P12证书、全能签、万能签、轻松签、IPA签名工具、微信多开、软件多开自助购买，支付宝支付自动秒发卡密。",
     url: "https://qqqi.top",
   },
   robots: { index: true, follow: true },
@@ -43,7 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     "@type": "WebSite",
     name: "甜甜发卡",
     url: "https://qqqi.top",
-    description: "24小时自动发卡平台，支付宝支付，自动秒发卡密。",
+    description: "苹果手机证书签名、P12证书、全能签、万能签、轻松签、IPA签名工具与微信软件多开自助购买平台，支付宝支付自动秒发卡密。",
     inLanguage: "zh-CN",
   };
   return (

@@ -10,12 +10,12 @@ interface OrderItem {
 /** 实时下单滚动公示栏 */
 export default function Marquee({ items }: { items: OrderItem[] }) {
   const [fallback] = useState<OrderItem[]>([
-    { nickname: "用户**88", product_name: "会员月卡", created_at: "" },
-    { nickname: "小**坤", product_name: "加速器季卡", created_at: "" },
-    { nickname: "**苹果", product_name: "视频VIP年卡", created_at: "" },
-    { nickname: "用户**23", product_name: "游戏点卡", created_at: "" },
-    { nickname: "**奶茶", product_name: "网盘会员", created_at: "" },
-    { nickname: "用户**67", product_name: "音乐会员", created_at: "" },
+    { nickname: "用户**88", product_name: "P12证书（全能签）", created_at: "" },
+    { nickname: "小**坤", product_name: "微信多开分身", created_at: "" },
+    { nickname: "**苹果", product_name: "IPA签名工具", created_at: "" },
+    { nickname: "用户**23", product_name: "万能签证书", created_at: "" },
+    { nickname: "**奶茶", product_name: "软件多开版本", created_at: "" },
+    { nickname: "用户**67", product_name: "轻松签自签证书", created_at: "" },
   ]);
 
   const list = items && items.length > 0 ? items : fallback;

@@ -187,8 +187,8 @@ export default function Home() {
       <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '82px 14px 32px' : '92px 22px 56px' }}>
         {/* Hero */}
         <div style={{ textAlign: 'center', marginBottom: isMobile ? 20 : 36 }}>
-          <h1 style={{ fontSize: isMobile ? 26 : 44, fontWeight: 700, marginBottom: 8, lineHeight: 1.1 }}>{site.banner_title || '虚拟商品，即拍即发。'}</h1>
-          <p style={{ fontSize: isMobile ? 13 : 16, color: '#86868B', marginBottom: 0 }}>{site.banner_subtitle || '支付宝安全支付，付款后自动秒发卡密。'}</p>
+          <h1 style={{ fontSize: isMobile ? 26 : 44, fontWeight: 700, marginBottom: 8, lineHeight: 1.1 }}>{site.banner_title || '苹果证书签名，即买即用。'}</h1>
+          <p style={{ fontSize: isMobile ? 13 : 16, color: '#86868B', marginBottom: 0 }}>{site.banner_subtitle || 'P12证书 · 全能签 · 轻松签 · IPA签名工具 · 微信软件多开，付款后自动秒发。'}</p>
         </div>
 
         {/* 分类 */}
@@ -287,7 +287,7 @@ export default function Home() {
                 <img src="/logo.png" alt="logo" style={{ width: 32, height: 32, borderRadius: 9, objectFit: 'cover', display: 'block' }} />
                 <span style={{ fontSize: 17, fontWeight: 700, color: '#1d1d1f' }}>{site.site_name || '甜甜发卡'}</span>
               </div>
-              <p style={{ fontSize: 12, color: '#86868B', lineHeight: 1.7, maxWidth: isMobile ? 280 : 300, margin: isMobile ? '0 auto' : 0 }}>{site.footer_desc || '专业的虚拟商品自动发卡平台，支付宝安全支付，付款后自动秒发卡密，24小时无人值守。'}</p>
+              <p style={{ fontSize: 12, color: '#86868B', lineHeight: 1.7, maxWidth: isMobile ? 280 : 300, margin: isMobile ? '0 auto' : 0 }}>{site.footer_desc || '专注苹果手机证书签名与应用多开，P12证书、全能签、万能签、轻松签、IPA签名工具自助下单，支付宝安全支付，付款后自动秒发卡密，24小时无人值守。'}</p>
             </div>
             {/* 快速链接 - 手机端横向排列，电脑端纵向 */}
             <div style={{ textAlign: isMobile ? 'center' : 'left' }}>
@@ -323,7 +323,7 @@ export default function Home() {
           {/* 底部版权 */}
           <div style={{ borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: 20, textAlign: 'center' }}>
             <div style={{ fontSize: 11, color: '#86868B', marginBottom: 4 }}>© {new Date().getFullYear()} {site.site_name || '甜甜发卡'}</div>
-            <div style={{ fontSize: 11, color: '#AEAEB2' }}>{site.icp_number || ''} 虚拟商品自动发卡平台</div>
+            <div style={{ fontSize: 11, color: '#AEAEB2' }}>{site.icp_number || ''} 苹果证书签名平台</div>
           </div>
         </div>
       </footer>

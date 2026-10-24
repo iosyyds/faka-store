@@ -16,7 +16,7 @@ export default function Footer({
       <div className="footer-inner">
         <div>
           <h4>{siteName}</h4>
-          <p>全自动虚拟商品发卡平台，24小时无人值守，付款秒发。</p>
+          <p>苹果证书签名与应用多开平台，24小时无人值守，付款秒发。</p>
           <p>安全 · 快捷 · 稳定</p>
         </div>
         <div>
