@@ -21,6 +21,8 @@ export default function Navbar({
 
   const pText = primaryText ?? buttonText ?? '';
   const pHref = primaryHref ?? buttonHref ?? '/';
+  const sText = secondaryText ?? '';
+  const sHref = secondaryHref ?? '/';
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -70,9 +72,9 @@ export default function Navbar({
 
         {/* 右侧：描边次要按钮 + 蓝色实心主按钮 */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          {secondaryText && (
+          {sText && (
             <button
-              onClick={() => { window.location.href = secondaryHref; }}
+              onClick={() => { window.location.href = sHref; }}
               style={{
                 height: isMobile ? 34 : 36, padding: '0 16px', borderRadius: 980,
                 background: 'transparent', color: '#1D1D1F',
@@ -86,7 +88,7 @@ export default function Navbar({
               onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.transform = 'scale(1)'; }}
               onMouseDown={(e) => { e.currentTarget.style.transform = 'scale(0.95)'; }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
-            >{secondaryText}</button>
+            >{sText}</button>
           )}
           {pText && (
             <button
