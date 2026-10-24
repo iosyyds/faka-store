@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const BACKEND_API = 'https://kk.qqqi.top/api';
+const BACKEND_API = 'https://api.puaaa.cn/api';
 
 // 动态代理所有 /api/* 请求到后端
 export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string[] }> }) {
