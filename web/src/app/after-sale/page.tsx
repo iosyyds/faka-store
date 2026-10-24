@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 
-const API_BASE = 'https://kk.qqqi.top/api';
+const API_BASE = 'https://api.puaaa.cn/api';
 const appleBlue = '#007AFF';
 const appleGray = '#F2F2F7';
 const appleText = '#1D1D1F';
@@ -34,8 +34,8 @@ export default function AfterSalePage() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#ffffff', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif', color: appleText }}>
-      <Navbar buttonText="返回首页" buttonHref="/" />
-      <div style={{ maxWidth: 440, margin: '0 auto', padding: '92px 22px 40px' }}>
+      <Navbar primaryText="返回首页" primaryHref="/" secondaryText="订单查询" secondaryHref="/query" />
+      <div style={{ maxWidth: 440, margin: '0 auto', padding: '96px 22px 40px' }}>
         <div style={{ background: '#fff', borderRadius: 20, padding: 28, boxShadow: '0 4px 24px rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.04)' }}>
           <div style={{ textAlign: 'center', marginBottom: 24 }}>
             <div style={{ width: 48, height: 48, margin: '0 auto 12px', borderRadius: 14, background: 'linear-gradient(135deg,#FF9500,#FF3B30)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 16px rgba(255,59,48,0.2)' }}>

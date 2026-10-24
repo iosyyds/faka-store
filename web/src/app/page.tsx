@@ -176,15 +176,15 @@ export default function Home() {
       )}
 
       {/* 导航栏 */}
-      <Navbar buttonText="订单查询" buttonHref="/query" />
+      <Navbar primaryText="订单查询" primaryHref="/query" secondaryText="常见问题" secondaryHref="/faq" />
 
       {/* 主内容 */}
       {!loaded ? (
-        <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '72px 14px 32px' : '92px 22px 56px', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
+        <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '82px 14px 32px' : '92px 22px 56px', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
           <div style={{ color: '#86868B', fontSize: 14 }}>加载中...</div>
         </div>
       ) : (
-      <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '72px 14px 32px' : '92px 22px 56px' }}>
+      <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '82px 14px 32px' : '92px 22px 56px' }}>
         {/* Hero */}
         <div style={{ textAlign: 'center', marginBottom: isMobile ? 20 : 36 }}>
           <h1 style={{ fontSize: isMobile ? 26 : 44, fontWeight: 700, marginBottom: 8, lineHeight: 1.1 }}>{site.banner_title || '虚拟商品，即拍即发。'}</h1>
