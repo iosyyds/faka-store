@@ -282,12 +282,12 @@ export default function Home() {
         <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '32px 20px 28px' : '48px 22px 36px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr', marginBottom: isMobile ? 28 : 36 }}>
             {/* 品牌区 */}
-            <div style={{ textAlign: isMobile ? 'center' : 'left' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12, justifyContent: isMobile ? 'center' : 'flex-start' }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12, justifyContent: 'center' }}>
                 <img src="/logo.png" alt="logo" style={{ width: 32, height: 32, borderRadius: 9, objectFit: 'cover', display: 'block' }} />
                 <span style={{ fontSize: 17, fontWeight: 700, color: '#1d1d1f' }}>{site.site_name || '甜甜发卡'}</span>
               </div>
-              <p style={{ fontSize: 12, color: '#86868B', lineHeight: 1.7, maxWidth: isMobile ? 280 : 300, margin: isMobile ? '0 auto' : 0 }}>{site.footer_desc || '专注苹果手机证书签名与应用多开，P12证书、全能签、万能签、轻松签、IPA签名工具自助下单，支付宝安全支付，付款后自动秒发卡密，24小时无人值守。'}</p>
+              <p style={{ fontSize: 12, color: '#86868B', lineHeight: 1.7, maxWidth: isMobile ? 280 : 300, margin: '0 auto' }}>{site.footer_desc || '专注苹果手机证书签名与应用多开，P12证书、全能签、万能签、轻松签、IPA签名工具自助下单，支付宝安全支付，付款后自动秒发卡密，24小时无人值守。'}</p>
             </div>
           </div>
           {/* 底部版权 */}
