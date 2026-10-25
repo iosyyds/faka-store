@@ -280,7 +280,7 @@ export default function Home() {
       {/* 页脚 - AppStore 风格 */}
       <footer style={{ borderTop: '1px solid rgba(0,0,0,0.05)', background: '#F5F5F7' }}>
         <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '32px 20px 28px' : '48px 22px 36px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.5fr 1fr 1fr', gap: isMobile ? 28 : 40, marginBottom: isMobile ? 28 : 36 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', marginBottom: isMobile ? 28 : 36 }}>
             {/* 品牌区 */}
             <div style={{ textAlign: isMobile ? 'center' : 'left' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12, justifyContent: isMobile ? 'center' : 'flex-start' }}>
@@ -289,36 +289,6 @@ export default function Home() {
               </div>
               <p style={{ fontSize: 12, color: '#86868B', lineHeight: 1.7, maxWidth: isMobile ? 280 : 300, margin: isMobile ? '0 auto' : 0 }}>{site.footer_desc || '专注苹果手机证书签名与应用多开，P12证书、全能签、万能签、轻松签、IPA签名工具自助下单，支付宝安全支付，付款后自动秒发卡密，24小时无人值守。'}</p>
             </div>
-            {/* 快速链接 - 手机端横向排列，电脑端纵向 */}
-            <div style={{ textAlign: isMobile ? 'center' : 'left' }}>
-              <div style={{ fontSize: 12, fontWeight: 600, marginBottom: isMobile ? 14 : 16, color: '#1d1d1f', letterSpacing: 0.3 }}>快速链接</div>
-              <div style={{ display: 'flex', flexDirection: isMobile ? 'row' : 'column', gap: isMobile ? 6 : 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-                <a href="/" style={{ padding: isMobile ? '6px 14px' : 0, background: isMobile ? '#fff' : 'transparent', borderRadius: isMobile ? 980 : 0, fontSize: 12, color: isMobile ? '#1d1d1f' : '#86868B', textDecoration: 'none', fontWeight: isMobile ? 500 : 400, transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.color = '#007AFF'; if (isMobile) e.currentTarget.style.background = 'rgba(0,122,255,0.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.color = isMobile ? '#1d1d1f' : '#86868B'; if (isMobile) e.currentTarget.style.background = '#fff'; }}>首页</a>
-                <a href="/query" style={{ padding: isMobile ? '6px 14px' : 0, background: isMobile ? '#fff' : 'transparent', borderRadius: isMobile ? 980 : 0, fontSize: 12, color: isMobile ? '#1d1d1f' : '#86868B', textDecoration: 'none', fontWeight: isMobile ? 500 : 400, transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.color = '#007AFF'; if (isMobile) e.currentTarget.style.background = 'rgba(0,122,255,0.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.color = isMobile ? '#1d1d1f' : '#86868B'; if (isMobile) e.currentTarget.style.background = '#fff'; }}>订单查询</a>
-                <a href="/faq" style={{ padding: isMobile ? '6px 14px' : 0, background: isMobile ? '#fff' : 'transparent', borderRadius: isMobile ? 980 : 0, fontSize: 12, color: isMobile ? '#1d1d1f' : '#86868B', textDecoration: 'none', fontWeight: isMobile ? 500 : 400, transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.color = '#007AFF'; if (isMobile) e.currentTarget.style.background = 'rgba(0,122,255,0.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.color = isMobile ? '#1d1d1f' : '#86868B'; if (isMobile) e.currentTarget.style.background = '#fff'; }}>常见问题</a>
-              </div>
-            </div>
-            {/* 服务保障 - 仅电脑端 */}
-            {!isMobile && (
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 16, color: '#1d1d1f', letterSpacing: 0.3 }}>服务保障</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#86868B' }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#34C759" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    支付宝安全支付
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#86868B' }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#007AFF" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    24小时自动发货
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#86868B' }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#AF52DE" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                    </svg>
-                    卡密加密存储
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
           {/* 底部版权 */}
           <div style={{ borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: 20, textAlign: 'center' }}>
