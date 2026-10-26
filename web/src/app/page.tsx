@@ -193,10 +193,10 @@ export default function Home() {
             {/* 信任状徽章 */}
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 980, background: 'rgba(0,122,255,0.08)', border: '1px solid rgba(0,122,255,0.15)', color: '#007AFF', fontSize: isMobile ? 11 : 12, fontWeight: 600, letterSpacing: 0.3, marginBottom: isMobile ? 14 : 20, backdropFilter: 'saturate(180%) blur(10px)', WebkitBackdropFilter: 'saturate(180%) blur(10px)' }}>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 6a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
-              即买即用 · 付款秒发 · 24h 自动发货
+              P12个人证书 · IPA签名 · 微信多开
             </div>
             <h1 style={{ fontSize: isMobile ? 28 : 48, fontWeight: 800, marginBottom: 14, lineHeight: 1.12, letterSpacing: '-0.02em', background: 'linear-gradient(180deg, #1d1d1f 0%, #1d1d1f 55%, #2f6fd6 100%)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent', color: 'transparent' }}>{site.banner_title || '苹果证书签名，即买即用。'}</h1>
-            <p style={{ fontSize: isMobile ? 13 : 16, color: '#6e6e73', marginBottom: 0, letterSpacing: 0.2, lineHeight: 1.6 }}>{site.banner_subtitle || 'P12证书 · 全能签 · 轻松签 · IPA签名工具 · 微信软件多开，付款后自动秒发。'}</p>
+            <p style={{ fontSize: isMobile ? 13 : 16, color: '#6e6e73', marginBottom: 0, letterSpacing: 0.2, lineHeight: 1.6 }}>{site.banner_subtitle || 'P12个人证书 · iOS自签 · IPA签名 · 微信多开 · 软件多开 · 破解版软件安装'}</p>
           </div>
         </div>
 
@@ -296,13 +296,13 @@ export default function Home() {
                 <img src="/logo.png" alt="logo" style={{ width: 32, height: 32, borderRadius: 9, objectFit: 'cover', display: 'block' }} />
                 <span style={{ fontSize: 17, fontWeight: 700, color: '#1d1d1f' }}>{site.site_name || '甜甜发卡'}</span>
               </div>
-              <p style={{ fontSize: 12, color: '#86868B', lineHeight: 1.7, maxWidth: isMobile ? 280 : 300, margin: '0 auto' }}>{site.footer_desc || '专注苹果手机证书签名与应用多开，P12证书、全能签、万能签、轻松签、IPA签名工具自助下单，支付宝安全支付，付款后自动秒发卡密，24小时无人值守。'}</p>
+              <p style={{ fontSize: 12, color: '#86868B', lineHeight: 1.7, maxWidth: isMobile ? 280 : 300, margin: '0 auto' }}>{site.footer_desc || '专注苹果 iOS P12 个人证书签名，支持 IPA 签名、微信多开、软件多开与破解版软件安装，全能签、轻松签、万能签自签工具一站式自助下单。'}</p>
             </div>
           </div>
           {/* 底部版权 */}
           <div style={{ borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: 20, textAlign: 'center' }}>
             <div style={{ fontSize: 11, color: '#86868B', marginBottom: 4 }}>© {new Date().getFullYear()} {site.site_name || '甜甜发卡'}</div>
-            <div style={{ fontSize: 11, color: '#AEAEB2' }}>{site.icp_number || ''} 苹果证书签名平台</div>
+            <div style={{ fontSize: 11, color: '#AEAEB2' }}>{site.icp_number || ''}</div>
           </div>
         </div>
       </footer>

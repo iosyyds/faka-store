@@ -10,10 +10,10 @@ interface OrderItem {
 /** 实时下单滚动公示栏 */
 export default function Marquee({ items }: { items: OrderItem[] }) {
   const [fallback] = useState<OrderItem[]>([
-    { nickname: "用户**88", product_name: "P12证书（全能签）", created_at: "" },
+    { nickname: "用户**88", product_name: "P12个人证书（全能签）", created_at: "" },
     { nickname: "小**坤", product_name: "微信多开分身", created_at: "" },
     { nickname: "**苹果", product_name: "IPA签名工具", created_at: "" },
-    { nickname: "用户**23", product_name: "万能签证书", created_at: "" },
+    { nickname: "用户**23", product_name: "破解版软件安装", created_at: "" },
     { nickname: "**奶茶", product_name: "软件多开版本", created_at: "" },
     { nickname: "用户**67", product_name: "轻松签自签证书", created_at: "" },
   ]);
