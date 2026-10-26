@@ -180,11 +180,11 @@ export default function Home() {
 
       {/* 主内容 */}
       {!loaded ? (
-        <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '68px 14px 32px' : '76px 22px 56px', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
+        <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '82px 14px 32px' : '92px 22px 56px', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
           <div style={{ color: '#86868B', fontSize: 14 }}>加载中...</div>
         </div>
       ) : (
-      <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '68px 14px 32px' : '76px 22px 56px' }}>
+      <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '82px 14px 32px' : '92px 22px 56px' }}>
         {/* Hero */}
         <div style={{ position: 'relative', textAlign: 'center', marginBottom: isMobile ? 28 : 48, padding: isMobile ? '8px 0 0' : '16px 0 0' }}>
           {/* 背景淡蓝光晕 */}

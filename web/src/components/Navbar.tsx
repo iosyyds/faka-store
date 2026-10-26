@@ -34,18 +34,22 @@ export default function Navbar({
   return (
     <nav style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-      background: 'rgba(255,255,255,0.88)',
-      backdropFilter: 'saturate(180%) blur(20px)',
-      WebkitBackdropFilter: 'saturate(180%) blur(20px)',
-      borderBottom: '1px solid rgba(0,0,0,0.06)',
+      background: 'transparent',
       fontFamily: NAV_FONT,
+      padding: isMobile ? '10px 14px 0' : '14px 22px 0',
       boxSizing: 'border-box',
     }}>
       <div style={{
         maxWidth: 980, margin: '0 auto',
-        height: isMobile ? 52 : 60,
+        height: isMobile ? 56 : 62,
+        background: 'rgba(255,255,255,0.88)',
+        backdropFilter: 'saturate(180%) blur(20px)',
+        WebkitBackdropFilter: 'saturate(180%) blur(20px)',
+        border: '1px solid rgba(0,0,0,0.06)',
+        borderRadius: isMobile ? 22 : 30,
+        boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: isMobile ? '0 14px' : '0 22px',
+        padding: isMobile ? '0 14px' : '0 18px',
         boxSizing: 'border-box',
       }}>
         {/* 左侧：logo + 站点标题 */}
