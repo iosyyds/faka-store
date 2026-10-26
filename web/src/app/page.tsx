@@ -191,7 +191,7 @@ export default function Home() {
           <div style={{ position: 'absolute', left: '50%', top: isMobile ? -20 : -40, transform: 'translateX(-50%)', width: isMobile ? 320 : 640, height: isMobile ? 160 : 280, background: 'radial-gradient(ellipse at center, rgba(0,122,255,0.13) 0%, rgba(0,122,255,0.05) 45%, rgba(0,122,255,0) 72%)', filter: 'blur(30px)', zIndex: 0, pointerEvents: 'none' }} />
           <div style={{ position: 'relative', zIndex: 1, animation: 'slideUp 0.7s ease-out both' }}>
             {/* 信任状徽章 */}
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 980, background: 'rgba(0,122,255,0.08)', border: '1px solid rgba(0,122,255,0.15)', color: '#007AFF', fontSize: isMobile ? 11 : 12, fontWeight: 600, letterSpacing: 0.3, marginBottom: isMobile ? 14 : 20, backdropFilter: 'saturate(180%) blur(10px)', WebkitBackdropFilter: 'saturate(180%) blur(10px)' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 980, background: 'rgba(0,122,255,0.10)', border: '1px solid rgba(0,122,255,0.15)', color: '#007AFF', fontSize: isMobile ? 11 : 12, fontWeight: 600, letterSpacing: 0.3, marginBottom: isMobile ? 14 : 20 }}>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 6a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
               不越狱可用 · 全机型支持
             </div>
