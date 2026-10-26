@@ -64,7 +64,7 @@ export default function Navbar({
             borderRadius: 8, objectFit: 'cover', display: 'block',
           }} />
           <span style={{
-            fontSize: isMobile ? 17 : 20, fontWeight: 700, lineHeight: 1.2,
+            fontSize: isMobile ? 14 : 16, fontWeight: 700, lineHeight: 1.2,
             color: titleHover ? '#007AFF' : '#1D1D1F',
             letterSpacing: -0.4, transition: 'color 0.2s ease',
           }}>甜甜发卡</span>
