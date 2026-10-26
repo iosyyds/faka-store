@@ -366,9 +366,18 @@ export default function Home() {
                 <>
                   <div style={{ padding: 12, background: '#F5F5F7', borderRadius: 12, marginBottom: 16, display: 'flex', gap: 12, alignItems: 'center' }}>
                     <div style={{ width: 48, height: 48, borderRadius: 10, background: '#E8E8ED', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#007AFF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="12" cy="9" r="5.5"/>
-                        <path d="M15.5 13.4 17 22l-5-3-5 3 1.5-8.6"/>
+                      <svg width="44" height="44" viewBox="0 0 44 44">
+                        <defs>
+                          <linearGradient id="p12card" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0" stopColor="#0A84FF"/>
+                            <stop offset="1" stopColor="#0066D6"/>
+                          </linearGradient>
+                        </defs>
+                        <rect x="2" y="4" width="40" height="36" rx="9" fill="url(#p12card)"/>
+                        <circle cx="22" cy="9.5" r="1.8" fill="rgba(255,255,255,0.4)"/>
+                        <text x="22" y="25.5" textAnchor="middle" fontFamily="-apple-system, 'SF Pro Display', sans-serif" fontSize="13" fontWeight="800" fill="#ffffff">P12</text>
+                        <rect x="13" y="30" width="18" height="1.6" rx="0.8" fill="rgba(255,255,255,0.45)"/>
+                        <rect x="16" y="33.5" width="12" height="1.6" rx="0.8" fill="rgba(255,255,255,0.25)"/>
                       </svg>
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
