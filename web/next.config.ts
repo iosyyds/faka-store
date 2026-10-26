@@ -1,10 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Vercel 原生部署，不使用静态导出
+  // 静态导出：同时兼容 Vercel 与 GitHub Pages（qqqi.top 自定义域名根路径）
+  output: "export",
   images: { unoptimized: true },
-  // 子路径部署（GitHub Pages 时用）；Vercel 根域名部署时留空
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
+  // 自定义域名根路径部署时留空；仓库子路径 iosyyds.github.io/faka-store 不可用，以自定义域名为正式入口
+  basePath: "",
 };
 
 export default nextConfig;
