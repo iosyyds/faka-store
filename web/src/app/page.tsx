@@ -200,20 +200,20 @@ export default function Home() {
           </div>
         </div>
 
-        {/* 分类 */}
+        {/* 分类 - 毛玻璃悬浮条 */}
         {Array.isArray(categories) && categories.length > 0 && (
-          <div style={{ position: 'relative', marginBottom: isMobile ? 16 : 24 }}>
-            <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 4, paddingRight: isMobile ? 30 : 0, scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-              <span onClick={() => setActiveCategory('all')} style={{ padding: '7px 16px', borderRadius: 980, fontSize: 13, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === 'all' ? '#fff' : '#F5F5F7', color: activeCategory === 'all' ? '#007AFF' : '#1d1d1f', border: activeCategory === 'all' ? '1.5px solid #007AFF' : '1.5px solid transparent', transition: 'all 0.2s ease', flexShrink: 0 }}>全部</span>
+          <div style={{ position: 'sticky', top: isMobile ? 74 : 84, zIndex: 20, marginBottom: isMobile ? 16 : 24, background: 'rgba(255,255,255,0.85)', backdropFilter: 'saturate(180%) blur(20px)', WebkitBackdropFilter: 'saturate(180%) blur(20px)', borderRadius: 980, boxShadow: '0 4px 20px rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.04)', padding: 6 }}>
+            <div style={{ display: 'flex', gap: 6, overflowX: 'auto', paddingRight: isMobile ? 24 : 0, scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              <span onClick={() => setActiveCategory('all')} style={{ padding: '7px 16px', borderRadius: 980, fontSize: 13, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === 'all' ? '#fff' : 'transparent', color: activeCategory === 'all' ? '#007AFF' : '#1d1d1f', border: activeCategory === 'all' ? '1.5px solid #007AFF' : '1.5px solid transparent', transition: 'all 0.2s ease', flexShrink: 0 }}>全部</span>
               {categories.map((cat) => (
-                <span key={cat.id} onClick={() => setActiveCategory(cat.id)} style={{ padding: '7px 16px', borderRadius: 980, fontSize: 13, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === cat.id ? '#fff' : '#F5F5F7', color: activeCategory === cat.id ? '#007AFF' : '#1d1d1f', border: activeCategory === cat.id ? '1.5px solid #007AFF' : '1.5px solid transparent', transition: 'all 0.2s ease', flexShrink: 0 }}>
+                <span key={cat.id} onClick={() => setActiveCategory(cat.id)} style={{ padding: '7px 16px', borderRadius: 980, fontSize: 13, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap', background: activeCategory === cat.id ? '#fff' : 'transparent', color: activeCategory === cat.id ? '#007AFF' : '#1d1d1f', border: activeCategory === cat.id ? '1.5px solid #007AFF' : '1.5px solid transparent', transition: 'all 0.2s ease', flexShrink: 0 }}>
                   {cat.name}
                 </span>
               ))}
             </div>
             {isMobile && categories.length > 3 && (
-              <div style={{ position: 'absolute', right: 0, top: 0, bottom: 4, width: 30, background: 'linear-gradient(to right, transparent, #fff)', pointerEvents: 'none', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#86868B" stroke-width="2.5" stroke-linecap="round" strokeLinejoin="round" style={{ marginRight: 4 }}>
+              <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: 28, background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.85))', pointerEvents: 'none', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', borderRadius: '0 980 980 0' }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#86868B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style={{ marginRight: 6 }}>
                   <path d="m9 18 6-6-6-6"/>
                 </svg>
               </div>
