@@ -19,7 +19,7 @@ export default function FaqPage() {
   return (
     <div style={{ minHeight: '100vh', background: '#ffffff', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif', color: appleText }}>
       <Navbar primaryText="返回首页" primaryHref="/" secondaryText="订单查询" secondaryHref="/query" />
-      <div style={{ maxWidth: 600, margin: '0 auto', padding: '96px 22px 36px' }}>
+      <div style={{ maxWidth: 600, margin: '0 auto', padding: '76px 22px 36px' }}>
         <h2 style={{ fontSize: 28, fontWeight: 700, margin: '0 0 24px', textAlign: 'center', letterSpacing: -0.8 }}>常见问题</h2>
         {list.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '60px 20px', color: appleSubtext, fontSize: 14 }}>暂无常见问题</div>

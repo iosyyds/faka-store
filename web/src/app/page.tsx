@@ -180,11 +180,11 @@ export default function Home() {
 
       {/* 主内容 */}
       {!loaded ? (
-        <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '82px 14px 32px' : '92px 22px 56px', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
+        <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '68px 14px 32px' : '76px 22px 56px', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
           <div style={{ color: '#86868B', fontSize: 14 }}>加载中...</div>
         </div>
       ) : (
-      <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '82px 14px 32px' : '92px 22px 56px' }}>
+      <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '68px 14px 32px' : '76px 22px 56px' }}>
         {/* Hero */}
         <div style={{ position: 'relative', textAlign: 'center', marginBottom: isMobile ? 28 : 48, padding: isMobile ? '8px 0 0' : '16px 0 0' }}>
           {/* 背景淡蓝光晕 */}
@@ -193,7 +193,7 @@ export default function Home() {
             {/* 信任状徽章 */}
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 980, background: 'rgba(0,122,255,0.08)', border: '1px solid rgba(0,122,255,0.15)', color: '#007AFF', fontSize: isMobile ? 11 : 12, fontWeight: 600, letterSpacing: 0.3, marginBottom: isMobile ? 14 : 20, backdropFilter: 'saturate(180%) blur(10px)', WebkitBackdropFilter: 'saturate(180%) blur(10px)' }}>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 6a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
-              官方直营 · 付款秒发 · 24h 无人值守
+              即买即用 · 付款秒发 · 24h 自动发货
             </div>
             <h1 style={{ fontSize: isMobile ? 28 : 48, fontWeight: 800, marginBottom: 14, lineHeight: 1.12, letterSpacing: '-0.02em', background: 'linear-gradient(180deg, #1d1d1f 0%, #1d1d1f 55%, #2f6fd6 100%)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent', color: 'transparent' }}>{site.banner_title || '苹果证书签名，即买即用。'}</h1>
             <p style={{ fontSize: isMobile ? 13 : 16, color: '#6e6e73', marginBottom: 0, letterSpacing: 0.2, lineHeight: 1.6 }}>{site.banner_subtitle || 'P12证书 · 全能签 · 轻松签 · IPA签名工具 · 微信软件多开，付款后自动秒发。'}</p>
