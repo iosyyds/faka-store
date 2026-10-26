@@ -366,9 +366,9 @@ export default function Home() {
                 <>
                   <div style={{ padding: 12, background: '#F5F5F7', borderRadius: 12, marginBottom: 16, display: 'flex', gap: 12, alignItems: 'center' }}>
                     <div style={{ width: 48, height: 48, borderRadius: 10, background: '#E8E8ED', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
-                        <path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/>
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#007AFF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="9" r="5.5"/>
+                        <path d="M15.5 13.4 17 22l-5-3-5 3 1.5-8.6"/>
                       </svg>
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
