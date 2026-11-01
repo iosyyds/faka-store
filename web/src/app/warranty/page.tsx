@@ -100,6 +100,7 @@ export default function WarrantyPage() {
       case 'active': return '#34C759';
       case 'normal': return '#FF9500';
       case 'urgent': return '#FF3B30';
+      case 'pending': return '#FF9500';
       default: return '#86868B';
     }
   }
@@ -139,9 +140,9 @@ export default function WarrantyPage() {
           {queryResult && (
             <div style={{ marginTop: 14, padding: 14, background: '#F5F5F7', borderRadius: 12 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-                <span style={{ fontSize: 13, color: appleSubtext }}>剩余质保</span>
+                <span style={{ fontSize: 13, color: appleSubtext }}>{queryResult.status === 'pending' ? '审核状态' : '剩余质保'}</span>
                 <span style={{ padding: '4px 12px', borderRadius: 980, fontSize: 13, fontWeight: 700, color: '#fff', background: statusColor(queryResult.status) }}>
-                  {queryResult.remain_days >= 0 ? `剩 ${queryResult.remain_days} 天` : '已过期'}
+                  {queryResult.status === 'pending' ? '审核中' : (queryResult.remain_days >= 0 ? `剩 ${queryResult.remain_days} 天` : '已过期')}
                 </span>
               </div>
               <div style={{ fontSize: 12, color: appleSubtext, lineHeight: 1.8 }}>
@@ -160,7 +161,7 @@ export default function WarrantyPage() {
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
             </div>
             <h2 style={{ fontSize: 20, fontWeight: 700, margin: '0 0 8px' }}>提交成功</h2>
-            <p style={{ fontSize: 14, color: appleSubtext, margin: 0, lineHeight: 1.6 }}>质保信息已登记，我们会尽快处理。</p>
+            <p style={{ fontSize: 14, color: appleSubtext, margin: 0, lineHeight: 1.6 }}>质保信息已提交，等待管理员审核。<br/>审核通过后即可查询剩余质保天数。</p>
             <button onClick={() => setDone(false)} style={{ marginTop: 24, padding: '10px 28px', borderRadius: 980, border: 'none', background: appleBlue, color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>继续登记</button>
           </div>
         ) : (
