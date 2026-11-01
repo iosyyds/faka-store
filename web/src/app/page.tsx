@@ -301,7 +301,15 @@ export default function Home() {
           </div>
           {/* 底部版权 */}
           <div style={{ borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: 20, textAlign: 'center' }}>
-            <div style={{ fontSize: 11, color: '#86868B', marginBottom: 4 }}>© {new Date().getFullYear()} {site.site_name || '甜甜发卡'}</div>
+            <div style={{ fontSize: 11, color: '#86868B', marginBottom: 4 }}>
+              © {new Date().getFullYear()} {site.site_name || '甜甜发卡'}
+              {site.footer_link_text && site.footer_link_url && (
+                <>
+                  <span style={{ margin: '0 6px', color: '#D1D1D6' }}>·</span>
+                  <a href={site.footer_link_url} target="_blank" rel="noopener noreferrer" style={{ color: '#007AFF', textDecoration: 'none' }}>{site.footer_link_text}</a>
+                </>
+              )}
+            </div>
             <div style={{ fontSize: 11, color: '#AEAEB2' }}>{site.icp_number || ''}</div>
           </div>
         </div>
