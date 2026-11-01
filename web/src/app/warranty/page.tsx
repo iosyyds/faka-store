@@ -113,6 +113,7 @@ export default function WarrantyPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#ffffff', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif', color: appleText }}>
+      <style>{`input[type="date"]::-webkit-calendar-picker-indicator { display: none; }`}</style>
       <Navbar primaryText="返回首页" primaryHref="/" secondaryText="订单查询" secondaryHref="/query" />
 
       <div style={{ maxWidth: 440, margin: '0 auto', padding: isMobile ? '82px 16px 40px' : '92px 22px 64px' }}>
