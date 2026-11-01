@@ -306,7 +306,7 @@ export default function Home() {
               {site.footer_link_text && site.footer_link_url && (
                 <>
                   <span style={{ color: '#D1D1D6' }}>·</span>
-                  <a href={site.footer_link_url} target="_blank" rel="noopener noreferrer" style={{ color: '#007AFF', textDecoration: 'none' }}>{site.footer_link_text}</a>
+                  <a href={site.footer_link_url} target="_blank" rel="noopener noreferrer" style={{ color: '#007AFF', textDecoration: 'none', fontSize: 11, lineHeight: 1.5, fontWeight: 400 }}>{site.footer_link_text}</a>
                 </>
               )}
             </div>
