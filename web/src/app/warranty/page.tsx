@@ -192,13 +192,13 @@ export default function WarrantyPage() {
               <input placeholder="微信备注/称呼" value={customer} onChange={(e) => setCustomer(e.target.value)} style={inputStyle} onFocus={focusStyle} onBlur={blurStyle} />
             </div>
             <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
-              <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ width: '50%', flex: '0 0 50%' }}>
                 <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>下单时间 <span style={{ color: '#FF3B30' }}>*</span></label>
-                <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} style={{ ...inputStyle, width: '100%', fontSize: 12, padding: '10px 8px' }} onFocus={focusStyle} onBlur={blurStyle} />
+                <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} style={{ width: '100%', boxSizing: 'border-box', padding: '10px 8px', border: '1px solid #E5E5EA', borderRadius: 12, fontSize: 12, background: '#fff', outline: 'none' }} onFocus={focusStyle} onBlur={blurStyle} />
               </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ width: '50%', flex: '0 0 50%' }}>
                 <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>质保天数</label>
-                <select value={duration} onChange={(e) => setDuration(e.target.value)} style={{ ...inputStyle, width: '100%', fontSize: 12, padding: '10px 8px' }}>
+                <select value={duration} onChange={(e) => setDuration(e.target.value)} style={{ width: '100%', boxSizing: 'border-box', padding: '10px 8px', border: '1px solid #E5E5EA', borderRadius: 12, fontSize: 12, background: '#fff', outline: 'none' }}>
                   <option value="45">45天</option>
                   <option value="185">185天</option>
                   <option value="360">360天</option>
