@@ -8,6 +8,8 @@ export interface SiteInfo {
   customer_service: string;
   qq_group: string;
   copyright: string;
+  footer_link_text: string;
+  footer_link_url: string;
   announcements: Array<{ id: number; title: string; content: string; is_popup: number }>;
   faqs: Array<{ id: number; question: string; answer: string }>;
   recent_orders: Array<{ nickname: string; product_name: string; created_at: string }>;
