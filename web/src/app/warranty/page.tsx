@@ -27,7 +27,7 @@ export default function WarrantyPage() {
   const [signCode, setSignCode] = useState('');
   const [customer, setCustomer] = useState('');
   const [startDate, setStartDate] = useState('');
-  const [duration, setDuration] = useState('365');
+  const [duration, setDuration] = useState('360');
   const [remark, setRemark] = useState('');
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState('');
@@ -189,7 +189,11 @@ export default function WarrantyPage() {
               </div>
               <div style={{ flex: 1 }}>
                 <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>质保天数</label>
-                <input type="number" value={duration} onChange={(e) => setDuration(e.target.value)} min="1" style={inputStyle} onFocus={focusStyle} onBlur={blurStyle} />
+                <select value={duration} onChange={(e) => setDuration(e.target.value)} style={{ ...inputStyle, appearance: 'auto' }}>
+                  <option value="45">45天</option>
+                  <option value="185">185天</option>
+                  <option value="360">360天</option>
+                </select>
               </div>
             </div>
             <div style={{ marginBottom: 18 }}>
