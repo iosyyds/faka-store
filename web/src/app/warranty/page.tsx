@@ -37,6 +37,10 @@ export default function WarrantyPage() {
     setLoaded(true);
     setIsMobile(window.innerWidth < 768);
     setStartDate(new Date().toISOString().slice(0, 10));
+    // 检测从获取UDID页面跳回时自动填充
+    const params = new URLSearchParams(window.location.search);
+    const autoUdid = params.get('udid');
+    if (autoUdid) setUdid(autoUdid);
   }, []);
 
   const inputStyle: React.CSSProperties = {
@@ -172,7 +176,11 @@ export default function WarrantyPage() {
 
             <div style={{ marginBottom: 12 }}>
               <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>UDID <span style={{ color: '#FF3B30' }}>*</span></label>
-              <input placeholder="设备UDID" value={udid} onChange={(e) => setUdid(e.target.value)} style={inputStyle} onFocus={focusStyle} onBlur={blurStyle} />
+              <div style={{ display: 'flex', gap: 8 }}>
+                <input placeholder="设备UDID" value={udid} onChange={(e) => setUdid(e.target.value)} style={{ ...inputStyle, flex: 1 }} onFocus={focusStyle} onBlur={blurStyle} />
+                <a href="https://api.puaaa.cn/api/udid_profile.php" style={{ padding: '0 14px', borderRadius: 12, background: 'rgba(0,122,255,0.1)', color: appleBlue, fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', textDecoration: 'none', whiteSpace: 'nowrap', flexShrink: 0 }}>获取UDID</a>
+              </div>
+              {udid && <div style={{ fontSize: 11, color: '#34C759', marginTop: 4 }}>✓ 已自动填充</div>}
             </div>
             <div style={{ marginBottom: 12 }}>
               <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>签名码 <span style={{ color: '#FF3B30' }}>*</span></label>
