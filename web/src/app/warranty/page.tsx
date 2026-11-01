@@ -197,7 +197,7 @@ export default function WarrantyPage() {
                 <div style={{ position: 'relative' }}>
                   <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)}
                     style={{ display: 'block', width: '100%', padding: '10px 28px 10px 8px', border: '1px solid #E5E5EA', borderRadius: 12, fontSize: 12, background: '#fff', outline: 'none', boxSizing: 'border-box', color: appleText, WebkitAppearance: 'none', appearance: 'none' }} />
-                  <span style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: '#86868B', fontSize: 14 }}>📅</span>
+                  <svg style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#86868B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                 </div>
               </div>
               <div style={{ width: '50%', paddingLeft: 4 }}>
@@ -209,7 +209,7 @@ export default function WarrantyPage() {
                     <option value="185">185天</option>
                     <option value="360">360天</option>
                   </select>
-                  <span style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: '#86868B', fontSize: 12 }}>▾</span>
+                  <svg style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#86868B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
                 </div>
               </div>
             </div>
