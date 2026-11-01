@@ -195,12 +195,12 @@ export default function WarrantyPage() {
               <div style={{ width: '50%', paddingRight: 4 }}>
                 <div style={{ fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>下单时间 <span style={{ color: '#FF3B30' }}>*</span></div>
                 <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)}
-                  style={{ display: 'block', width: '100%', padding: '10px 8px', border: '1px solid #E5E5EA', borderRadius: 12, fontSize: 12, background: '#fff', outline: 'none', boxSizing: 'border-box', WebkitAppearance: 'none', appearance: 'none', color: appleText }} />
+                  style={{ display: 'block', width: '100%', padding: '10px 8px', border: '1px solid #E5E5EA', borderRadius: 12, fontSize: 12, background: '#fff', outline: 'none', boxSizing: 'border-box', color: appleText }} />
               </div>
               <div style={{ width: '50%', paddingLeft: 4 }}>
                 <div style={{ fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>质保天数</div>
                 <select value={duration} onChange={(e) => setDuration(e.target.value)}
-                  style={{ display: 'block', width: '100%', padding: '10px 24px 10px 8px', border: '1px solid #E5E5EA', borderRadius: 12, fontSize: 12, background: '#fff', outline: 'none', boxSizing: 'border-box', WebkitAppearance: 'none', appearance: 'none', color: appleText }}>
+                  style={{ display: 'block', width: '100%', padding: '10px 8px', border: '1px solid #E5E5EA', borderRadius: 12, fontSize: 12, background: '#fff', outline: 'none', boxSizing: 'border-box', color: appleText }}>
                   <option value="45">45天</option>
                   <option value="185">185天</option>
                   <option value="360">360天</option>
