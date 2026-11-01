@@ -288,8 +288,8 @@ export default function Home() {
 
       {/* 页脚 - AppStore 风格 */}
       <footer style={{ borderTop: '1px solid rgba(0,0,0,0.05)', background: '#F5F5F7' }}>
-        <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '32px 20px 28px' : '48px 22px 36px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', marginBottom: isMobile ? 28 : 36 }}>
+        <div style={{ maxWidth: 980, margin: '0 auto', padding: isMobile ? '20px 20px 16px' : '24px 22px 16px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', marginBottom: isMobile ? 16 : 20 }}>
             {/* 品牌区 */}
             <div style={{ textAlign: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12, justifyContent: 'center' }}>
@@ -300,7 +300,7 @@ export default function Home() {
             </div>
           </div>
           {/* 底部版权 */}
-          <div style={{ borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: 20, textAlign: 'center' }}>
+          <div style={{ borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: 12, textAlign: 'center' }}>
             <div style={{ fontSize: 11, color: '#86868B', marginBottom: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
               <span>© {new Date().getFullYear()} {site.site_name || '甜甜发卡'}</span>
               {site.footer_link_text && site.footer_link_url && (
