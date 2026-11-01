@@ -194,11 +194,11 @@ export default function WarrantyPage() {
             <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>下单时间 <span style={{ color: '#FF3B30' }}>*</span></label>
-                <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} style={{ ...inputStyle, width: '100%', fontSize: 12, padding: '10px 6px' }} onFocus={focusStyle} onBlur={blurStyle} />
+                <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} style={{ ...inputStyle, width: '100%', fontSize: 12, padding: '10px 6px', WebkitAppearance: 'none', appearance: 'none' }} onFocus={focusStyle} onBlur={blurStyle} />
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>质保天数</label>
-                <select value={duration} onChange={(e) => setDuration(e.target.value)} style={{ ...inputStyle, width: '100%', appearance: 'auto', fontSize: 12, padding: '10px 6px' }}>
+                <select value={duration} onChange={(e) => setDuration(e.target.value)} style={{ ...inputStyle, width: '100%', fontSize: 12, padding: '10px 6px', WebkitAppearance: 'none', appearance: 'none', backgroundImage: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2386868B' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>\")", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 10px center', paddingRight: 28 }}>
                   <option value="45">45天</option>
                   <option value="185">185天</option>
                   <option value="360">360天</option>
