@@ -192,11 +192,11 @@ export default function WarrantyPage() {
               <input placeholder="微信备注/称呼" value={customer} onChange={(e) => setCustomer(e.target.value)} style={inputStyle} onFocus={focusStyle} onBlur={blurStyle} />
             </div>
             <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
-              <div style={{ flex: '0 0 48%', maxWidth: '48%' }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
                 <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>下单时间 <span style={{ color: '#FF3B30' }}>*</span></label>
                 <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} style={{ ...inputStyle, width: '100%', fontSize: 12, padding: '10px 6px' }} onFocus={focusStyle} onBlur={blurStyle} />
               </div>
-              <div style={{ flex: '1', minWidth: 0 }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
                 <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>质保天数</label>
                 <select value={duration} onChange={(e) => setDuration(e.target.value)} style={{ ...inputStyle, width: '100%', appearance: 'auto', fontSize: 12, padding: '10px 6px' }}>
                   <option value="45">45天</option>
