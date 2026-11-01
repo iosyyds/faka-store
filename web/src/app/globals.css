@@ -31,3 +31,21 @@ input, textarea, select { font-family: inherit; font-size: 16px; }
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+@keyframes tagSweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+.tag-sweep {
+  position: relative;
+  overflow: hidden;
+}
+.tag-sweep::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+  animation: tagSweep 2s infinite;
+}
