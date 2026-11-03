@@ -113,7 +113,7 @@ export default function WarrantyPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#ffffff', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif', color: appleText }}>
-      <style>{`input[type="date"]::-webkit-calendar-picker-indicator { display: none; } input[type="date"] { text-align: left !important; } select { text-align: left !important; text-align-last: left; }`}</style>
+      <style>{`input[type="date"]::-webkit-calendar-picker-indicator { display: none; } input[type="date"] { text-align: left !important; text-align-last: left !important; direction: ltr !important; } select { text-align: left !important; text-align-last: left !important; direction: ltr !important; }`}</style>
       <Navbar primaryText="返回首页" primaryHref="/" secondaryText="订单查询" secondaryHref="/query" />
 
       <div style={{ maxWidth: 440, margin: '0 auto', padding: isMobile ? '82px 16px 40px' : '92px 22px 64px' }}>
@@ -210,7 +210,7 @@ export default function WarrantyPage() {
                 <div style={{ fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>下单时间 <span style={{ color: '#FF3B30' }}>*</span></div>
                 <div style={{ position: 'relative' }}>
                   <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)}
-                    style={{ display: 'block', width: '100%', padding: '10px 28px 10px 8px', border: '1px solid #E5E5EA', borderRadius: 12, fontSize: 12, background: '#fff', outline: 'none', boxSizing: 'border-box', color: appleText, WebkitAppearance: 'none', appearance: 'none', textAlign: 'left' }} />
+                    style={{ display: 'block', width: '100%', padding: '10px 28px 10px 8px', border: '1px solid #E5E5EA', borderRadius: 12, fontSize: 12, background: '#fff', outline: 'none', boxSizing: 'border-box', color: appleText, WebkitAppearance: 'none', appearance: 'none', textAlign: 'left', direction: 'ltr' }} />
                   <svg style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#86868B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                 </div>
               </div>
@@ -218,7 +218,7 @@ export default function WarrantyPage() {
                 <div style={{ fontSize: 13, fontWeight: 500, color: appleSubtext, marginBottom: 6 }}>质保天数 <span style={{ color: '#FF3B30' }}>*</span></div>
                 <div style={{ position: 'relative' }}>
                   <select value={duration} onChange={(e) => setDuration(e.target.value)}
-                    style={{ display: 'block', width: '100%', padding: '10px 24px 10px 8px', border: '1px solid #E5E5EA', borderRadius: 12, fontSize: 12, background: '#fff', outline: 'none', boxSizing: 'border-box', color: appleText, WebkitAppearance: 'none', appearance: 'none', textAlign: 'left' }}>
+                    style={{ display: 'block', width: '100%', padding: '10px 24px 10px 8px', border: '1px solid #E5E5EA', borderRadius: 12, fontSize: 12, background: '#fff', outline: 'none', boxSizing: 'border-box', color: appleText, WebkitAppearance: 'none', appearance: 'none', textAlign: 'left', direction: 'ltr' }}>
                     <option value="45">45天</option>
                     <option value="185">185天</option>
                     <option value="360">360天</option>
