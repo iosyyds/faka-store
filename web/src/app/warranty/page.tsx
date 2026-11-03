@@ -141,17 +141,31 @@ export default function WarrantyPage() {
           {queryErr && <div style={{ marginTop: 10, fontSize: 13, color: '#FF3B30' }}>{queryErr}</div>}
 
           {queryResult && (
-            <div style={{ marginTop: 14, padding: 14, background: '#F5F5F7', borderRadius: 12 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-                <span style={{ fontSize: 13, color: appleSubtext }}>{queryResult.status === 'pending' ? '审核状态' : queryResult.status === 'disabled' ? '账户状态' : queryResult.status === 'expired' ? '质保状态' : '剩余质保'}</span>
-                <span style={{ padding: '4px 12px', borderRadius: 980, fontSize: 13, fontWeight: 700, color: '#fff', background: statusColor(queryResult.status) }}>
-                  {queryResult.status === 'pending' ? '审核中' : queryResult.status === 'disabled' ? '已停用' : queryResult.status === 'expired' ? '已过期' : (queryResult.remain_days >= 0 ? `剩 ${queryResult.remain_days} 天` : '已过期')}
+            <div style={{ marginTop: 14, padding: 16, background: '#F5F5F7', borderRadius: 14 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                <span style={{ fontSize: 14, fontWeight: 600 }}>剩余质保</span>
+                <span style={{ padding: '5px 14px', borderRadius: 980, fontSize: 14, fontWeight: 700, color: '#fff', background: '#34C759' }}>
+                  剩 {queryResult.remain_days} 天
                 </span>
               </div>
-              <div style={{ fontSize: 12, color: appleSubtext, lineHeight: 1.8 }}>
-                <div>开始时间：{queryResult.start_date}</div>
-                <div>质保时长：{queryResult.duration_days} 天</div>
-                <div>当前状态：{queryResult.status_label}</div>
+              <div style={{ fontSize: 12, color: appleSubtext, lineHeight: 1.8, marginBottom: 12 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span>开始时间</span>
+                  <span style={{ color: appleText, fontWeight: 500 }}>{queryResult.start_date}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span>质保时长</span>
+                  <span style={{ color: appleText, fontWeight: 500 }}>{queryResult.duration_days} 天</span>
+                </div>
+              </div>
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: appleSubtext, marginBottom: 6 }}>
+                  <span>已用 {queryResult.duration_days - queryResult.remain_days} 天</span>
+                  <span>剩余 {queryResult.remain_days} 天</span>
+                </div>
+                <div style={{ height: 6, background: '#E5E5EA', borderRadius: 980, overflow: 'hidden' }}>
+                  <div style={{ height: '100%', width: `${Math.max(0, Math.min(100, queryResult.remain_days / queryResult.duration_days * 100))}%`, background: 'linear-gradient(90deg, #34C759, #30D158)', borderRadius: 980, transition: 'width 0.8s ease' }}></div>
+                </div>
               </div>
             </div>
           )}
