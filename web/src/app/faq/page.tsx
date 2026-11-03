@@ -29,7 +29,9 @@ export default function FaqPage() {
             <div key={f.id} style={{ background: '#fff', borderRadius: 14, overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.04)', border: '1px solid rgba(0,0,0,0.04)' }}>
               <div onClick={() => setOpenId(openId === f.id ? null : f.id)} style={{ padding: '14px 18px', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 14, fontWeight: 500 }}>
                 <span>{f.question}</span>
-                <span style={{ color: appleSubtext, transition: '.3s', transform: openId === f.id ? 'rotate(180deg)' : 'none', fontSize: 12 }}>▼</span>
+                <span style={{ color: appleSubtext, transition: 'transform .3s', transform: openId === f.id ? 'rotate(180deg)' : 'none', display: 'flex', alignItems: 'center' }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
               </div>
               {openId === f.id && <div style={{ padding: '0 18px 16px', fontSize: 13, color: appleSubtext, lineHeight: 1.7, borderTop: '1px solid #F2F2F7', paddingTop: 12 }}>{f.answer}</div>}
             </div>
