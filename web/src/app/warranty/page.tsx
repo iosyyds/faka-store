@@ -144,8 +144,8 @@ export default function WarrantyPage() {
             <div style={{ marginTop: 14, padding: 16, background: '#F5F5F7', borderRadius: 14 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
                 <span style={{ fontSize: 14, fontWeight: 600 }}>剩余质保</span>
-                <span style={{ padding: '5px 14px', borderRadius: 980, fontSize: 14, fontWeight: 700, color: '#fff', background: '#34C759' }}>
-                  剩 {queryResult.remain_days} 天
+                <span style={{ fontSize: 14, fontWeight: 700, color: '#34C759' }}>
+                  {queryResult.remain_days} 天
                 </span>
               </div>
               <div style={{ fontSize: 12, color: appleSubtext, lineHeight: 1.8, marginBottom: 12 }}>
