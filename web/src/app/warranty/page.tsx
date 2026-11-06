@@ -131,7 +131,17 @@ export default function WarrantyPage() {
           <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 15, textAlign: 'center', lineHeight: 1.7, maxWidth: 300 }}>
             微信内无法获取设备 UDID<br/>
             点击右上角「···」<br/>
-            选择「在浏览器打开」即可正常登记
+            选择「在浏览器打开」<br/>
+            或「用默认浏览器打开」即可正常登记
+          </div>
+          <div style={{ marginTop: 28, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+            <div style={{ width: 56, height: 56, borderRadius: 14, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 16px rgba(0,0,0,0.25)' }}>
+              <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+                <circle cx="17" cy="17" r="15" fill="#1E9BF0"/>
+                <path d="M20.8 8.2 13 17.6l6.6-1.9 2.5 7.9 4-9.9-2.3-1.7 3.6-4.8z" fill="#fff"/>
+              </svg>
+            </div>
+            <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: 12 }}>看到这个图标就点它</span>
           </div>
         </div>
       )}
