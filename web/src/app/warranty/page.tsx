@@ -15,6 +15,7 @@ interface WarrantyInfo {
 export default function WarrantyPage() {
   const [loaded, setLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isWechat, setIsWechat] = useState(false);
 
   // 查询
   const [queryUdid, setQueryUdid] = useState('');
@@ -36,6 +37,7 @@ export default function WarrantyPage() {
   useEffect(() => {
     setLoaded(true);
     setIsMobile(window.innerWidth < 768);
+    setIsWechat(/MicroMessenger/i.test(navigator.userAgent));
     setStartDate(new Date().toISOString().slice(0, 10));
     // 检测从获取UDID页面跳回时自动填充
     const params = new URLSearchParams(window.location.search);
@@ -114,6 +116,26 @@ export default function WarrantyPage() {
   return (
     <div style={{ minHeight: '100vh', background: '#ffffff', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif', color: appleText }}>
       <style>{`input[type="date"]::-webkit-calendar-picker-indicator { display: none; } input[type="date"] { text-align: left !important; text-align-last: left !important; direction: ltr !important; } select { text-align: left !important; text-align-last: left !important; direction: ltr !important; }`}</style>
+
+      {/* 微信打开提示 */}
+      {isWechat && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.78)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
+          <div style={{ position: 'absolute', top: 20, right: 24, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+            <span style={{ color: '#fff', fontSize: 13, fontWeight: 500 }}>右上角</span>
+          </div>
+          <div style={{ width: 72, height: 72, marginBottom: 24, borderRadius: 20, background: 'linear-gradient(135deg,#07C160,#06AD56)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 32px rgba(7,193,96,0.4)' }}>
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <div style={{ color: '#fff', fontSize: 22, fontWeight: 700, marginBottom: 12, textAlign: 'center', letterSpacing: -0.5 }}>请在浏览器中打开</div>
+          <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 15, textAlign: 'center', lineHeight: 1.7, maxWidth: 300 }}>
+            微信内无法获取设备 UDID<br/>
+            点击右上角「···」<br/>
+            选择「在浏览器打开」即可正常登记
+          </div>
+        </div>
+      )}
+
       <Navbar primaryText="返回首页" primaryHref="/" secondaryText="订单查询" secondaryHref="/query" />
 
       <div style={{ maxWidth: 440, margin: '0 auto', padding: isMobile ? '82px 16px 40px' : '92px 22px 64px' }}>
