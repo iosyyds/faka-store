@@ -124,8 +124,11 @@ export default function WarrantyPage() {
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
             <span style={{ color: '#fff', fontSize: 13, fontWeight: 500 }}>右上角</span>
           </div>
-          <div style={{ width: 72, height: 72, marginBottom: 24, borderRadius: 20, background: 'linear-gradient(135deg,#07C160,#06AD56)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 32px rgba(7,193,96,0.4)' }}>
-            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          <div style={{ width: 84, height: 84, marginBottom: 24, borderRadius: 22, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 32px rgba(0,0,0,0.28)' }}>
+            <svg width="54" height="54" viewBox="0 0 60 60" fill="none">
+              <circle cx="30" cy="30" r="26" fill="#1E9BF0"/>
+              <path d="M30 12 L38 30 L30 48 L22 30 Z" fill="#fff" transform="rotate(35 30 30)"/>
+            </svg>
           </div>
           <div style={{ color: '#fff', fontSize: 22, fontWeight: 700, marginBottom: 12, textAlign: 'center', letterSpacing: -0.5 }}>请在浏览器中打开</div>
           <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 15, textAlign: 'center', lineHeight: 1.7, maxWidth: 300 }}>
@@ -133,15 +136,6 @@ export default function WarrantyPage() {
             点击右上角「···」<br/>
             选择「在浏览器打开」<br/>
             或「用默认浏览器打开」即可正常登记
-          </div>
-          <div style={{ marginTop: 28, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-            <div style={{ width: 56, height: 56, borderRadius: 14, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 16px rgba(0,0,0,0.25)' }}>
-              <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-                <circle cx="17" cy="17" r="15" fill="#1E9BF0"/>
-                <path d="M20.8 8.2 13 17.6l6.6-1.9 2.5 7.9 4-9.9-2.3-1.7 3.6-4.8z" fill="#fff"/>
-              </svg>
-            </div>
-            <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: 12 }}>看到这个图标就点它</span>
           </div>
         </div>
       )}
